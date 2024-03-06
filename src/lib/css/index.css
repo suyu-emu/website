@@ -1,0 +1,51 @@
+:root {
+	--text-color: #bebbdd;
+	--text-font: "Jost", sans-serif;
+	--header-font: "Jost", sans-serif;
+	--page-bg: rgb(16, 22, 35);
+	--color-primary: #202b41;
+	--border-color: rgb(53, 62, 82);
+	--border-primary: solid thin var(--border-color);
+	--text-size: 14pt;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: var(--text-color);
+	font-family: var(--text-font);
+	font-size: var(--text-size);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--header-font) !important;
+	font-size: 64px;
+}
+
+body {
+	background-color: black;
+	height: fit-content;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #2b3947;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #3c4f7c;
+	border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #526ca8;
+}
