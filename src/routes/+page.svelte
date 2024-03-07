@@ -8,6 +8,7 @@
 	import totk from "$assets/cards/totk.webp";
 	import scarletviolet from "$assets/cards/scarlet-violet.webp";
 	import CardCarousel from "$components/CardCarousel.svelte";
+	import Wordmark from "$components/Wordmark.svelte";
 
 	let logoSizes = {
 		small: 256,
@@ -38,7 +39,9 @@
 	<div class="container">
 		<Logo size={logoSize} />
 		<div class="hero-text">
-			<h1 class="hero-header">{strings.landingHeader}</h1>
+			<h1 class="hero-header">
+				<Wordmark size={80} />
+			</h1>
 			<p>
 				{strings.landingOne}
 			</p>
@@ -46,6 +49,7 @@
 	</div>
 	<div class="below">
 		<div class="absolute-center">
+			<h1>We care about preservation...</h1>
 			<CardCarousel
 				cards={[
 					{
@@ -73,18 +77,41 @@
 				<span class="plus">+</span>
 				<ScrollIcon size={48} color="#bebbdd" />
 			</div>
+			<p>
+				...so we're setting out to continue the beloved Yuzu emulator, as a non-profit drive
+				for hardware preservation and research.
+			</p>
+			<div class="buttons">
+				<button
+					on:click={() =>
+						window.open("https://gitlab.com/suyu-emu/suyu/-/releases", "_blank")}
+					class="download">Download</button
+				>
+				<button
+					class="discord"
+					on:click={() => window.open("https://discord.gg/suyu", "_blank")}
+					>Discord</button
+				>
+			</div>
 		</div>
 	</div>
 </div>
 
 <style>
+	.buttons {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+		margin-top: 20px;
+	}
+
 	.instructions {
 		display: flex;
 		align-items: center;
 		margin-top: 24px;
 		opacity: 0.25;
 		position: absolute;
-		top: 100%;
+		top: calc(100% - 162px);
 		left: 50%;
 		transform: translateX(-50%);
 	}
@@ -120,7 +147,7 @@
 	.hero-header {
 		font-size: 110px;
 		margin-top: -48px;
-		margin-bottom: 12px;
+		margin-bottom: -24px;
 	}
 
 	.hero-text {
@@ -154,7 +181,7 @@
 
 	.below {
 		width: 100%;
-		min-height: 100vh;
+		min-height: calc(100vh - 80px);
 		height: fit-content;
 		padding-bottom: 80px;
 		position: relative;
@@ -164,5 +191,16 @@
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
+	}
+
+	.absolute-center > h1 {
+		text-align: center;
+		margin-bottom: 18px;
+		margin-top: 36px;
+	}
+
+	.absolute-center > p {
+		text-align: center;
+		margin-top: 64px;
 	}
 </style>
