@@ -31,6 +31,7 @@ h6 {
 body {
 	background-color: black;
 	height: fit-content;
+	overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {

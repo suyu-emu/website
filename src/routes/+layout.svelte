@@ -17,14 +17,15 @@
 
 <style>
 	.below {
-		margin-top: 80px;
 		z-index: 5;
 		position: relative;
 		display: flex;
 		flex-direction: column;
 	}
 	.header {
-		position: fixed;
+		position: sticky;
+		/* on overscroll, stick to the top */
+		overscroll-behavior: contain;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -47,15 +48,14 @@
 
 	.bullshit-flex-placeholder {
 		/* 100vh height */
-		flex-grow: 0;
-		flex-shrink: 0;
-		height: calc(100vh - 80px);
+		height: calc(100vh - 162px);
 		width: 100%;
 	}
 
 	.bg-below-gradient {
 		width: 100%;
 		flex-grow: 1;
+		flex-shrink: 0;
 		background-color: var(--page-bg);
 		background-size: 100% 100%;
 		z-index: -1;

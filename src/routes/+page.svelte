@@ -1,15 +1,20 @@
-<script>
+<script lang="ts">
 	import Logo from "$components/Logo.svelte";
-	import { onMount } from "svelte";
+	import { onMount, tick } from "svelte";
 	import strings from "$lib/data/strings.json";
 	import Card from "$components/Card.svelte";
+	import odyssey from "$assets/cards/Super-Mario-Odyssey.jpg";
+	import ScrollIcon from "$components/ScrollIcon.svelte";
+	import totk from "$assets/cards/totk.webp";
+	import scarletviolet from "$assets/cards/scarlet-violet.webp";
+	import CardCarousel from "$components/CardCarousel.svelte";
 
 	let logoSizes = {
 		small: 256,
 		large: 378,
 	};
 
-	let logoSize = logoSizes.small;
+	let logoSize = logoSizes.large;
 
 	onMount(() => {
 		function onResize() {
@@ -22,7 +27,10 @@
 
 		onResize();
 		window.addEventListener("resize", onResize);
-		return () => window.removeEventListener("resize", onResize);
+
+		return () => {
+			window.removeEventListener("resize", onResize);
+		};
 	});
 </script>
 
@@ -37,11 +45,67 @@
 		</div>
 	</div>
 	<div class="below">
-		<Card />
+		<div class="absolute-center">
+			<CardCarousel
+				cards={[
+					{
+						title: "Super Mario Odyssey",
+						compatibility: "goated",
+						image: odyssey,
+						releaseYear: 2017,
+					},
+					{
+						title: "The Legend of Zelda: Tears of the Kingdom",
+						compatibility: "based",
+						image: totk,
+						releaseYear: 2023,
+					},
+					{
+						title: "Pokémon Scarlet and Pokémon Violet",
+						compatibility: "cringe",
+						image: scarletviolet,
+						releaseYear: 2022,
+					},
+				]}
+			/>
+			<div class="instructions">
+				<div class="key">Shift</div>
+				<span class="plus">+</span>
+				<ScrollIcon size={48} color="#bebbdd" />
+			</div>
+		</div>
 	</div>
 </div>
 
 <style>
+	.instructions {
+		display: flex;
+		align-items: center;
+		margin-top: 24px;
+		opacity: 0.25;
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.plus {
+		margin-left: 15px;
+	}
+
+	.plus,
+	.key {
+		margin-top: -14px;
+	}
+
+	.key {
+		font-size: 12px;
+		background-color: rgb(59, 55, 78);
+		border-radius: 4px;
+		border: solid 1px rgb(137, 129, 176);
+		padding: 4px 12px;
+	}
+
 	.container {
 		width: calc(100vw - 17px);
 		height: calc(100vh - 160px);
@@ -73,12 +137,32 @@
 		}
 	}
 
+	@media (max-width: 560px) {
+		.absolute-center {
+			position: relative !important;
+			transform: none !important;
+			left: 0 !important;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.instructions {
+			display: none;
+		}
+	}
+
 	.below {
-		margin-top: 80px;
 		width: 100%;
-		height: 100vh;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
+		min-height: 100vh;
+		height: fit-content;
+		padding-bottom: 80px;
+		position: relative;
+	}
+
+	.absolute-center {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 </style>
