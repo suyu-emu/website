@@ -1,19 +1,42 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import BackgroundProvider from "$components/BackgroundProvider.svelte";
+	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
+	import { page } from "$app/stores";
 	import "$lib/css/index.css";
+
+	const excludedRoutesNav = ["/mockup/boot"];
+	const excludedRoutesBg = ["/mockup"];
+	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url.pathname.startsWith(route));
+	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url.pathname === route);
 </script>
 
-<div class="header" />
-<BackgroundProvider size={80} gap={12} speed={1} />
-<div class="below">
-	<div class="page-contents">
-		<slot />
+{#if !isNavExcluded}
+	<div class="header">
+		<div class="left">
+			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
+		</div>
+		<div class="right">
+			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">Download</a>
+			<a href="https://discord.gg/suyu" target="_blank">Discord</a>
+		</div>
 	</div>
-	<div class="bullshit-flex-container">
-		<div class="bullshit-flex-placeholder" />
-		<div class="bg-below-gradient" />
+{/if}
+
+{#if !isBgExcluded}
+	<BackgroundProvider size={80} gap={12} speed={1} />
+	<div class="below">
+		<div class="page-contents">
+			<slot />
+		</div>
+		<div class="bullshit-flex-container">
+			<div class="bullshit-flex-placeholder" />
+			<div class="bg-below-gradient" />
+		</div>
 	</div>
-</div>
+{:else}
+	<slot />
+{/if}
 
 <style>
 	.below {
@@ -35,6 +58,9 @@
 		z-index: 1000;
 		backdrop-filter: blur(10px);
 		-webkit-backdrop-filter: blur(10px);
+		align-items: center;
+		display: flex;
+		padding: 0 32px 0 16px;
 	}
 
 	.bullshit-flex-container {
@@ -59,5 +85,17 @@
 		background-color: var(--page-bg);
 		background-size: 100% 100%;
 		z-index: -1;
+	}
+
+	.left {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+	}
+
+	.right {
+		display: flex;
+		align-items: center;
+		gap: 32px;
 	}
 </style>
