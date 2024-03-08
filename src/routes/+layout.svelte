@@ -6,8 +6,8 @@
 	import "$lib/css/index.css";
 	import { onMount } from "svelte";
 
-	const excludedRoutesNav = ["/mockup/boot"];
-	const excludedRoutesBg = ["/mockup"];
+	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
+	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
 	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url?.pathname.startsWith(route));
 	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url?.pathname === route);
 </script>
