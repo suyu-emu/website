@@ -13,8 +13,8 @@ const app = express();
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-const PORT = 80;
-const SSLPORT = 443;
+const PORT = 3000;
+const SSLPORT = 3001;
 
 httpServer.listen(PORT, function () {
 	console.log("HTTP Server is running on: http://localhost:%s", PORT);
