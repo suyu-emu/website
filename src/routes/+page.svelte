@@ -81,11 +81,11 @@
 				for hardware preservation and research.
 			</p>
 			<div class="buttons">
-				<button
+				<!-- <button
 					on:click={() =>
 						window.open("https://gitlab.com/suyu-emu/suyu/-/releases", "_blank")}
 					class="download">Download</button
-				>
+				> -->
 				<button
 					class="discord"
 					on:click={() => window.open("https://discord.gg/suyu", "_blank")}
