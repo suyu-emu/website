@@ -6,7 +6,7 @@
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
 	import { Button } from "flowbite-svelte";
-	import { DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
+	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 
 	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
 	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
@@ -21,11 +21,11 @@
 			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
 		</div>
 		<div class="right">
-			<!-- <a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
+			<a href="https://git.suyu.dev/explore/organizations" target="_blank">
 				<Button class="!p-2" pill={true}>
-					<DownloadOutline />
+					<CodeBranchOutline />
 				</Button>
-			</a> -->
+			</a>
 			<a href="https://discord.gg/suyu" target="_blank">
 				<Button class="!p-2" pill={true}>
 					<DiscordSolid />
