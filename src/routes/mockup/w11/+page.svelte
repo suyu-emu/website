@@ -121,6 +121,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="disclaimer">
+			<h1>Disclaimer</h1>
+			<p>
+				This is a <b>concept</b> for suyu's launcher, made by nullptr. It is not<br />a true
+				desktop application, it is non-functional and running in<br />a browser.
+			</p>
+		</div>
 	</div>
 </div>
 
@@ -195,8 +202,13 @@
 		width: 1012px;
 		height: 600px;
 		position: absolute;
-		opacity: 0;
-		animation: window-appear forwards 0.3s 1s var(--fluent-ease-out);
+	}
+
+	.disclaimer {
+		text-align: right;
+		position: absolute;
+		bottom: 16px;
+		right: 24px;
 	}
 
 	.titlebar-buttons {

@@ -6,10 +6,11 @@
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
 	import { Button } from "flowbite-svelte";
-	import {DiscordSolid, DownloadOutline} from "flowbite-svelte-icons";
+	import { DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 
 	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
 	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
+	console.log($page.url);
 	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url?.pathname.startsWith(route));
 	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url?.pathname === route);
 </script>
@@ -21,12 +22,12 @@
 		</div>
 		<div class="right">
 			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
-				<Button class='!p-2' pill={true}>
+				<Button class="!p-2" pill={true}>
 					<DownloadOutline />
 				</Button>
 			</a>
 			<a href="https://discord.gg/suyu" target="_blank">
-				<Button class='!p-2' pill={true}>
+				<Button class="!p-2" pill={true}>
 					<DiscordSolid />
 				</Button>
 			</a>

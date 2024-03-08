@@ -85,7 +85,6 @@
 
 	.logo {
 		animation: spin 2s reverse infinite cubic-bezier(0.8, 0, 0.2, 1);
-		transform-origin: 50.1% 47.45%;
 	}
 
 	.body {
