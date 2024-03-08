@@ -5,7 +5,8 @@
 	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
-	import { onMount } from "svelte";
+	import { Button } from "flowbite-svelte";
+	import {DiscordSolid, DownloadOutline} from "flowbite-svelte-icons";
 
 	const excludedRoutesNav = ["/mockup/boot"];
 	const excludedRoutesBg = ["/mockup"];
@@ -19,8 +20,16 @@
 			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
 		</div>
 		<div class="right">
-			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">Download</a>
-			<a href="https://discord.gg/suyu" target="_blank">Discord</a>
+			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
+				<Button class='!p-2' pill={true}>
+					<DownloadOutline />
+				</Button>
+			</a>
+			<a href="https://discord.gg/suyu" target="_blank">
+				<Button class='!p-2' pill={true}>
+					<DiscordSolid />
+				</Button>
+			</a>
 		</div>
 	</div>
 {/if}
@@ -98,6 +107,6 @@
 	.right {
 		display: flex;
 		align-items: center;
-		gap: 32px;
+		gap: 1rem;
 	}
 </style>
