@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "../app.pcss";
 	import { goto } from "$app/navigation";
 	import BackgroundProvider from "$components/BackgroundProvider.svelte";
 	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
@@ -25,14 +26,14 @@
 {/if}
 
 {#if !isBgExcluded}
-	<BackgroundProvider size={80} gap={12} speed={1} />
+	<BackgroundProvider size={80} gap={12} speed={1}></BackgroundProvider>
 	<div class="below">
 		<div class="page-contents">
 			<slot />
 		</div>
 		<div class="bullshit-flex-container">
-			<div class="bullshit-flex-placeholder" />
-			<div class="bg-below-gradient" />
+			<div class="bullshit-flex-placeholder"></div>
+			<div class="bg-below-gradient"></div>
 		</div>
 	</div>
 {:else}
