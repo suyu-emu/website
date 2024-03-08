@@ -21,11 +21,11 @@
 			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
 		</div>
 		<div class="right">
-			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
+			<!-- <a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
 				<Button class="!p-2" pill={true}>
 					<DownloadOutline />
 				</Button>
-			</a>
+			</a> -->
 			<a href="https://discord.gg/suyu" target="_blank">
 				<Button class="!p-2" pill={true}>
 					<DiscordSolid />
