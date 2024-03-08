@@ -3,13 +3,16 @@
 	import { onMount } from "svelte";
 	import type { PageData } from "./$types";
 	import Logo from "$components/Logo.svelte";
+	import { page } from "$app/stores";
 
 	let shadersDone = 0;
 	const shadersTotal = 8146;
 
 	export let data: PageData;
-
-	$: game = data.props.games[0];
+	$: game =
+		data.props.games.find(
+			(g) => g.title.trim().toLowerCase() === $page.params.game.trim().toLowerCase(),
+		) || data.props.games[0];
 	onMount(() => {
 		const interval = setInterval(() => {
 			shadersDone += Math.floor(Math.random() * 150);
@@ -44,7 +47,7 @@
 
 <style>
 	@keyframes spin {
-		0% {
+		/* 0% {
 			transform: none;
 			animation-timing-function: cubic-bezier(1, 0, 1, 1);
 		}
@@ -66,6 +69,13 @@
 		70%,
 		100% {
 			transform: scale(1) rotateZ(720deg);
+		} */
+		0% {
+			transform: none;
+		}
+
+		100% {
+			transform: rotateZ(360deg);
 		}
 	}
 
@@ -74,7 +84,8 @@
 	}
 
 	.logo {
-		animation: spin 4s infinite;
+		animation: spin 2s reverse infinite cubic-bezier(0.8, 0, 0.2, 1);
+		transform-origin: 50.1% 47.45%;
 	}
 
 	.body {
@@ -120,6 +131,9 @@
 		font-size: 32px;
 		white-space: nowrap;
 		overflow: hidden;
+	}
+
+	.launching {
 		--mask-image: linear-gradient(
 			90deg,
 			black,
@@ -132,5 +146,6 @@
 
 	.bold {
 		font-weight: bold;
+		width: 100%;
 	}
 </style>
