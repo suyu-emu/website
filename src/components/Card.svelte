@@ -4,8 +4,14 @@
 	export let title: string;
 	export let releaseYear: number;
 
-	function capitalizeFirstLetter(string: string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
+	function capitalizeFirstLetter(string: typeof compatibility) {
+		if (string === "goated") {
+			return "Good";
+		} else if (string === "based") {
+			return "Okay";
+		} else if (string === "cringe") {
+			return "Bad";
+		}
 	}
 </script>
 
