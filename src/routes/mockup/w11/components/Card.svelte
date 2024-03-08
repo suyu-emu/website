@@ -70,7 +70,7 @@
 
 	.card-container {
 		width: 128px;
-		height: 204px;
+		height: 212px;
 		border-radius: 10px;
 		border: var(--fluent-stroke);
 		position: relative;

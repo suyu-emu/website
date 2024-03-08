@@ -4,14 +4,6 @@
 
 <div class="cards">
 	<Card />
-	<Card />
-	<Card />
-	<Card />
-	<Card />
-	<Card />
-	<Card />
-	<Card />
-	<Card />
 </div>
 
 <style>
