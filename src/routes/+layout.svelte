@@ -1,10 +1,12 @@
 <script lang="ts">
+	import "../app.pcss";
 	import { goto } from "$app/navigation";
 	import BackgroundProvider from "$components/BackgroundProvider.svelte";
 	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
-	import { onMount } from "svelte";
+	import { Button } from "flowbite-svelte";
+	import {DiscordSolid, DownloadOutline} from "flowbite-svelte-icons";
 
 	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
 	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
@@ -18,21 +20,29 @@
 			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
 		</div>
 		<div class="right">
-			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">Download</a>
-			<a href="https://discord.gg/suyu" target="_blank">Discord</a>
+			<a href="https://gitlab.com/suyu-emu/suyu/-/releases" target="_blank">
+				<Button class='!p-2' pill={true}>
+					<DownloadOutline />
+				</Button>
+			</a>
+			<a href="https://discord.gg/suyu" target="_blank">
+				<Button class='!p-2' pill={true}>
+					<DiscordSolid />
+				</Button>
+			</a>
 		</div>
 	</div>
 {/if}
 
 {#if !isBgExcluded}
-	<BackgroundProvider size={80} gap={12} speed={1} />
+	<BackgroundProvider size={80} gap={12} speed={1}></BackgroundProvider>
 	<div class="below">
 		<div class="page-contents">
 			<slot />
 		</div>
 		<div class="bullshit-flex-container">
-			<div class="bullshit-flex-placeholder" />
-			<div class="bg-below-gradient" />
+			<div class="bullshit-flex-placeholder"></div>
+			<div class="bg-below-gradient"></div>
 		</div>
 	</div>
 {:else}
@@ -97,6 +107,6 @@
 	.right {
 		display: flex;
 		align-items: center;
-		gap: 32px;
+		gap: 1rem;
 	}
 </style>
