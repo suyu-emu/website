@@ -4,11 +4,12 @@
 	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
+	import { onMount } from "svelte";
 
 	const excludedRoutesNav = ["/mockup/boot"];
 	const excludedRoutesBg = ["/mockup"];
-	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url.pathname.startsWith(route));
-	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url.pathname === route);
+	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url?.pathname.startsWith(route));
+	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url?.pathname === route);
 </script>
 
 {#if !isNavExcluded}
