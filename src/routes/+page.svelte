@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Logo from "$components/Logo.svelte";
-	import { onMount, tick } from "svelte";
+	import { onMount } from "svelte";
 	import strings from "$lib/data/strings.json";
-	import Card from "$components/Card.svelte";
 	import odyssey from "$assets/cards/Super-Mario-Odyssey.jpg";
 	import ScrollIcon from "$components/ScrollIcon.svelte";
 	import totk from "$assets/cards/totk.webp";
@@ -145,9 +144,8 @@
 	}
 
 	.hero-header {
-		font-size: 110px;
-		margin-top: -48px;
-		margin-bottom: -24px;
+		margin-top: -2rem;
+		margin-bottom: 2rempx;
 	}
 
 	.hero-text {
@@ -181,7 +179,7 @@
 
 	.below {
 		width: 100%;
-		min-height: calc(100vh - 80px);
+		min-height: calc(106vh - 80px);
 		height: fit-content;
 		padding-bottom: 80px;
 		position: relative;
