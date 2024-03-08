@@ -1,0 +1,69 @@
+@font-face {
+	font-family: "Segoe UI Variable";
+	src: url($assets/fonts/suivar.ttf);
+}
+
+:root {
+	--mica-accent: rgba(47, 53, 72, 0.44);
+	--fluent-stroke-color: rgba(255, 255, 255, 0.15);
+	--fluent-stroke-width: thin;
+	--fluent-stroke: solid var(--fluent-stroke-color) var(--fluent-stroke-width);
+	--text-font: "Segoe UI Variable", sans-serif !important;
+	--text-color: #ffffff !important;
+	--text-size: 11pt !important;
+	--on-mica-bg: rgba(255, 255, 255, 0.08);
+	--fluent-ease-in: cubic-bezier(0.6, 0, 0.8, 0.6);
+	--fluent-ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+	user-select: none;
+}
+
+.fluent-press {
+	transition: 0.2s transform var(--fluent-ease-out);
+}
+
+.fluent-press:active {
+	/* transform: scale(0.97); */
+	opacity: 0.75;
+}
+
+.mica-backdrop {
+	backdrop-filter: blur(200px);
+	background-color: var(--mica-accent);
+}
+
+.on-mica-bg {
+	background-color: var(--on-mica-bg);
+}
+
+.window {
+	border: var(--fluent-stroke);
+	border-radius: 8px;
+	box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+}
+
+button {
+	border: var(--fluent-stroke);
+	border-radius: 4px;
+	background-color: rgba(255, 255, 255, 0.15);
+	height: 32px;
+	padding: 0 12px;
+	font-size: 10pt !important;
+	transition: 0.3s var(--fluent-ease-out);
+	transition-property: background-color, opacity;
+}
+
+button * {
+	font-size: 10pt !important;
+}
+
+button:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+button:active {
+	filter: none;
+	transition: 0.3s var(--fluent-ease-out);
+	background-color: rgba(255, 255, 255, 0.2);
+	opacity: 0.8;
+}
