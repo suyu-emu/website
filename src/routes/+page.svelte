@@ -35,7 +35,7 @@
 </script>
 
 <div class="page">
-	<div class="container">
+	<div class="contents-container">
 		<Logo size={logoSize} />
 		<div class="hero-text">
 			<h1 class="hero-header">
@@ -132,7 +132,7 @@
 		padding: 4px 12px;
 	}
 
-	.container {
+	.contents-container {
 		width: calc(100vw - 17px);
 		height: calc(100vh - 160px);
 		display: flex;
@@ -145,7 +145,7 @@
 
 	.hero-header {
 		margin-top: -2rem;
-		margin-bottom: 2rempx;
+		margin-bottom: 2rem;
 	}
 
 	.hero-text {
@@ -153,7 +153,7 @@
 	}
 
 	@media (max-width: 625px) {
-		.container {
+		.contents-container {
 			flex-direction: column;
 			gap: 96px;
 			padding-right: 0;
