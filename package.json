@@ -42,6 +42,8 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/enhanced-img": "^0.1.8",
+		"sequelize": "^6.37.1",
+		"sqlite3": "^5.1.7",
 		"vite-plugin-vsharp": "^1.7.3"
 	}
 }
