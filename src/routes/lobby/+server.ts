@@ -17,7 +17,26 @@ export async function GET({ request }) {
 export async function POST({ request, getClientAddress }) {
 	// TODO: per-ip room limit
 	const body: IRoom = await request.json();
-	console.log(body);
+	/* description may contain "### END DESCRIPTION ###" on its own line. if it does, get all lines after that */
+	const parsedDescription = body.description.split("### END DESCRIPTION ###");
+	console.log(parsedDescription);
+	const description = parsedDescription?.slice(1)?.join("### END DESCRIPTION ###") || "";
+	const opts: { [key: string]: string } = {};
+	description.split("\n").forEach((line) => {
+		const [key, ...values] = line.split("=");
+		const value = values.join("=").trim();
+		if (!key || !value) return;
+		opts[key] = value;
+	});
+	if (opts.ip) {
+		if (
+			!opts.ip.match(
+				/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+			)
+		) {
+			return new Response(null, { status: 400 });
+		}
+	}
 	const token = request.headers.get("authorization")?.replace("Bearer ", "");
 	if (!token) return new Response(null, { status: 401 });
 	// TODO: jwt utils which type and validate automatically
@@ -26,7 +45,7 @@ export async function POST({ request, getClientAddress }) {
 	if (!user) return new Response(null, { status: 401 });
 	const room = RoomManager.createRoom({
 		name: body.name,
-		description: body.description,
+		description: parsedDescription[0] || "",
 		gameName: body.preferredGameName,
 		gameId: body.preferredGameId,
 		players: [
@@ -37,10 +56,9 @@ export async function POST({ request, getClientAddress }) {
 			},
 		],
 		maxPlayers: body.maxPlayers,
-		ip: `${getClientAddress().split(":").at(-1)}:${body.port}`,
+		ip: `${opts.ip || getClientAddress().split(":").at(-1)}:${body.port}`,
 		host: user,
 		hasPassword: body.hasPassword || false,
 	});
-	console.log(room.toJSON());
 	return json(room.toJSON());
 }
