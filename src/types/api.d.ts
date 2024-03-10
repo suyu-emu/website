@@ -18,3 +18,15 @@ export interface CreateAccountResponseFailure {
 }
 
 export type CreateAccountResponse = CreateAccountResponseSuccess | CreateAccountResponseFailure;
+
+export interface GetUserResponseSuccess {
+	success: true;
+	user: SuyuUser;
+}
+
+export interface GetUserResponseFailure {
+	success: false;
+	error: string;
+}
+
+export type GetUserResponse = GetUserResponseSuccess | GetUserResponseFailure;

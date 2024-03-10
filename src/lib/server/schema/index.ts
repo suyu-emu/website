@@ -1,20 +1,25 @@
 import type { Role } from "$types/db";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class SuyuUser {
-	@PrimaryColumn()
+export class SuyuUser extends BaseEntity {
+	@PrimaryGeneratedColumn("uuid")
 	id: string;
 
-	@Column()
+	@Column("text")
 	username: string;
 
-	@Column()
+	@Column("text")
 	displayName: string;
 
-	@Column()
+	@Column("text")
 	avatarUrl: string;
 
-	@Column()
-	roles: Role[];
+	@Column("text")
+	roles: string;
+
+	@Column("text", {
+		select: false,
+	})
+	apiKey: string;
 }

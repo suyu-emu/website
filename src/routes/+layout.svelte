@@ -16,7 +16,7 @@
 </script>
 
 {#if !isNavExcluded}
-	<div class="header">
+	<div class="header panel-blur">
 		<div class="left">
 			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
 		</div>
@@ -66,10 +66,10 @@
 		width: 100%;
 		height: 80px;
 		background-color: color-mix(in srgb, var(--color-primary), transparent 50%);
+		border: none;
+		border-radius: 0;
 		border-bottom: var(--border-primary);
 		z-index: 1000;
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
 		align-items: center;
 		display: flex;
 		padding: 0 32px 0 16px;
