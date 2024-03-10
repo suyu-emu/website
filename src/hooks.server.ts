@@ -1,9 +1,10 @@
 import { db } from "$lib/server/db";
 import "reflect-metadata";
 import { building } from "$app/environment";
+import type { Handle } from "@sveltejs/kit";
 
 const runAllTheInitFunctions = async () => {
-	await db.initialize();
+	if (!db.isInitialized) await db.initialize();
 };
 
 if (!building) {
