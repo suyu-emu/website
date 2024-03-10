@@ -1,8 +1,10 @@
 import { json } from "$lib/server/util/index";
+import { useAuth } from "$lib/util/api/index.js";
 
-export function GET({ request }) {
-	console.log(request.headers.get("Authorization"));
+export async function GET({ request }) {
+	const user = await useAuth(request.headers.get("authorization") || "");
+	if (!user) return new Response(null, { status: 401 });
 	return json({
-		username: "nullptr",
+		username: user.username,
 	});
 }
