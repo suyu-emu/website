@@ -1,9 +1,46 @@
-import { Room } from "$lib/server/class/Room";
+import { Room, RoomManager } from "$lib/server/class/Room";
+import { userRepo } from "$lib/server/repo/index.js";
+import { SuyuUser } from "$lib/server/schema";
+import { PUBLIC_KEY } from "$lib/server/secrets/index.js";
 import { json } from "$lib/server/util";
-import type { LobbyResponse } from "$types/rooms";
+import type { IJwtData } from "$types/auth.js";
+import type { IRoom, LobbyResponse } from "$types/rooms";
+import jwt from "jsonwebtoken";
 
 export async function GET({ request }) {
 	return json<LobbyResponse>({
-		rooms: [new Room("suyu Testing Room 1", "A testing room for suyu", "suyu", [], 4).toJSON()],
+		rooms: RoomManager.getRooms().map((r) => r.toJSON()),
 	});
+}
+
+/* credit to janeberru for showing the shape of this data */
+export async function POST({ request, getClientAddress }) {
+	// TODO: per-ip room limit
+	const body: IRoom = await request.json();
+	console.log(body);
+	const token = request.headers.get("authorization")?.replace("Bearer ", "");
+	if (!token) return new Response(null, { status: 401 });
+	// TODO: jwt utils which type and validate automatically
+	const data = jwt.verify(token, Buffer.from(PUBLIC_KEY), { algorithms: ["RS256"] }) as IJwtData;
+	const user = await userRepo.findOne({ where: { id: data.id } });
+	if (!user) return new Response(null, { status: 401 });
+	const room = RoomManager.createRoom({
+		name: body.name,
+		description: body.description,
+		gameName: body.preferredGameName,
+		gameId: body.preferredGameId,
+		players: [
+			{
+				gameId: 0,
+				gameName: "",
+				nickname: user.username,
+			},
+		],
+		maxPlayers: body.maxPlayers,
+		ip: `${getClientAddress().split(":").at(-1)}:${body.port}`,
+		host: user,
+		hasPassword: body.hasPassword || false,
+	});
+	console.log(room.toJSON());
+	return json(room.toJSON());
 }

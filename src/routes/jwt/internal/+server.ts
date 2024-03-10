@@ -1,17 +1,14 @@
-import { json } from "$lib/server/util/index.js";
+import { PRIVATE_KEY } from "$lib/server/secrets/index.js";
+import { useAuth } from "$lib/util/api/index.js";
+import jwt from "jsonwebtoken";
 
-export function GET({ request }) {
-	console.log(request);
-	return new Response(
-		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
-		{
-			headers: {
-				"content-type": "text/html",
-			},
+export async function POST({ request }) {
+	const userKey = `${request.headers.get("x-username")}:${request.headers.get("x-token")}`;
+	const user = await useAuth(userKey);
+	const token = jwt.sign({ ...user }, Buffer.from(PRIVATE_KEY), { algorithm: "RS256" });
+	return new Response(token, {
+		headers: {
+			"content-type": "text/html",
 		},
-	);
-}
-
-export function POST() {
-	return new Response("god fucking kill me");
+	});
 }

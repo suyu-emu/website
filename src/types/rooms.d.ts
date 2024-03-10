@@ -10,10 +10,28 @@ export interface IRoom {
 	name: string;
 	netVersion: number;
 	owner: string;
-	players: SuyuUser[];
+	players: RoomPlayer[];
 	port: number;
 	preferredGameId: number;
 	preferredGameName: string;
+}
+
+export interface IRoomConfig {
+	name: string;
+	description: string;
+	gameName: string;
+	gameId: number;
+	hasPassword: boolean;
+	players: RoomPlayer[];
+	maxPlayers: number;
+	ip: string;
+	host: SuyuUser;
+}
+
+export interface RoomPlayer {
+	gameId: number;
+	gameName: string;
+	nickname: string;
 }
 
 export interface LobbyResponse {
