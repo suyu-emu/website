@@ -3,7 +3,13 @@
 import { userRepo } from "$lib/server/repo";
 import type { SuyuUser } from "$lib/server/schema";
 import { json, serializeRoles } from "$lib/server/util";
-import type { CreateAccountRequest, CreateAccountResponse } from "$types/api";
+import { useAuth } from "$lib/util/api";
+import type {
+	CreateAccountRequest,
+	CreateAccountResponse,
+	DeleteAccountResponse,
+	GetUserResponse,
+} from "$types/api";
 import crypto from "crypto";
 import { promisify } from "util";
 
@@ -41,5 +47,33 @@ export async function POST({ request }) {
 		success: true,
 		token: createdUser.apiKey,
 		user: createdUser,
+	});
+}
+
+export async function GET({ request }) {
+	const user = await useAuth(request);
+	if (!user) {
+		return json<GetUserResponse>({
+			success: false,
+			error: "unauthorized",
+		});
+	}
+	return json<GetUserResponse>({
+		success: true,
+		user,
+	});
+}
+
+export async function DELETE({ request }) {
+	const user = await useAuth(request);
+	if (!user) {
+		return json<DeleteAccountResponse>({
+			success: false,
+			error: "unauthorized",
+		});
+	}
+	await userRepo.remove(user);
+	return json<DeleteAccountResponse>({
+		success: true,
 	});
 }

@@ -2,6 +2,11 @@
 
 import type { SuyuUser } from "$lib/server/schema";
 
+export interface GenericFailureResponse {
+	success: false;
+	error: string;
+}
+
 export interface CreateAccountRequest {
 	username: string;
 }
@@ -11,22 +16,17 @@ export interface CreateAccountResponseSuccess {
 	user: SuyuUser;
 	token: string;
 }
+export type CreateAccountResponse = CreateAccountResponseSuccess | GenericFailureResponse;
 
-export interface CreateAccountResponseFailure {
-	success: false;
-	error: string;
+export interface DeleteAccountResponseSuccess {
+	success: true;
 }
 
-export type CreateAccountResponse = CreateAccountResponseSuccess | CreateAccountResponseFailure;
+export type DeleteAccountResponse = DeleteAccountResponseSuccess | GenericFailureResponse;
 
 export interface GetUserResponseSuccess {
 	success: true;
 	user: SuyuUser;
 }
 
-export interface GetUserResponseFailure {
-	success: false;
-	error: string;
-}
-
-export type GetUserResponse = GetUserResponseSuccess | GetUserResponseFailure;
+export type GetUserResponse = GetUserResponseSuccess | GenericFailureResponse;
