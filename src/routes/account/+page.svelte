@@ -5,6 +5,8 @@
 	import type { PageData } from "./$types";
 
 	export let data: PageData;
+	let base64Token: string;
+	$: base64Token = data?.token ? btoa(data.token) : "";
 
 	let usernameToCreate: string;
 	let createBtn: HTMLButtonElement;
@@ -50,7 +52,7 @@
 	<p>
 		{#if data?.token && data?.user && data.user.username}
 			<p>Username: {data.user.username}</p>
-			<p>Token: <code>{data.token}</code></p>
+			<p>Token: <code>{base64Token}</code></p>
 		{:else}
 			<p>
 				It appears you don't have an account; please register one to access suyu's online
@@ -97,6 +99,13 @@
 		padding: 2px 8px;
 		border-radius: 4px;
 		user-select: all;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: pre;
+		max-width: 100%;
+		display: block;
+		margin-top: 4px;
+		margin-bottom: 4px;
 	}
 
 	.float-bottom-right {

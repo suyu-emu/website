@@ -1,7 +1,6 @@
 import { json } from "$lib/server/util/index.js";
 
 export function GET({ request }) {
-	console.log(request);
 	return new Response(
 		`-----BEGIN CERTIFICATE-----
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -43,6 +42,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 	);
 }
 
-export function POST() {
-	return new Response("god fucking kill me");
+export function POST({ request }) {
+	return new Response();
 }
