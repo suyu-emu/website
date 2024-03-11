@@ -1,19 +1,8 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
-
 	export let size = 512;
-
-	const dispatcher = createEventDispatcher<{
-		click: void;
-	}>();
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <svg
-	class="pointer"
-	on:click={() => dispatcher("click")}
 	width={size * 3.771484375}
 	height={size}
 	viewBox="0 0 1931 512"
@@ -45,9 +34,3 @@
 		fill="#3A99FF"
 	/>
 </svg>
-
-<style>
-	.pointer {
-		cursor: pointer;
-	}
-</style>
