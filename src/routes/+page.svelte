@@ -2,7 +2,9 @@
 	import { XCircleOutline } from "flowbite-svelte-icons";
 	import { Dialog } from "radix-svelte";
 	import type { ResolvedProps } from "radix-svelte/internal/helpers";
+
 	import embedImage from '$assets/branding/suyu__Embed-Image.png';
+	import suyuWindow from '$assets/mockups/suyuwindow.png';
 
 	let rootOpen: boolean;
 	let rootModal: boolean = true;
@@ -164,7 +166,7 @@
 					alt=""
 					decoding="async"
 					loading="lazy"
-					src="/img/bettercrophero.png"
+					src={suyuWindow}
 				/>
 			</div>
 		</div>
