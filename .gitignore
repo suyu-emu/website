@@ -10,4 +10,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 ssl
 *.sqlite
-src/lib/server/secrets
+src/lib/server/secrets/secrets.json

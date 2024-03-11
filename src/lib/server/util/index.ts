@@ -1,6 +1,6 @@
 import type { IJwtData } from "$types/auth";
 import type { Role } from "$types/db";
-import { PUBLIC_KEY } from "../secrets";
+import { PUBLIC_KEY } from "../secrets/secrets.json";
 import jwt from "jsonwebtoken";
 
 export function json<T>(body: T): Response {

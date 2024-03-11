@@ -1,4 +1,4 @@
-import { PRIVATE_KEY } from "$lib/server/secrets/index.js";
+import { PRIVATE_KEY } from "$lib/server/secrets/secrets.json";
 import { useAuth } from "$lib/util/api/index.js";
 import jwt from "jsonwebtoken";
 
