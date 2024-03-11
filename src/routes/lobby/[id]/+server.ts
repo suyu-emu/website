@@ -11,8 +11,10 @@ export async function POST({ request, params }) {
 	const user = await useAuth(request.headers.get("authorization") || "");
 	if (!user) return new Response(null, { status: 401 });
 	if (user.id !== room.host.id) return new Response(null, { status: 401 });
-	console.log(body.players);
-	room.setPlayerList(body.players);
+	if (body.players.length === 0 && room.roomInfo.owner) {
+		console.log(room.roomInfo.players);
+		room.setPlayerList([{ gameId: 0, gameName: "", nickname: room.roomInfo.owner }]);
+	}
 	return json({ message: "Lobby updated successfully" });
 }
 
