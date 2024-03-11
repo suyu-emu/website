@@ -47,7 +47,7 @@
 			<div class="flex w-full flex-row items-center justify-end gap-8 text-[#A6A5A7]">
 				<CodeBranchOutline />
 				<DiscordSolid />
-				<a class="button-sm">Sign in</a>
+				<a href="/account" class="button-sm">Sign in</a>
 			</div>
 		</nav>
 	</header>
