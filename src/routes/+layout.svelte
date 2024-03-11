@@ -48,11 +48,11 @@
 			</div>
 			<div class="flex w-full flex-row items-center justify-end gap-4 text-[#A6A5A7]">
 				<a
-					class="p-2 transition hover:text-white"
-					href="https://git.suyu.dev/explore/organizations"
-					rel="noreferrer noopener"
-					target="_blank"
-				>
+				class="p-2 transition hover:text-white"
+				href="https://gitlab.com/suyu-emu/suyu"
+				rel="noreferrer noopener"
+				target="_blank"
+			>
 					<CodeBranchOutline />
 				</a>
 				<a
