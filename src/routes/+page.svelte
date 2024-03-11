@@ -3,15 +3,37 @@
 	import { Dialog } from "radix-svelte";
 	import type { ResolvedProps } from "radix-svelte/internal/helpers";
 
+	import embedImage from '$assets/branding/suyu__Embed-Image.png';
+	import suyuWindow from '$assets/mockups/suyuwindow.png';
+
 	let rootOpen: boolean;
 	let rootModal: boolean = true;
 	let portalContainer: HTMLElement | string;
 	let contentOpenAutoFocus: boolean = true;
 	let contentCloseAutoFocus: boolean = true;
+
+	let metadata = {
+		url: "https://suyu.dev",
+		title: "suyu - Open-source, non-profit Switch emulator",
+		description: "suyu is a familiar C++ based Nintendo Switch emulator with a focus on compatibility. Completely free and open-source, forever. Download it here.",
+		image: embedImage,
+	};
 </script>
 
 <svelte:head>
-	<title>suyu - Open-source, non-profit Switch emulator</title>
+	<title>{metadata.title}</title>
+	<meta name="description" content={metadata.description} />
+
+	<meta property="og:url" content={metadata.url} />
+	<meta property="og:title" content={metadata.title} />
+	<meta property="og:description" content={metadata.description} />
+	<meta property="og:image" content={metadata.image} />
+
+	<meta name="twitter:url" content={metadata.url} />
+	<meta name="twitter:title" content={metadata.title} />
+	<meta name="twitter:description" content={metadata.description} />
+	<meta name="twitter:image" content={metadata.image} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div
@@ -39,8 +61,8 @@
 		suyu is the open-source, non-profit Switch emulator
 	</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
-		suyu is a C++ based Switch emulator with a focus on compatibility. Completely free and
-		open-source, forever.
+		suyu is a familiar C++ based Switch emulator with a focus on compatibility. Completely free
+		and open-source, forever.
 	</p>
 	<div class="flex flex-row gap-4">
 		<Dialog.Root bind:modal={rootModal} bind:open={rootOpen}>
@@ -144,7 +166,7 @@
 					alt=""
 					decoding="async"
 					loading="lazy"
-					src="/img/bettercrophero.png"
+					src={suyuWindow}
 				/>
 			</div>
 		</div>
@@ -194,7 +216,7 @@
 		href="https://gitlab.com/suyu-emu/"
 		target="_blank"
 		rel="noreferrer noopener"
-		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12"
+		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
 		<p class="mt-2 text-lg leading-relaxed">
