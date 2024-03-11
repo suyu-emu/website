@@ -46,6 +46,31 @@
 			alert("Failed to delete account: " + response.error);
 		}
 	}
+
+	async function getWsMessage(event: MessageEvent): Promise<string> {
+		return new Promise((resolve, reject) => {
+			if (event.data instanceof Blob) {
+				const reader = new FileReader();
+
+				reader.onload = () => {
+					resolve((reader.result as string) || "");
+				};
+
+				reader.readAsText(event.data);
+			} else {
+				resolve(event.data);
+			}
+		});
+	}
+
+	onMount(() => {
+		const ws = new WebSocket("wss://sjqr2hlh-21563.uks1.devtunnels.ms/net");
+		ws.onmessage = async (event) => {
+			const msg = await getWsMessage(event);
+			console.log(msg);
+		};
+		ws.onopen = () => ws.send("hello, world");
+	});
 </script>
 
 <div class="panel-blur main-panel">
@@ -68,9 +93,13 @@
 	</p>
 	<h2>Rooms</h2>
 	<div class="rooms">
-		{#each data.rooms as room}
-			<Room {room} />
-		{/each}
+		{#if data.rooms.length > 0}
+			{#each data.rooms as room}
+				<Room {room} />
+			{/each}
+		{:else}
+			<p>No rooms are currently being hosted.</p>
+		{/if}
 	</div>
 </div>
 
@@ -87,6 +116,8 @@
 		max-width: 1000px;
 		padding: 28px 36px;
 		padding-top: 12px;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.main-panel > h2 {
@@ -112,5 +143,22 @@
 		display: block;
 		margin-top: 4px;
 		margin-bottom: 16px;
+	}
+
+	.rooms {
+		margin-top: -16px;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		height: 0px;
+		flex-grow: 1;
+		overflow-y: auto;
+		--mask-image: linear-gradient(transparent, black 8px, black calc(100% - 32px), transparent),
+			linear-gradient(to left, black 8px, transparent 8px);
+		padding-top: 8px;
+		padding-bottom: 32px;
+		mask-image: var(--mask-image);
+		-webkit-mask-image: var(--mask-image);
+		background-color: transparent;
 	}
 </style>
