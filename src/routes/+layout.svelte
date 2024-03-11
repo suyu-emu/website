@@ -1,117 +1,69 @@
 <script lang="ts">
 	import "../app.pcss";
-	import { goto } from "$app/navigation";
-	import BackgroundProvider from "$components/BackgroundProvider.svelte";
-	import LogoWithTextHorizontal from "$components/LogoWithTextHorizontal.svelte";
-	import { page } from "$app/stores";
-	import "$lib/css/index.css";
-	import { Button } from "flowbite-svelte";
-	import { CodeBranchOutline, DiscordSolid, UserCircleSolid } from "flowbite-svelte-icons";
+	import { onMount, onDestroy } from "svelte";
+	import Logo from "../components/LogoWithTextHorizontal.svelte";
+	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 
-	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
-	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
-	$: isNavExcluded = excludedRoutesNav.some((route) => $page.url?.pathname.startsWith(route));
-	$: isBgExcluded = excludedRoutesBg.some((route) => $page.url?.pathname === route);
+	let scrolled = false;
+
+	onMount(() => {
+		const handleScroll = () => {
+			scrolled = window.scrollY > 0;
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	});
 </script>
 
-{#if !isNavExcluded}
-	<div class="header panel-blur">
-		<div class="left">
-			<LogoWithTextHorizontal on:click={() => goto("/")} size={50} />
-		</div>
-		<div class="right">
-			<a href="https://git.suyu.dev/explore/organizations" target="_blank">
-				<Button class="!p-2" pill={true}>
+<main class="min-h-full w-full">
+	<header
+		style="transition: 180ms ease;"
+		class={scrolled
+			? "fixed top-0 z-[9999] w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
+			: "fixed top-0 z-[9999] w-full border-b-0 border-b-[transparent]"}
+	>
+		<nav
+			style="transition: 180ms ease;"
+			class={scrolled
+				? "mx-auto flex h-[72px] w-full max-w-[1300px] flex-row items-center justify-between px-8 backdrop-blur-xl"
+				: "mx-auto flex h-[120px] w-full max-w-[1300px] flex-row items-center justify-between px-8"}
+		>
+			<div class="flex w-full flex-row items-center justify-start gap-8">
+				<a href="/">
+					<Logo size={28} />
+				</a>
+			</div>
+			<div
+				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7]"
+			>
+				<a href="/" class="px-5 py-3 transition hover:text-white">Blog</a>
+				<a href="/" class="px-5 py-3 transition hover:text-white">Docs</a>
+				<a href="/" class="px-5 py-3 transition hover:text-white">FAQ</a>
+			</div>
+			<div class="flex w-full flex-row items-center justify-end gap-4 text-[#A6A5A7]">
+				<a
+					class="p-2 transition hover:text-white"
+					href="https://git.suyu.dev/explore/organizations"
+					target="_blank"
+				>
 					<CodeBranchOutline />
-				</Button>
-			</a>
-			<a href="https://discord.gg/suyu" target="_blank">
-				<Button class="!p-2" pill={true}>
+				</a>
+				<a
+					class="p-2 transition hover:text-white"
+					href="https://discord.gg/suyu"
+					target="_blank"
+				>
 					<DiscordSolid />
-				</Button>
-			</a>
-			<a href="/account">
-				<Button class="!p-2" pill={true}>
-					<UserCircleSolid />
-				</Button>
-			</a>
-		</div>
+				</a>
+				<a href="/account" class="button-sm">Sign in</a>
+			</div>
+		</nav>
+	</header>
+	<div class="mx-auto flex w-full max-w-[1300px] flex-col px-8 pb-12 pt-[120px]">
+		<slot />
 	</div>
-{/if}
-
-{#if !isBgExcluded}
-	<BackgroundProvider size={80} gap={12} speed={1}></BackgroundProvider>
-	<div class="below">
-		<div class="page-contents">
-			<slot />
-		</div>
-		<div class="bullshit-flex-container">
-			<div class="bullshit-flex-placeholder"></div>
-			<div class="bg-below-gradient"></div>
-		</div>
-	</div>
-{:else}
-	<slot />
-{/if}
-
-<style>
-	.below {
-		z-index: 5;
-		position: relative;
-		display: flex;
-		flex-direction: column;
-	}
-	.header {
-		position: sticky;
-		/* on overscroll, stick to the top */
-		overscroll-behavior: contain;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 80px;
-		background-color: color-mix(in srgb, var(--color-primary), transparent 50%);
-		border: none;
-		border-radius: 0;
-		border-bottom: var(--border-primary);
-		z-index: 1000;
-		align-items: center;
-		display: flex;
-		padding: 0 32px 0 16px;
-	}
-
-	.bullshit-flex-container {
-		display: flex;
-		height: 100%;
-		width: 100%;
-		position: absolute;
-		flex-direction: column;
-		z-index: -1;
-	}
-
-	.bullshit-flex-placeholder {
-		/* 100vh height */
-		height: calc(100vh - 162px);
-		width: 100%;
-	}
-
-	.bg-below-gradient {
-		width: 100%;
-		flex-grow: 1;
-		flex-shrink: 0;
-		background-color: var(--page-bg);
-		background-size: 100% 100%;
-		z-index: -1;
-	}
-
-	.left {
-		display: flex;
-		align-items: center;
-		flex-grow: 1;
-	}
-
-	.right {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
-</style>
+</main>
