@@ -44,9 +44,21 @@
 				<a href="/" class="px-5 py-3 transition hover:text-white">Docs</a>
 				<a href="/" class="px-5 py-3 transition hover:text-white">FAQ</a>
 			</div>
-			<div class="flex w-full flex-row items-center justify-end gap-8 text-[#A6A5A7]">
-				<CodeBranchOutline />
-				<DiscordSolid />
+			<div class="flex w-full flex-row items-center justify-end gap-4 text-[#A6A5A7]">
+				<a
+					class="p-2 transition hover:text-white"
+					href="https://git.suyu.dev/explore/organizations"
+					target="_blank"
+				>
+					<CodeBranchOutline />
+				</a>
+				<a
+					class="p-2 transition hover:text-white"
+					href="https://discord.gg/suyu"
+					target="_blank"
+				>
+					<DiscordSolid />
+				</a>
 				<a href="/account" class="button-sm">Sign in</a>
 			</div>
 		</nav>
