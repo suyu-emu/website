@@ -1,4 +1,64 @@
-/* Write your global styles here, in PostCSS syntax */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: "Roc Grotesk";
+	src: url("RocGroteskWideMedium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+html,
+body {
+	min-height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background: #131215;
+	color: #ffffff;
+	font-family: "DM Sans", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+	font-family: "Roc Grotesk", sans-serif;
+}
+
+::selection {
+	background: #eee;
+	color: #000;
+}
+
+.cta-button {
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+		radial-gradient(109.26% 109.26% at 49.83% 13.37%, #ffffff 0%, #babaca 100%);
+	color: black;
+	@apply flex w-fit shrink-0 select-none flex-row items-center justify-center gap-4 rounded-xl py-3 pl-7 pr-5 font-bold transition;
+}
+
+.button {
+	border: 2px solid #46424d;
+	@apply flex w-fit shrink-0 select-none flex-row items-center justify-center gap-4 rounded-xl py-3 pl-7 pr-5 font-bold transition;
+}
+
+.button:hover {
+	border: 2px solid transparent;
+	background: #c3c3cd;
+	color: black;
+}
+
+.button-sm {
+	border: 2px solid #46424d;
+	@apply flex w-fit shrink-0 select-none flex-row items-center justify-center gap-4 rounded-xl px-4 py-2 text-sm font-bold transition;
+}
+
+.button-sm:hover {
+	border: 2px solid transparent;
+	background: #c3c3cd;
+	color: black;
+}
