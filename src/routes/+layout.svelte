@@ -6,7 +6,7 @@
 	import { page } from "$app/stores";
 	import "$lib/css/index.css";
 	import { Button } from "flowbite-svelte";
-	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
+	import { CodeBranchOutline, DiscordSolid, UserCircleSolid } from "flowbite-svelte-icons";
 
 	const excludedRoutesNav = ["/mockup/boot", "/mockup/w11"];
 	const excludedRoutesBg = ["/mockup", "/mockup/w11"];
@@ -28,6 +28,11 @@
 			<a href="https://discord.gg/suyu" target="_blank">
 				<Button class="!p-2" pill={true}>
 					<DiscordSolid />
+				</Button>
+			</a>
+			<a href="/account">
+				<Button class="!p-2" pill={true}>
+					<UserCircleSolid />
 				</Button>
 			</a>
 		</div>

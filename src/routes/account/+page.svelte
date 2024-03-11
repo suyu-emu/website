@@ -3,6 +3,7 @@
 	import { SuyuAPI } from "$lib/client/api";
 	import type { CreateAccountResponse } from "$types/api";
 	import type { PageData } from "./$types";
+	import Room from "$components/Room.svelte";
 
 	export let data: PageData;
 	let base64Token: string;
@@ -48,11 +49,12 @@
 </script>
 
 <div class="panel-blur main-panel">
-	<h2>Account Settings</h2>
+	<h2>Online Services</h2>
 	<p>
 		{#if data?.token && data?.user && data.user.username}
 			<p>Username: {data.user.username}</p>
 			<p>Token: <code>{base64Token}</code></p>
+			<button class="danger" on:click={deleteAccount}>Delete Account</button>
 		{:else}
 			<p>
 				It appears you don't have an account; please register one to access suyu's online
@@ -64,20 +66,23 @@
 			</div>
 		{/if}
 	</p>
-	<div class="float-bottom-right">
-		<button class="danger" on:click={deleteAccount}>Delete Account</button>
+	<h2>Rooms</h2>
+	<div class="rooms">
+		{#each data.rooms as room}
+			<Room {room} />
+		{/each}
 	</div>
 </div>
 
 <style>
 	.main-panel {
 		position: fixed;
-		top: 50%;
 		left: 50%;
-		transform: translate(-50%, calc(-50% + 40px));
+		transform: translate(-50%);
+		margin-top: 60px;
 		width: calc(100% - 120px);
 		height: calc(100% - 240px);
-		max-height: 600px;
+		max-height: 1000px;
 		min-height: 400px;
 		max-width: 1000px;
 		padding: 28px 36px;
@@ -102,16 +107,10 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: pre;
+		width: fit-content;
 		max-width: 100%;
 		display: block;
 		margin-top: 4px;
-		margin-bottom: 4px;
-	}
-
-	.float-bottom-right {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		margin: 16px;
+		margin-bottom: 16px;
 	}
 </style>
