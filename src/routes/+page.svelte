@@ -90,7 +90,12 @@
 				</Dialog.Content>
 			</Dialog.Portal>
 		</Dialog.Root>
-		<a href="https://git.suyu.dev/explore/organizations" target="_blank" rel="noreferrer noopener" class="button text-[#8A8F98]">
+		<a
+			href="https://git.suyu.dev/explore/organizations"
+			target="_blank"
+			rel="noreferrer noopener"
+			class="button text-[#8A8F98]"
+		>
 			Contribute <svg
 				class=""
 				style="--icon-color:#8A8F98"
@@ -108,6 +113,7 @@
 		</a>
 	</div>
 </div>
+
 <div class="flex w-full flex-col lg:flex-row">
 	<div
 		class="flex w-full flex-shrink-0 flex-col gap-8 rounded-b-[2.25rem] bg-black p-12 lg:w-[35%]"
@@ -142,6 +148,63 @@
 				/>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div
+	class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#eee] p-8 text-black md:p-12"
+>
+	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
+		Built by and for the community
+	</h1>
+	<p class="max-w-[40rem] text-lg leading-relaxed text-[#4D4D4D]">
+		The future of suyu is shaped by you. New features are always being added, and our community
+		continually shapes the direction of the project.
+	</p>
+</div>
+
+<div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
+	<div class="relative w-full rounded-[2.25rem] bg-[#5451ff] p-12">
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
+		<p class="mt-2 text-lg leading-relaxed">
+			Join our Discord server to chat with 14,000+ suyu users and developers. Get the latest
+			updates and help with any issues you have.
+		</p>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+			class="absolute right-12 top-12 h-12 w-12"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="4"
+				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+			/>
+		</svg>
+	</div>
+	<div class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12">
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
+		<p class="mt-2 text-lg leading-relaxed">
+			GitLab is where all the magic of suyu happens. We're always looking for new contributors
+			to help us out, so feel free to check out our code.
+		</p>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+			class="absolute right-12 top-12 h-12 w-12"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="4"
+				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+			/>
+		</svg>
 	</div>
 </div>
 
