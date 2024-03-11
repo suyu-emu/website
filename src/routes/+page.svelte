@@ -91,7 +91,7 @@
 			</Dialog.Portal>
 		</Dialog.Root>
 		<a
-			href="https://git.suyu.dev/explore/organizations"
+			href="https://gitlab.com/suyu-emu/"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
@@ -164,7 +164,12 @@
 </div>
 
 <div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
-	<div class="relative w-full rounded-[2.25rem] bg-[#5451ff] p-12">
+	<a
+		href="https://discord.gg/suyu/"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="relative w-full rounded-[2.25rem] bg-[#5451ff] p-12"
+	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
 		<p class="mt-2 text-lg leading-relaxed">
 			Join our Discord server to chat with 14,000+ suyu users and developers. Get the latest
@@ -184,8 +189,13 @@
 				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
 			/>
 		</svg>
-	</div>
-	<div class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12">
+	</a>
+	<a
+		href="https://gitlab.com/suyu-emu/"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12"
+	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
 		<p class="mt-2 text-lg leading-relaxed">
 			GitLab is where all the magic of suyu happens. We're always looking for new contributors
@@ -205,7 +215,7 @@
 				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
 			/>
 		</svg>
-	</div>
+	</a>
 </div>
 
 <div data-spacer-element class="min-h-[400px]"></div>
