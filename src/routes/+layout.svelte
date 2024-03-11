@@ -33,7 +33,9 @@
 				: "mx-auto flex h-[120px] w-full max-w-[1300px] flex-row items-center justify-between px-8"}
 		>
 			<div class="flex w-full flex-row items-center justify-start gap-8">
-				<Logo size={28} />
+				<a href="/">
+					<Logo size={28} />
+				</a>
 			</div>
 			<div
 				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7]"
