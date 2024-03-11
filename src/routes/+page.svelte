@@ -1,3 +1,15 @@
+<script lang="ts">
+	import { XCircleOutline } from "flowbite-svelte-icons";
+	import { Dialog } from "radix-svelte";
+	import type { ResolvedProps } from "radix-svelte/internal/helpers";
+
+	let rootOpen: boolean;
+	let rootModal: boolean = true;
+	let portalContainer: HTMLElement | string;
+	let contentOpenAutoFocus: boolean = true;
+	let contentCloseAutoFocus: boolean = true;
+</script>
+
 <svelte:head>
 	<title>suyu - Open-source, non-profit Switch emulator</title>
 </svelte:head>
@@ -31,23 +43,54 @@
 		open-source, forever.
 	</p>
 	<div class="flex flex-row gap-4">
-		<div class="cta-button">
-			Download <svg
-				class=""
-				style="--icon-color:#000"
-				width="16"
-				height="16"
-				viewBox="0 0 16 16"
-				fill="#000"
-				role="img"
-				focusable="false"
-				aria-hidden="true"
-				><path
-					d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
-				></path></svg
-			>
-		</div>
-		<div class="button text-[#8A8F98]">
+		<Dialog.Root bind:modal={rootModal} bind:open={rootOpen}>
+			<Dialog.Trigger class="cta-button">
+				Download <svg
+					class=""
+					style="--icon-color:#000"
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="#000"
+					role="img"
+					focusable="false"
+					aria-hidden="true"
+					><path
+						d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
+					></path></svg
+				>
+			</Dialog.Trigger>
+			<Dialog.Portal>
+				<Dialog.Overlay
+					class="fixed inset-0 z-[9999] bg-black/80 data-[state=open]:animate-[overlayShow_555ms_cubic-bezier(.16,1,.3,1)]"
+				/>
+				<Dialog.Content
+					class="fixed left-[50%] top-[50%] z-[9999] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%]
+					translate-y-[-50%] rounded-md bg-white p-[25px] shadow-lg
+					focus:outline-none data-[state=open]:animate-[contentShow_555ms_cubic-bezier(.16,1,.3,1)]"
+					openAutoFocus={contentOpenAutoFocus}
+					closeAutoFocus={contentCloseAutoFocus}
+				>
+					<Dialog.Title class="m-0 text-2xl font-medium text-black">
+						suyu isn't available for download yet.</Dialog.Title
+					>
+					<Dialog.Description class="mb-5 mt-[10px] leading-normal text-zinc-600">
+						Official downloads for suyu aren't available yet, but you're welcome to
+						compile it yourself from the source code. If you're not comfortable with
+						that, we recommend you wait for the official release.
+					</Dialog.Description>
+
+					<Dialog.Close
+						class="absolute right-[10px] top-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center
+					justify-center rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black"
+						aria-label="Close"
+					>
+						<XCircleOutline />
+					</Dialog.Close>
+				</Dialog.Content>
+			</Dialog.Portal>
+		</Dialog.Root>
+		<a href="https://git.suyu.dev/explore/organizations" target="_blank" rel="noreferrer noopener" class="button text-[#8A8F98]">
 			Contribute <svg
 				class=""
 				style="--icon-color:#8A8F98"
@@ -62,7 +105,7 @@
 					d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
 				></path></svg
 			>
-		</div>
+		</a>
 	</div>
 </div>
 <div class="flex w-full flex-col lg:flex-row">

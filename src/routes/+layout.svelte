@@ -48,6 +48,7 @@
 				<a
 					class="p-2 transition hover:text-white"
 					href="https://git.suyu.dev/explore/organizations"
+					rel="noreferrer noopener"
 					target="_blank"
 				>
 					<CodeBranchOutline />
@@ -55,6 +56,7 @@
 				<a
 					class="p-2 transition hover:text-white"
 					href="https://discord.gg/suyu"
+					rel="noreferrer noopener"
 					target="_blank"
 				>
 					<DiscordSolid />
