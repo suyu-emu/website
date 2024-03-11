@@ -1,6 +1,6 @@
 import { userRepo } from "$lib/server/repo";
 import type { SuyuUser } from "$lib/server/schema";
-import { PUBLIC_KEY } from "$lib/server/secrets";
+import { PUBLIC_KEY } from "$lib/server/secrets/secrets.json";
 import type { IJwtData } from "$types/auth";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";

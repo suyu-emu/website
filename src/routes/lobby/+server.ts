@@ -1,7 +1,7 @@
 import { Room, RoomManager } from "$lib/server/class/Room";
 import { userRepo } from "$lib/server/repo/index.js";
 import { SuyuUser } from "$lib/server/schema";
-import { PUBLIC_KEY } from "$lib/server/secrets/index.js";
+import { PUBLIC_KEY } from "$lib/server/secrets/secrets.json";
 import { json } from "$lib/server/util";
 import type { IJwtData } from "$types/auth.js";
 import type { IRoom, LobbyResponse } from "$types/rooms";
