@@ -39,7 +39,7 @@
 		suyu is the open-source, non-profit Switch emulator
 	</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
-		suyu is a C++ based Switch emulator with a focus on compatibility. Completely free and
+		suyu is a familiar C++ based Switch emulator with a focus on compatibility. Completely free and
 		open-source, forever.
 	</p>
 	<div class="flex flex-row gap-4">
