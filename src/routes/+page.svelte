@@ -214,7 +214,7 @@
 		href="https://gitlab.com/suyu-emu/"
 		target="_blank"
 		rel="noreferrer noopener"
-		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12"
+		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
 		<p class="mt-2 text-lg leading-relaxed">
