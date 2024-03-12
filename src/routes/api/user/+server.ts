@@ -39,6 +39,12 @@ export async function POST({ request, getClientAddress }) {
 			error: "missing fields",
 		});
 	}
+	if (body.username.length < 3 || body.username.length > 24) {
+		return json<CreateAccountResponse>({
+			success: false,
+			error: "invalid username",
+		});
+	}
 	if (!validator.isEmail(body.email)) {
 		return json<CreateAccountResponse>({
 			success: false,
