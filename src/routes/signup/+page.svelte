@@ -61,8 +61,20 @@
 					>Contact us</a
 				>.
 			</p>
-			<input bind:value={emailInput} class="input" type="text" placeholder="Recovery Email" />
-			<input bind:value={usernameInput} class="input" type="text" placeholder="Username" />
+			<input
+				bind:value={emailInput}
+				maxlength="128"
+				class="input"
+				type="text"
+				placeholder="Recovery Email"
+			/>
+			<input
+				bind:value={usernameInput}
+				maxlength="24"
+				class="input"
+				type="text"
+				placeholder="Username"
+			/>
 			<div class="h-[78px]">
 				<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
 			</div>
