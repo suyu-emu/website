@@ -9,6 +9,8 @@ export interface GenericFailureResponse {
 
 export interface CreateAccountRequest {
 	username: string;
+	email: string;
+	captchaToken: string;
 }
 
 export interface CreateAccountResponseSuccess {

@@ -3,13 +3,33 @@
 	import { onMount, onDestroy } from "svelte";
 	import Logo from "../components/LogoWithTextHorizontal.svelte";
 	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
+	import { browser } from "$app/environment";
 
 	let scrolled = false;
-
+	let cookies: {
+		[key: string]: string;
+	} = {};
+	if (browser) {
+		cookies = Object.fromEntries(
+			document.cookie.split("; ").map((c) => {
+				const [key, value] = c.split("=");
+				return [key, value];
+			}),
+		);
+	}
 	onMount(() => {
 		const handleScroll = () => {
 			scrolled = window.scrollY > 0;
 		};
+
+		handleScroll(); // we can't guarantee that the page starts at the top
+
+		cookies = Object.fromEntries(
+			document.cookie.split("; ").map((c) => {
+				const [key, value] = c.split("=");
+				return [key, value];
+			}),
+		);
 
 		window.addEventListener("scroll", handleScroll);
 
@@ -59,7 +79,9 @@
 				>
 					<DiscordSolid />
 				</a>
-				<a href="/account" class="button-sm">Sign in</a>
+				<a href={cookies.token ? "/account" : "/signup"} class="button-sm"
+					>{cookies.token ? "Account" : "Sign up"}</a
+				>
 			</div>
 		</nav>
 	</header>

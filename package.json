@@ -48,12 +48,16 @@
 		"@sveltejs/enhanced-img": "^0.1.8",
 		"better-sqlite3": "^9.4.3",
 		"cookie": "^0.6.0",
+		"email-validator": "^2.0.4",
+		"hcaptcha": "^0.1.1",
 		"jsonwebtoken": "^9.0.2",
 		"reflect-metadata": "^0.2.1",
 		"sequelize": "^6.37.1",
 		"sqlite3": "^5.1.7",
+		"svelte-hcaptcha": "^0.1.1",
 		"typeorm": "^0.3.20",
 		"uuid": "^9.0.1",
+		"verify-hcaptcha": "^1.0.0",
 		"vite-plugin-vsharp": "^1.7.3",
 		"ws": "^8.16.0"
 	}
