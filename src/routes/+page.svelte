@@ -60,13 +60,13 @@
 		/>
 	</svg>
 	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
-		suyu is the open-source, non-profit Switch emulator
+		suyu is an open-source, non-profit Switch emulator
 	</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
 		suyu is a familiar C++ based Switch emulator with a focus on compatibility. Completely free
 		and open-source, forever.
 	</p>
-	<div class="flex flex-row gap-4">
+	<div class="flex flex-col gap-4 md:flex-row">
 		<Dialog.Root bind:modal={rootModal} bind:open={rootOpen}>
 			<Dialog.Trigger class="cta-button">
 				Download <svg
