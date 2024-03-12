@@ -12,6 +12,10 @@ import type {
 } from "$types/api";
 import crypto from "crypto";
 import { promisify } from "util";
+import { verify } from "hcaptcha";
+import { PUBLIC_SITE_KEY } from "$env/static/public";
+import { HCAPTCHA_KEY } from "$env/static/private";
+import validator from "validator";
 
 const randomBytes = promisify(crypto.randomBytes);
 
@@ -27,24 +31,42 @@ async function genKey(username: string) {
 	return apiKey;
 }
 
-export async function POST({ request }) {
+export async function POST({ request, getClientAddress }) {
 	const body: CreateAccountRequest = await request.json();
-	if (!body.username) {
+	if (!body.username || !body.email || !body.captchaToken) {
 		return json<CreateAccountResponse>({
 			success: false,
-			error: "username is required",
+			error: "missing fields",
+		});
+	}
+	if (!validator.isEmail(body.email)) {
+		return json<CreateAccountResponse>({
+			success: false,
+			error: "invalid email",
+		});
+	}
+	const res = await verify(HCAPTCHA_KEY, body.captchaToken, getClientAddress(), PUBLIC_SITE_KEY);
+	if (!res.success) {
+		return json<CreateAccountResponse>({
+			success: false,
+			error: "missing fields!",
 		});
 	}
 	// check if user exists
 	const user = await userRepo.findOne({
-		where: {
-			username: body.username,
-		},
+		where: [
+			{
+				username: body.username,
+			},
+			{
+				email: body.email,
+			},
+		],
 	});
 	if (user) {
 		return json<CreateAccountResponse>({
 			success: false,
-			error: "username already exists",
+			error: "user already exists",
 		});
 	}
 	// the api key can only be 80 characters total, including the username and colon
@@ -55,6 +77,7 @@ export async function POST({ request }) {
 		displayName: body.username,
 		roles: serializeRoles(["user"]),
 		apiKey: key,
+		email: body.email,
 	});
 	await userRepo.save(createdUser);
 	return json<CreateAccountResponse>({

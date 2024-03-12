@@ -23,6 +23,12 @@ body {
 	font-family: "DM Sans", sans-serif;
 }
 
+html {
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+	scrollbar-gutter: stable;
+}
+
 h1,
 h2,
 h3 {
@@ -39,6 +45,17 @@ h3 {
 		radial-gradient(109.26% 109.26% at 49.83% 13.37%, #ffffff 0%, #babaca 100%);
 	color: black;
 	@apply flex w-fit shrink-0 select-none flex-row items-center justify-center gap-4 rounded-xl py-3 pl-7 pr-5 font-bold transition;
+}
+
+.button,
+.cta-button {
+	padding: 0.75rem 1.5rem;
+}
+
+.button:disabled,
+.cta-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .button {
@@ -61,4 +78,20 @@ h3 {
 	border: 2px solid transparent;
 	background: #c3c3cd;
 	color: black;
+}
+
+.input {
+	border: 2px solid #46424d;
+	/* @apply w-full rounded-xl px-4 py-3 text-sm font-bold transition; */
+	width: 100%;
+	border-radius: 0.75rem;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	font-weight: 600;
+	transition: all 0.2s;
+	background-color: transparent;
+}
+
+.link {
+	@apply text-blue-300 underline transition-all ease-out hover:text-blue-100;
 }

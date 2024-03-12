@@ -22,4 +22,9 @@ export class SuyuUser extends BaseEntity {
 		select: false,
 	})
 	apiKey: string;
+
+	@Column("text", {
+		select: false,
+	})
+	email: string;
 }
