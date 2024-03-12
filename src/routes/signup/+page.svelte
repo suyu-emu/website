@@ -5,6 +5,11 @@
 	import { PUBLIC_SITE_KEY } from "$env/static/public";
 	import { SuyuAPI } from "$lib/client/api";
 	import type { PageData } from "./$types";
+	import type { Writable } from "svelte/store";
+	import { getContext } from "svelte";
+
+	const token = getContext<Writable<string>>("token");
+	if ($token) goto("/account");
 
 	let usernameInput = "";
 	let emailInput = "";
@@ -28,6 +33,7 @@
 		}
 		// set "token" cookie
 		document.cookie = `token=${res.token}; path=/; max-age=31536000; samesite=strict`;
+		$token = res.token;
 		goto("/account");
 	}
 
@@ -57,7 +63,9 @@
 			</p>
 			<input bind:value={emailInput} class="input" type="text" placeholder="Recovery Email" />
 			<input bind:value={usernameInput} class="input" type="text" placeholder="Username" />
-			<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
+			<div class="h-[78px]">
+				<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
+			</div>
 			<button {disabled} on:click={signUp} class="cta-button mt-2">Sign up</button>
 		</div>
 	</div>
