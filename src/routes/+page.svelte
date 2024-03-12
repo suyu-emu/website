@@ -1,8 +1,9 @@
 <script lang="ts">
 	import embedImage from "$assets/branding/suyu__Embed-Image.png";
-	import { ModalManager } from "$lib/util/modal";
 	import type { PageData } from "./$types";
 	import suyuWindow from "$assets/mockups/suyuwindow.png";
+	import { XCircleOutline } from "flowbite-svelte-icons";
+	import { Dialog } from "radix-svelte";
 
 	export let data: PageData;
 	$: memberCount = parseFloat(data.memberCount.toPrecision(2));
@@ -15,13 +16,10 @@
 		image: embedImage,
 	};
 
-	function openModal() {
-		ModalManager.notify({
-			title: "suyu isn't available for download yet.",
-			message:
-				"Official downloads for suyu aren't available yet, but you're welcome to compile it yourself from the source code. If you're not comfortable with that, we recommend you wait for the official release.",
-		});
-	}
+	let rootOpen: boolean;
+	let rootModal: boolean = true;
+	let contentOpenAutoFocus: boolean = true;
+	let contentCloseAutoFocus: boolean = true;
 </script>
 
 <svelte:head>
@@ -69,25 +67,24 @@
 		and open-source, forever.
 	</p>
 	<div class="flex flex-row gap-4">
-		<!-- <Dialog.Root bind:modal={rootModal} bind:open={rootOpen}> -->
-		<button on:click={openModal} class="cta-button">
-			Download <svg
-				class=""
-				style="--icon-color:#000"
-				width="16"
-				height="16"
-				viewBox="0 0 16 16"
-				fill="#000"
-				role="img"
-				focusable="false"
-				aria-hidden="true"
-				><path
-					d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
-				></path></svg
-			>
-		</button>
-		<!-- </Dialog.Trigger> -->
-		<!-- <Dialog.Portal>
+		<Dialog.Root bind:modal={rootModal} bind:open={rootOpen}>
+			<Dialog.Trigger class="cta-button">
+				Download <svg
+					class=""
+					style="--icon-color:#000"
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="#000"
+					role="img"
+					focusable="false"
+					aria-hidden="true"
+					><path
+						d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
+					></path></svg
+				>
+			</Dialog.Trigger>
+			<Dialog.Portal>
 				<Dialog.Overlay
 					class="fixed inset-0 z-[9999] bg-black/80 data-[state=open]:animate-[overlayShow_555ms_cubic-bezier(.16,1,.3,1)]"
 				/>
@@ -116,7 +113,7 @@
 					</Dialog.Close>
 				</Dialog.Content>
 			</Dialog.Portal>
-		</Dialog.Root> -->
+		</Dialog.Root>
 		<a
 			href="https://gitlab.com/suyu-emu/"
 			target="_blank"

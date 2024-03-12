@@ -4,7 +4,6 @@
 	import Logo from "../components/LogoWithTextHorizontal.svelte";
 	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 	import { browser } from "$app/environment";
-	import ModalManager from "$components/ModalRoot.svelte";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
 	import type { PageData } from "./$types";
@@ -52,11 +51,11 @@
 
 <main class="min-h-full w-full">
 	<header
-		style="transition: 180ms ease;"
+		style="transition: 180ms ease border;"
 		class={`${
 			scrolled
-				? "fixed top-0 z-40 w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
-				: "fixed top-0 z-40 w-full border-b-0 border-b-[transparent]"
+				? "fixed top-0 z-[9999] w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
+				: "fixed top-0 z-[9999] w-full border-b-0 border-b-[transparent]"
 		} pl-[calc(100vw-100%)]`}
 	>
 		<nav
@@ -104,5 +103,3 @@
 		<slot />
 	</div>
 </main>
-
-<ModalManager />
