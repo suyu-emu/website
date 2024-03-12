@@ -4,7 +4,6 @@
 	import { getContext } from "svelte";
 	import type { PageData } from "./$types";
 	import type { Writable } from "svelte/store";
-	import { ModalManager } from "$lib/util/modal";
 
 	const token = getContext<Writable<string>>("token");
 
