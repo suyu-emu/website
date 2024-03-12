@@ -4,6 +4,7 @@
 	import Logo from "../components/LogoWithTextHorizontal.svelte";
 	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 	import { browser } from "$app/environment";
+	import ModalManager from "$components/ModalRoot.svelte";
 
 	let scrolled = false;
 	let cookies: {
@@ -43,8 +44,8 @@
 	<header
 		style="transition: 180ms ease;"
 		class={scrolled
-			? "fixed top-0 z-[9999] w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
-			: "fixed top-0 z-[9999] w-full border-b-0 border-b-[transparent]"}
+			? "fixed top-0 z-40 w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
+			: "fixed top-0 z-40 w-full border-b-0 border-b-[transparent]"}
 	>
 		<nav
 			style="transition: 180ms ease;"
@@ -91,3 +92,5 @@
 		<slot />
 	</div>
 </main>
+
+<ModalManager />
