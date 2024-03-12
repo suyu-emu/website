@@ -43,9 +43,11 @@
 <main class="min-h-full w-full">
 	<header
 		style="transition: 180ms ease;"
-		class={scrolled
-			? "fixed top-0 z-40 w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
-			: "fixed top-0 z-40 w-full border-b-0 border-b-[transparent]"}
+		class={`${
+			scrolled
+				? "fixed top-0 z-40 w-full border-b-2 border-b-[#ffffff11] bg-[#131215d0]"
+				: "fixed top-0 z-40 w-full border-b-0 border-b-[transparent]"
+		} pl-[calc(100vw-100%)]`}
 	>
 		<nav
 			style="transition: 180ms ease;"
