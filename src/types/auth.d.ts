@@ -5,4 +5,5 @@ export interface IJwtData {
 	avatarUrl: string;
 	roles: string;
 	iat: number;
+	apiKey: string;
 }

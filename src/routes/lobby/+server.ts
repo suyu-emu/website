@@ -3,6 +3,7 @@ import { userRepo } from "$lib/server/repo/index.js";
 import { SuyuUser } from "$lib/server/schema";
 import { PUBLIC_KEY } from "$lib/server/secrets/secrets.json";
 import { json } from "$lib/server/util";
+import { useAuth } from "$lib/util/api/index.js";
 import type { IJwtData } from "$types/auth.js";
 import type { IRoom, LobbyResponse } from "$types/rooms";
 import jwt from "jsonwebtoken";
@@ -37,11 +38,11 @@ export async function POST({ request, getClientAddress }) {
 			return new Response(null, { status: 400 });
 		}
 	}
-	const token = request.headers.get("authorization")?.replace("Bearer ", "");
+	const token = request.headers.get("authorization");
 	if (!token) return new Response(null, { status: 401 });
 	// TODO: jwt utils which type and validate automatically
-	const data = jwt.verify(token, Buffer.from(PUBLIC_KEY), { algorithms: ["RS256"] }) as IJwtData;
-	const user = await userRepo.findOne({ where: { id: data.id } });
+	const user = await useAuth(token);
+	console.log(user);
 	if (!user) return new Response(null, { status: 401 });
 	const room = RoomManager.createRoom({
 		name: body.name,

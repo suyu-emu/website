@@ -1,18 +1,12 @@
 <script lang="ts">
-	// import { XCircleOutline } from "flowbite-svelte-icons";
-	// import { Dialog } from "radix-svelte";
-	// import type { ResolvedProps } from "radix-svelte/internal/helpers";
-
 	import embedImage from "$assets/branding/suyu__Embed-Image.png";
-	import suyuWindow from "$assets/mockups/suyuwindow.png";
 	import { ModalManager } from "$lib/util/modal";
+	import type { PageData } from "./$types";
+	import suyuWindow from "$assets/mockups/suyuwindow.png";
 
-	// let rootOpen: boolean;
-	// let rootModal: boolean = true;
-	// let portalContainer: HTMLElement | string;
-	// let contentOpenAutoFocus: boolean = true;
-	// let contentCloseAutoFocus: boolean = true;
-
+	export let data: PageData;
+	$: memberCount = parseFloat(data.memberCount.toPrecision(2));
+	$: contributors = parseFloat(data.roleMembers["1214817156420862012"].toPrecision(2));
 	let metadata = {
 		url: "https://suyu.dev",
 		title: "suyu - Open-source, non-profit Switch emulator",
@@ -153,15 +147,51 @@
 	>
 		<h1 class="text-[48px] leading-[0.9]">By the numbers</h1>
 		<div class="flex flex-col gap-0">
-			<h2 class="text-[40px] leading-[1.1]">30+</h2>
+			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
+				<!-- <AnimatedCounter
+					values={Array.from({ length: contributors + 1 }, (_, i) => i.toString())}
+					startImmediately={false}
+					direction="up"
+					loop={false}
+					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
+					initialValue={(contributors - 1).toString()}
+				/>+ -->
+				{contributors}+
+			</h2>
 			<div class="text-[#A6A5A7]">dedicated contributors</div>
 		</div>
 		<div class="flex flex-col gap-0">
-			<h2 class="text-[40px] leading-[1.1]">4000+</h2>
+			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
+				<!-- <AnimatedCounter
+					values={// array from 0 - 4000 with steps of 100
+					Array.from({ length: 41 }, (_, i) => (i * 100).toString())}
+					startImmediately={false}
+					direction="up"
+					loop={false}
+					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
+					initialValue={"3900"}
+				/>+ -->
+				4000+
+			</h2>
 			<div class="text-[#A6A5A7]">supported games</div>
 		</div>
 		<div class="flex flex-col gap-0">
-			<h2 class="text-[40px] leading-[1.1]">14000+</h2>
+			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
+				<!-- <AnimatedCounter
+					values={Array.from(
+						{
+							length: memberCount / 100 + 1,
+						},
+						(_, i) => (i * 100).toString(),
+					)}
+					startImmediately={false}
+					direction="up"
+					loop={false}
+					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
+					initialValue={(memberCount - 100).toString()}
+				/>+ -->
+				{memberCount}+
+			</h2>
 			<div class="text-[#A6A5A7]">members on Discord</div>
 		</div>
 	</div>
@@ -251,4 +281,4 @@
 	</a>
 </div>
 
-<div data-spacer-element class="min-h-[400px]"></div>
+<div data-spacer-element class="min-h-[180px]"></div>

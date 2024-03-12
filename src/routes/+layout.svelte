@@ -5,11 +5,17 @@
 	import { CodeBranchOutline, DiscordSolid, DownloadOutline } from "flowbite-svelte-icons";
 	import { browser } from "$app/environment";
 	import ModalManager from "$components/ModalRoot.svelte";
+	import { writable } from "svelte/store";
+	import { setContext } from "svelte";
+	import type { PageData } from "./$types";
+
+	const token = writable("");
 
 	let scrolled = false;
 	let cookies: {
 		[key: string]: string;
 	} = {};
+
 	if (browser) {
 		cookies = Object.fromEntries(
 			document.cookie.split("; ").map((c) => {
@@ -17,7 +23,11 @@
 				return [key, value];
 			}),
 		);
+		if (cookies.token) {
+			$token = cookies.token;
+		}
 	}
+	setContext("token", token);
 	onMount(() => {
 		const handleScroll = () => {
 			scrolled = window.scrollY > 0;
@@ -63,9 +73,9 @@
 			<div
 				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7]"
 			>
-				<a href="/" class="px-5 py-3 transition hover:text-white">Blog</a>
+				<!-- <a href="/" class="px-5 py-3 transition hover:text-white">Blog</a>
 				<a href="/" class="px-5 py-3 transition hover:text-white">Docs</a>
-				<a href="/" class="px-5 py-3 transition hover:text-white">FAQ</a>
+				<a href="/" class="px-5 py-3 transition hover:text-white">FAQ</a> -->
 			</div>
 			<div class="flex w-full flex-row items-center justify-end gap-4 text-[#A6A5A7]">
 				<a
@@ -84,8 +94,8 @@
 				>
 					<DiscordSolid />
 				</a>
-				<a href={cookies.token ? "/account" : "/signup"} class="button-sm"
-					>{cookies.token ? "Account" : "Sign up"}</a
+				<a href={$token ? "/account" : "/signup"} class="button-sm"
+					>{$token ? "Account" : "Sign up"}</a
 				>
 			</div>
 		</nav>

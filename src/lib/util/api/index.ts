@@ -20,7 +20,7 @@ export async function useAuth(request: Request | string): Promise<SuyuUser | nul
 		}) as IJwtData;
 		const user = await userRepo.findOne({
 			where: {
-				id: decoded.id,
+				apiKey: decoded.apiKey,
 			},
 		});
 		return user;
