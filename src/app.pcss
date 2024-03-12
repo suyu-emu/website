@@ -40,6 +40,10 @@ h3 {
 	color: #000;
 }
 
+:focus-visible {
+	@apply outline-none ring-2 ring-sky-400;
+}
+
 .cta-button {
 	background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
 		radial-gradient(109.26% 109.26% at 49.83% 13.37%, #ffffff 0%, #babaca 100%);
@@ -94,4 +98,24 @@ h3 {
 
 .link {
 	@apply text-blue-300 underline transition-all ease-out hover:text-blue-100;
+}
+
+@keyframes contentShow {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -48%) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
+@keyframes overlayShow {
+	0% {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

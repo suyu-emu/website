@@ -1,5 +1,40 @@
+<script lang="ts">
+	import { XCircleOutline } from "flowbite-svelte-icons";
+	import { Dialog } from "radix-svelte";
+	import type { ResolvedProps } from "radix-svelte/internal/helpers";
+
+	import embedImage from "$assets/branding/suyu__Embed-Image.png";
+	import suyuWindow from "$assets/mockups/suyuwindow.png";
+
+	let rootOpen: boolean;
+	let rootModal: boolean = true;
+	let portalContainer: HTMLElement | string;
+	let contentOpenAutoFocus: boolean = true;
+	let contentCloseAutoFocus: boolean = true;
+
+	let metadata = {
+		url: "https://suyu.dev",
+		title: "suyu - Open-source, non-profit Switch emulator",
+		description:
+			"suyu is a familiar C++ based Nintendo Switch emulator with a focus on compatibility. Completely free and open-source, forever. Download it here.",
+		image: embedImage,
+	};
+</script>
+
 <svelte:head>
-	<title>suyu - Open-source, non-profit Switch emulator</title>
+	<title>{metadata.title}</title>
+	<meta name="description" content={metadata.description} />
+
+	<meta property="og:url" content={metadata.url} />
+	<meta property="og:title" content={metadata.title} />
+	<meta property="og:description" content={metadata.description} />
+	<meta property="og:image" content={metadata.image} />
+
+	<meta name="twitter:url" content={metadata.url} />
+	<meta name="twitter:title" content={metadata.title} />
+	<meta name="twitter:description" content={metadata.description} />
+	<meta name="twitter:image" content={metadata.image} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div
@@ -27,27 +62,63 @@
 		suyu is the open-source, non-profit Switch emulator
 	</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
-		suyu is a C++ based Switch emulator with a focus on compatibility. Completely free and
-		open-source, forever.
+		suyu is a familiar C++ based Switch emulator with a focus on compatibility. Completely free
+		and open-source, forever.
 	</p>
 	<div class="flex flex-row gap-4">
-		<button class="cta-button">
-			Download <svg
-				class=""
-				style="--icon-color:#000"
-				width="16"
-				height="16"
-				viewBox="0 0 16 16"
-				fill="#000"
-				role="img"
-				focusable="false"
-				aria-hidden="true"
-				><path
-					d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
-				></path></svg
-			>
-		</button>
-		<div class="button text-[#8A8F98]">
+		<Dialog.Root bind:modal={rootModal} bind:open={rootOpen}>
+			<Dialog.Trigger class="cta-button">
+				Download <svg
+					class=""
+					style="--icon-color:#000"
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="#000"
+					role="img"
+					focusable="false"
+					aria-hidden="true"
+					><path
+						d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
+					></path></svg
+				>
+			</Dialog.Trigger>
+			<Dialog.Portal>
+				<Dialog.Overlay
+					class="fixed inset-0 z-[9999] bg-black/80 data-[state=open]:animate-[overlayShow_555ms_cubic-bezier(.16,1,.3,1)]"
+				/>
+				<Dialog.Content
+					class="fixed left-[50%] top-[50%] z-[9999] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%]
+					translate-y-[-50%] rounded-md bg-white p-[25px] shadow-lg
+					focus:outline-none data-[state=open]:animate-[contentShow_555ms_cubic-bezier(.16,1,.3,1)]"
+					openAutoFocus={contentOpenAutoFocus}
+					closeAutoFocus={contentCloseAutoFocus}
+				>
+					<Dialog.Title class="m-0 text-2xl font-medium text-black">
+						suyu isn't available for download yet.</Dialog.Title
+					>
+					<Dialog.Description class="mb-5 mt-[10px] leading-normal text-zinc-600">
+						Official downloads for suyu aren't available yet, but you're welcome to
+						compile it yourself from the source code. If you're not comfortable with
+						that, we recommend you wait for the official release.
+					</Dialog.Description>
+
+					<Dialog.Close
+						class="absolute right-[10px] top-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center
+					justify-center rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black"
+						aria-label="Close"
+					>
+						<XCircleOutline />
+					</Dialog.Close>
+				</Dialog.Content>
+			</Dialog.Portal>
+		</Dialog.Root>
+		<a
+			href="https://gitlab.com/suyu-emu/"
+			target="_blank"
+			rel="noreferrer noopener"
+			class="button text-[#8A8F98]"
+		>
 			Contribute <svg
 				class=""
 				style="--icon-color:#8A8F98"
@@ -62,9 +133,10 @@
 					d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
 				></path></svg
 			>
-		</div>
+		</a>
 	</div>
 </div>
+
 <div class="flex w-full flex-col lg:flex-row">
 	<div
 		class="flex w-full flex-shrink-0 flex-col gap-8 rounded-b-[2.25rem] bg-black p-12 lg:w-[35%]"
@@ -95,11 +167,78 @@
 					alt=""
 					decoding="async"
 					loading="lazy"
-					src="/img/bettercrophero.png"
+					src={suyuWindow}
 				/>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div
+	class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#eee] p-8 text-black md:p-12"
+>
+	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
+		Built by and for the community
+	</h1>
+	<p class="max-w-[40rem] text-lg leading-relaxed text-[#4D4D4D]">
+		The future of suyu is shaped by you. New features are always being added, and our community
+		continually shapes the direction of the project.
+	</p>
+</div>
+
+<div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
+	<a
+		href="https://discord.gg/suyu/"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="relative w-full rounded-[2.25rem] bg-[#5451ff] p-12"
+	>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
+		<p class="mt-2 text-lg leading-relaxed">
+			Join our Discord server to chat with 14,000+ suyu users and developers. Get the latest
+			updates and help with any issues you have.
+		</p>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+			class="absolute right-12 top-12 h-12 w-12"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="4"
+				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+			/>
+		</svg>
+	</a>
+	<a
+		href="https://gitlab.com/suyu-emu/"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
+	>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
+		<p class="mt-2 text-lg leading-relaxed">
+			GitLab is where all the magic of suyu happens. We're always looking for new contributors
+			to help us out, so feel free to check out our code.
+		</p>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+			class="absolute right-12 top-12 h-12 w-12"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="4"
+				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+			/>
+		</svg>
+	</a>
 </div>
 
 <div data-spacer-element class="min-h-[400px]"></div>
