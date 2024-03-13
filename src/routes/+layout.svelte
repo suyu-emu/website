@@ -282,10 +282,11 @@
 						aria-label={dropdownOpen ? "Close navigation" : "Open navigation"}
 						aria-expanded={dropdownOpen}
 						on:click={toggleDropdown}
+						class="-mr-4 p-4"
 					>
 						<div
 							style="transition: 180ms; transition-property: opacity transform;"
-							class={`absolute right-0 ${dropdownOpen ? "rotate-45 opacity-0" : "opacity-1"}`}
+							class={`absolute ${dropdownOpen ? "rotate-45 opacity-0" : "opacity-1"}`}
 						>
 							<BarsSolid />
 						</div>
