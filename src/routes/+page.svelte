@@ -8,6 +8,7 @@
 	export let data: PageData;
 	$: memberCount = parseFloat(data.memberCount.toPrecision(2));
 	$: contributors = parseFloat(data.roleMembers["1214817156420862012"].toPrecision(2));
+	$: starCount = data.starCount;
 	let metadata = {
 		url: "https://suyu.dev",
 		title: "suyu - Open-source, non-profit Switch emulator",
@@ -156,6 +157,12 @@
 				{contributors}+
 			</h2>
 			<div class="text-[#A6A5A7]">dedicated contributors</div>
+		</div>
+		<div class="flex flex-col gap-0">
+			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
+				{starCount}+
+			</h2>
+			<div class="text-[#A6A5A7]">gitlab Stars</div>
 		</div>
 		<div class="flex flex-col gap-0">
 			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
