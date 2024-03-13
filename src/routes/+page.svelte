@@ -162,7 +162,7 @@
 			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
 				{starCount}+
 			</h2>
-			<div class="text-[#A6A5A7]">gitlab Stars</div>
+			<div class="text-[#A6A5A7]">Gitlab stars</div>
 		</div>
 		<div class="flex flex-col gap-0">
 			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
