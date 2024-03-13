@@ -59,6 +59,7 @@
 		"sequelize": "^6.37.1",
 		"sqlite3": "^5.1.7",
 		"svelte-countup": "^0.2.6",
+		"svelte-markdown": "^0.4.1",
 		"typeorm": "^0.3.20",
 		"uuid": "^9.0.1",
 		"verify-hcaptcha": "^1.0.0",
