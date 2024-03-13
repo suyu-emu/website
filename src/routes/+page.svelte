@@ -278,4 +278,70 @@
 	</a>
 </div>
 
+<div
+	class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-black p-8 md:p-12"
+>
+	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
+		we’re passionate about preserving games.
+	</h1>
+	<p class="max-w-[40rem] text-lg leading-relaxed text-[#A6A5A7]">
+		We’re developing suyu as a tool to prevent Switch games from becoming lost media, so we’re
+		taking care to prevent dissolution from outside influences.
+	</p>
+	<div class="flex flex-col gap-4">
+		<div class="flex flex-row items-center gap-2">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="h-6 w-6"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+			</svg>
+			<p>suyu is community-run.</p>
+		</div>
+		<div class="flex flex-row items-center gap-2">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="h-6 w-6"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+			</svg>
+			<p>suyu is completely free. There’s no option to monetarily support the project.</p>
+		</div>
+		<div class="flex flex-row items-center gap-2">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="h-6 w-6"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+			</svg>
+			<p>suyu exists solely as an effort of hardware preservation and research.</p>
+		</div>
+		<div class="flex flex-row items-center gap-2">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="h-6 w-6"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+			</svg>
+			<p>suyu does not condone nor facilitate piracy or intellectual property theft.</p>
+		</div>
+	</div>
+</div>
+
 <div data-spacer-element class="min-h-[180px]"></div>
