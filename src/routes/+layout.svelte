@@ -6,6 +6,11 @@
 	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
+	import type { TransitionConfig } from "svelte/transition";
+	import type { PageData } from "./$types";
+	import { bounceOut } from "svelte/easing";
+
+	export let data: PageData;
 
 	// TODO: refactor
 	interface NavItem {
@@ -38,6 +43,87 @@
 	const token = writable("");
 	const transition =
 		"linear(0,0.006,0.025 2.8%,0.101 6.1%,0.539 18.9%,0.721 25.3%,0.849 31.5%,0.937 38.1%,0.968 41.8%,0.991 45.7%,1.006 50.1%,1.015 55%,1.017 63.9%,1.001)";
+
+	function transitionIn(node: HTMLElement, { duration = 360 }: TransitionConfig) {
+		const UA = navigator.userAgent;
+		const ff = UA.indexOf("Firefox") > -1;
+		if (!dropdownCloseFinished) {
+			node.animate(
+				[
+					{
+						top: "160px",
+						opacity: "0",
+						filter: ff ? "" : "blur(20px)",
+					},
+					{
+						top: "0",
+						opacity: "1",
+						filter: ff ? "" : "blur(0px)",
+					},
+				],
+				{
+					easing: transition,
+					duration,
+				},
+			);
+
+			return {
+				duration: 0,
+			};
+		}
+		// FUCK YOUR DEFAULT SYSTEM, SVELTEKIT!!!
+		node.animate(
+			[
+				{
+					top: "-240px",
+					opacity: "0",
+					filter: ff ? "" : "blur(20px)",
+				},
+				{
+					top: "0",
+					opacity: "1",
+					filter: ff ? "" : "blur(0px)",
+				},
+			],
+			{
+				easing: transition,
+				duration,
+			},
+		);
+		return {
+			duration,
+		};
+	}
+
+	function transitionOut(node: HTMLElement, { duration = 360 }: TransitionConfig) {
+		if (!dropdownCloseFinished)
+			return {
+				duration: 0,
+			};
+		const UA = navigator.userAgent;
+		const ff = UA.indexOf("Firefox") > -1;
+		node.animate(
+			[
+				{
+					top: "0",
+					opacity: "1",
+					filter: ff ? "" : "blur(0px)",
+				},
+				{
+					top: "240px",
+					opacity: "0",
+					filter: ff ? "" : "blur(80px)",
+				},
+			],
+			{
+				easing: transition,
+				duration,
+			},
+		);
+		return {
+			duration,
+		};
+	}
 
 	let dropdownOpen = false;
 	let dropdownCloseFinished = true;
@@ -108,7 +194,7 @@
 		}
 	}
 
-	function openDropdown() {
+	function toggleDropdown() {
 		dropdownOpen = !dropdownOpen;
 	}
 
@@ -153,7 +239,12 @@
 				: "mx-auto flex h-[120px] w-full max-w-[1300px] flex-row items-center justify-between px-8"}
 		>
 			<div class="flex w-full flex-row items-center justify-start gap-8">
-				<a href="/">
+				<a
+					href="/"
+					on:click={() => {
+						if (dropdownOpen && window.innerWidth < 625) toggleDropdown();
+					}}
+				>
 					<Logo size={28} />
 				</a>
 			</div>
@@ -182,15 +273,15 @@
 					>
 						<DiscordSolid />
 					</a>
-					<a href={$token ? "/account" : "/signup"} class="button-sm"
+					<!-- <a href={$token ? "/account" : "/signup"} class="button-sm"
 						>{$token ? "Account" : "Sign up"}</a
-					>
+					> -->
 				</div>
 				<div class="relative mr-4 hidden flex-row gap-4 max-[625px]:flex">
 					<button
 						aria-label={dropdownOpen ? "Close navigation" : "Open navigation"}
 						aria-expanded={dropdownOpen}
-						on:click={openDropdown}
+						on:click={toggleDropdown}
 					>
 						<div
 							style="transition: 180ms; transition-property: opacity transform;"
@@ -214,7 +305,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`fixed left-0 z-10 h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"}`}
+		class={`fixed left-0 z-10 h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${dropdownOpen && !dropdownCloseFinished} ? "z-[99999]" : ""`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
@@ -263,6 +354,7 @@
 						? "translate-y-0 opacity-100 filter-none"
 						: "-translate-y-24 opacity-0 blur-md"}
 					href={item.href}
+					on:click={() => toggleDropdown()}
 				>
 					<h1 class="w-full text-5xl">{item.name}</h1>
 				</a>
@@ -270,12 +362,16 @@
 		</div>
 	</div>
 	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-	<div
-		style="transition: 360ms {transition};"
-		aria-hidden={dropdownOpenFinished && dropdownOpen}
-		tabindex={dropdownOpen ? 0 : -1}
-		class={`relative z-50 mx-auto flex w-full max-w-[1300px] flex-col px-8 pb-12 pt-[120px] ${dropdownOpen ? "pointer-events-none translate-y-[25vh] opacity-0" : ""} ${dropdownOpenFinished && dropdownOpen ? "invisible" : ""}`}
-	>
-		<slot />
-	</div>
+	{#key data.url}
+		<div
+			in:transitionIn={{ duration: 500 }}
+			out:transitionOut={{ duration: 500 }}
+			style="transition: 360ms {transition};"
+			aria-hidden={dropdownOpenFinished && dropdownOpen}
+			tabindex={dropdownOpen ? 0 : -1}
+			class={`absolute left-[50%] z-50 mx-auto flex w-screen max-w-[1300px] translate-x-[-50%] flex-col px-8 pb-12 pt-[120px] ${dropdownOpen ? "pointer-events-none translate-y-[25vh] opacity-0" : ""} ${dropdownOpenFinished && dropdownOpen ? "invisible" : ""}`}
+		>
+			<slot />
+		</div>
+	{/key}
 </main>

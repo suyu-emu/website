@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
 	import HCaptcha from "$components/HCaptcha.svelte";
@@ -81,4 +81,4 @@
 			<button {disabled} on:click={signUp} class="cta-button mt-2">Sign up</button>
 		</div>
 	</div>
-</div>
+</div> -->
