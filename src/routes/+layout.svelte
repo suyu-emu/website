@@ -366,7 +366,7 @@
 		<div
 			in:transitionIn={{ duration: 500 }}
 			out:transitionOut={{ duration: 500 }}
-			style="transition: 360ms {transition};"
+			style="transition: 360ms {transition}; transition-property: opacity, transform;"
 			aria-hidden={dropdownOpenFinished && dropdownOpen}
 			tabindex={dropdownOpen ? 0 : -1}
 			class={`absolute left-[50%] z-50 mx-auto flex w-screen max-w-[1300px] translate-x-[-50%] flex-col px-8 pb-12 pt-[120px] ${dropdownOpen ? "pointer-events-none translate-y-[25vh] opacity-0" : ""} ${dropdownOpenFinished && dropdownOpen ? "invisible" : ""}`}
