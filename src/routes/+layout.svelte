@@ -283,7 +283,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`fixed left-0 z-10 h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${dropdownOpen && !dropdownCloseFinished} ? "z-[99999]" : ""`}
+		class={`fixed left-0 z-10 h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
@@ -328,9 +328,9 @@
 									},
 								])
 					}`}
-					class={dropdownOpen
-						? "translate-y-0 opacity-100 filter-none"
-						: "-translate-y-24 opacity-0 blur-md"}
+					class="{dropdownOpen
+						? 'translate-y-0 opacity-100 filter-none'
+						: '-translate-y-24 opacity-0 blur-md'} "
 					href={item.href}
 					on:click={() => toggleDropdown()}
 				>
