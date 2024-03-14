@@ -8,7 +8,7 @@
 	export let data: PageData;
 	$: memberCount = parseFloat(data.memberCount.toPrecision(2));
 	$: contributors = parseFloat(data.roleMembers["1214817156420862012"].toPrecision(2));
-	$: starCount = data.starCount;
+	$: starCount = parseFloat(data.starCount.toPrecision(2));
 	let metadata = {
 		url: "https://suyu.dev",
 		title: "suyu - Open-source, non-profit Switch emulator",
@@ -162,7 +162,7 @@
 			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
 				{starCount}+
 			</h2>
-			<div class="text-[#A6A5A7]">Gitlab stars</div>
+			<div class="text-[#A6A5A7]">GitLab stars</div>
 		</div>
 		<div class="flex flex-col gap-0">
 			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
@@ -239,8 +239,8 @@
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Join our Discord server to chat with {memberCount}+ suyu users and developers. Get the latest
-			updates and help with any issues you have.
+			Join our Discord server to chat with {memberCount}+ suyu users and developers. Get the
+			latest updates and help with any issues you have.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
