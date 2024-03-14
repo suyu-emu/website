@@ -232,7 +232,7 @@
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Join our Discord server to chat with 14,000+ suyu users and developers. Get the latest
+			Join our Discord server to chat with {memberCount}+ suyu users and developers. Get the latest
 			updates and help with any issues you have.
 		</p>
 		<svg
