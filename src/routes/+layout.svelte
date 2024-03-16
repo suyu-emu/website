@@ -11,6 +11,7 @@
 	import { bounceOut } from "svelte/easing";
 	import { generateTransition, transition } from "$lib/util/animation";
 	import { reducedMotion } from "$lib/accessibility";
+	import BackgroundProvider from "$components/BackgroundProvider.svelte";
 
 	export let data: PageData;
 
@@ -28,15 +29,16 @@
 				duration: 0,
 			};
 		node = node.querySelector(".content") || node;
+		const intensity = node.dataset.intensity || "160";
 		const UA = navigator.userAgent;
 		const ff = UA.indexOf("Firefox") > -1;
 		if (!dropdownCloseFinished) {
 			node.animate(
 				[
 					{
-						top: "160px",
+						top: `${intensity}px`,
 						opacity: "0",
-						filter: ff ? "none" : "blur(20px)",
+						filter: ff ? "none" : `blur(${parseInt(intensity) / 16}px)`,
 					},
 					{
 						top: "0",
@@ -58,9 +60,9 @@
 		node.animate(
 			[
 				{
-					top: "-240px",
+					top: `${-intensity}px`,
 					opacity: "0",
-					filter: ff ? "none" : "blur(20px)",
+					filter: ff ? "none" : `blur(${parseInt(intensity) / 16}px)`,
 				},
 				{
 					top: "0",
@@ -84,6 +86,7 @@
 				duration: 0,
 			};
 		node = node.querySelector(".content") || node;
+		const intensity = node.dataset.intensity || "160";
 		if (!dropdownCloseFinished)
 			return {
 				duration: 0,
@@ -98,9 +101,9 @@
 					filter: ff ? "none" : "blur(0px)",
 				},
 				{
-					top: "240px",
+					top: `${intensity}px`,
 					opacity: "0",
-					filter: ff ? "none" : "blur(80px)",
+					filter: ff ? "none" : `blur(${parseInt(intensity) / 16}px)`,
 				},
 			],
 			{
@@ -213,6 +216,15 @@
 	});
 </script>
 
+{#if navigator.userAgent.indexOf("Firefox") === -1}
+	<div
+		class="opacity-10"
+		style="position: fixed; width: 100vw; height: 100vh; --mask-image: linear-gradient(to bottom, transparent 50px, black 150px); mask-image: var(--mask-image); -webkit-mask-image: var(--mask-image);"
+	>
+		<BackgroundProvider size={90} gap={16} speed={0.25} />
+	</div>
+{/if}
+
 <div
 	style="background: radial-gradient(50% 50%, rgba(255,0,0,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; left: calc(25% - 400px);"
 />
@@ -306,7 +318,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`fixed left-0 z-[99999] h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
+		class={`${navigator.userAgent.indexOf("Firefox") > -1 ? "bg-[#0e0d10]" : "bg-[rgba(0,0,0,0.25)] backdrop-blur-xl"} fixed left-0 z-[99999] h-screen w-full p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
