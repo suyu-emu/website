@@ -22,7 +22,5 @@
 	<h1 class="text-[42px] leading-[1.41] md:text-[84px] md:leading-[1.1]">
 		{status}: "{message}"
 	</h1>
-	<p style="text-align: center;" class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
-		Sorry about that. Click the suyu logo to go home.
-	</p>
+	<a href="/" class="cta-button">Take me back home</a>
 </div>

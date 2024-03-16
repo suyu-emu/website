@@ -15,8 +15,8 @@ export class SuyuUser extends BaseEntity {
 	@Column("text")
 	avatarUrl: string;
 
-	@Column("text")
-	roles: string;
+	@Column("json")
+	roles: Role[];
 
 	@Column("text", {
 		select: false,

@@ -11,14 +11,6 @@ export function json<T>(body: T): Response {
 	});
 }
 
-export function serializeRoles(roles: Role[]): string {
-	return roles.join("|");
-}
-
-export function deserializeRoles(roles: string): Role[] {
-	return roles.split("|") as Role[];
-}
-
 export async function getJwtData(token: string): Promise<IJwtData> {
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, PUBLIC_KEY, { algorithms: ["RS256"] }, (err, data) => {

@@ -1,8 +1,10 @@
 import path from "path";
 import fs from "fs/promises";
 import { error } from "@sveltejs/kit";
+import { useModeratorAuth } from "$lib/util/api/index.js";
+import type { SuyuUser } from "$lib/server/schema/index.js";
 
-export async function load({ params }) {
+export async function load({ request }) {
 	const basePath = "static/blog";
 	const files = await fs.readdir(basePath);
 	// get all file contents in an array
@@ -31,7 +33,12 @@ export async function load({ params }) {
 			};
 		}),
 	);
+	const user = await useModeratorAuth(request);
 	return {
 		posts,
+		userInfo: JSON.parse(JSON.stringify(user)) as {
+			user: SuyuUser | null;
+			isModerator: boolean;
+		},
 	};
 }

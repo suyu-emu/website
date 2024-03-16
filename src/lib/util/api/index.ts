@@ -32,3 +32,17 @@ export async function useAuth(request: Request | string): Promise<SuyuUser | nul
 	});
 	return user;
 }
+
+export async function useModeratorAuth(request: Request | string): Promise<{
+	user: SuyuUser;
+	isModerator: boolean;
+} | null> {
+	const user = await useAuth(request);
+	if (!user) {
+		return null;
+	}
+	return {
+		user,
+		isModerator: user.roles.includes("moderator"),
+	};
+}
