@@ -43,16 +43,16 @@
 </script>
 
 <div
-	class="align-center relative flex h-[calc(100vh-200px)] flex-col items-center justify-center gap-6 overflow-hidden"
+	class="align-center relative flex h-[calc(100vh-200px)] flex-col items-center justify-center gap-6"
 >
 	<div class="flex h-fit w-full max-w-[500px] flex-col rounded-[2.25rem] bg-[#110d10] p-10">
-		<h1 class="text-[60px] md:leading-[1.1]">Sign up</h1>
+		<h1 class="text-[48px] md:text-[60px] md:leading-[1.1]">Sign up</h1>
 		<div class="mt-4 flex flex-col gap-4">
-			<p>
+			<p class="useless-text">
 				suyu believes in user privacy; as such, usernames are distributed on a first-come,
 				first-serve basis, with no password required. Accounts are used for:
 			</p>
-			<ul class="[&>*]:before:mr-3 [&>*]:before:content-['•']">
+			<ul class="list [&>*]:before:mr-3 [&>*]:before:content-['•']">
 				<li>Creating rooms</li>
 				<li>Adding friends</li>
 			</ul>
@@ -82,3 +82,17 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.useless-text,
+	.list {
+		display: none;
+	}
+
+	@media (min-height: 850px) {
+		.useless-text,
+		.list {
+			display: block;
+		}
+	}
+</style>
