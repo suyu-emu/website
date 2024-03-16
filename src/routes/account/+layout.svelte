@@ -168,13 +168,13 @@
 
 {#key data.url}
 	<div
-		class={`navbar ${data.url} relative z-50 mb-4 flex w-max gap-1 overflow-hidden rounded-full bg-[#110d10] p-1`}
+		class={`navbar ${data.url} relative z-50 mb-4 ml-auto mr-auto flex w-max gap-1 overflow-hidden rounded-full bg-[#110d10] p-1`}
 		bind:this={navBar}
 	>
 		<div
 			bind:this={indicator}
 			style="transition: 360ms {transition}"
-			class="pointer-events-none absolute left-0 top-[4px] z-10 h-[calc(100%-8px)] translate-x-0 transform rounded-full bg-gradient-to-b from-slate-50 to-[#a9a9a9] mix-blend-difference motion-reduce:!transition-none"
+			class="pointer-events-none absolute left-0 top-[4px] z-10 h-[calc(100%-8px)] translate-x-0 transform rounded-full bg-gradient-to-b from-[#fafafa] to-[#d1d1d1] mix-blend-difference motion-reduce:!transition-none"
 		></div>
 		{#each navItems as item, i}
 			<a
