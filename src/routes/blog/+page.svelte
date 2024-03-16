@@ -4,6 +4,8 @@
 	import type { PageData } from "./$types";
 	import { transition } from "$lib/util/animation";
 	import SvelteMarkdown from "svelte-markdown";
+	import { goto } from "$app/navigation";
+	import { reducedMotion } from "$lib/accessibility";
 
 	let cardsContainer: HTMLDivElement;
 
@@ -31,12 +33,17 @@
 						filter: "blur(0px)",
 					},
 				],
-				{
-					duration: 700,
-					easing: transition,
-					delay: x * 40,
-					fill: "forwards",
-				},
+				reducedMotion
+					? {
+							duration: 0,
+							fill: "forwards",
+						}
+					: {
+							duration: 700,
+							easing: transition,
+							delay: x * 40,
+							fill: "forwards",
+						},
 			);
 		});
 	}
@@ -45,42 +52,21 @@
 		transitionIn();
 	});
 
-	function doTransition(e: MouseEvent) {
-		const card = (e.target as HTMLDivElement).closest(".card");
-		if (!card) return;
-		// get bounds of card
-		const bounds = card.getBoundingClientRect();
-		// how much does the card need to scale to become 100vw, 100vh
-		const scaleX = window.innerWidth / bounds.width;
-		const scaleY = window.innerHeight / bounds.height;
-		// how much does the card need to move to become centered
-		const translateX = window.innerWidth / 2 - bounds.x - bounds.width / 2;
-		const translateY = window.innerHeight / 2 - bounds.y - bounds.height / 2;
-		// animate the card to become fullscreen
-		card.animate(
-			[
-				{
-					transform: "translate(0px, 0px) scale(1)",
-					opacity: "1",
-				},
-				{
-					transform: `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`,
-					opacity: "0",
-					backgroundColor: "transparent",
-				},
-			],
-			{
-				duration: 850,
-				easing: "cubic-bezier(0.19, 1, 0.22, 1)",
-				fill: "forwards",
-			},
-		);
-	}
-
 	export let data: PageData;
 </script>
 
 <h1 class="mb-8 text-[40px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Blog Posts</h1>
+{#if data.userInfo.isModerator}
+	<!-- <p class="mb-8 text-[24px] leading-[1.41] md:text-[36px] md:leading-[1.1]">
+		<a href="/blog/new">Create a new post</a>
+	</p> -->
+	<!-- wh, wha r -->
+	<div class="mb-4 ml-1 flex gap-4">
+		<a href="/blog/new" class="cta-button">Create a new post</a>
+		<a href="/blog/edit" class="cta-button">Edit a post</a>
+	</div>
+{/if}
+
 <div class="grid max-w-full grid-cols-1 gap-8 lg:grid-cols-2" bind:this={cardsContainer}>
 	{#each data.posts as post}
 		<a href={`/blog/${post.slug}`}>

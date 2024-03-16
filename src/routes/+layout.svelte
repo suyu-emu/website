@@ -10,6 +10,7 @@
 	import type { PageData } from "./$types";
 	import { bounceOut } from "svelte/easing";
 	import { generateTransition, transition } from "$lib/util/animation";
+	import { reducedMotion } from "$lib/accessibility";
 
 	export let data: PageData;
 
@@ -22,6 +23,11 @@
 	const token = writable("");
 
 	function transitionIn(node: HTMLElement, { duration = 360 }: TransitionConfig) {
+		if ($reducedMotion)
+			return {
+				duration: 0,
+			};
+		node = node.querySelector(".content") || node;
 		const UA = navigator.userAgent;
 		const ff = UA.indexOf("Firefox") > -1;
 		if (!dropdownCloseFinished) {
@@ -30,12 +36,12 @@
 					{
 						top: "160px",
 						opacity: "0",
-						filter: ff ? "" : "blur(20px)",
+						filter: ff ? "none" : "blur(20px)",
 					},
 					{
 						top: "0",
 						opacity: "1",
-						filter: ff ? "" : "blur(0px)",
+						filter: ff ? "none" : "blur(0px)",
 					},
 				],
 				{
@@ -54,12 +60,12 @@
 				{
 					top: "-240px",
 					opacity: "0",
-					filter: ff ? "" : "blur(20px)",
+					filter: ff ? "none" : "blur(20px)",
 				},
 				{
 					top: "0",
 					opacity: "1",
-					filter: ff ? "" : "blur(0px)",
+					filter: ff ? "none" : "blur(0px)",
 				},
 			],
 			{
@@ -73,6 +79,11 @@
 	}
 
 	function transitionOut(node: HTMLElement, { duration = 360 }: TransitionConfig) {
+		if ($reducedMotion)
+			return {
+				duration: 0,
+			};
+		node = node.querySelector(".content") || node;
 		if (!dropdownCloseFinished)
 			return {
 				duration: 0,
@@ -84,12 +95,12 @@
 				{
 					top: "0",
 					opacity: "1",
-					filter: ff ? "" : "blur(0px)",
+					filter: ff ? "none" : "blur(0px)",
 				},
 				{
 					top: "240px",
 					opacity: "0",
-					filter: ff ? "" : "blur(80px)",
+					filter: ff ? "none" : "blur(80px)",
 				},
 			],
 			{
@@ -113,7 +124,7 @@
 		[key: string]: string;
 	} = {};
 
-	const navItems: NavItem[] = [
+	$: navItems = [
 		{
 			name: "Blog",
 			href: "/blog",
@@ -134,7 +145,11 @@
 			name: "GitLab",
 			href: "https://gitlab.com/suyu-emu/",
 		},
-	];
+		{
+			name: $token ? "Account" : "Sign up",
+			href: $token ? "/account" : "/signup",
+		},
+	] as NavItem[];
 
 	$: {
 		if (browser) {
@@ -250,9 +265,9 @@
 					>
 						<DiscordSolid />
 					</a>
-					<!-- <a href={$token ? "/account" : "/signup"} class="button-sm"
+					<a href={$token ? "/account" : "/signup"} class="button-sm"
 						>{$token ? "Account" : "Sign up"}</a
-					> -->
+					>
 				</div>
 				<div class="relative mr-4 hidden flex-row gap-4 max-[625px]:flex">
 					<button
@@ -283,7 +298,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`fixed left-0 z-10 h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
+		class={`fixed left-0 z-[99999] h-screen w-full bg-black p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
@@ -344,7 +359,6 @@
 		<div
 			in:transitionIn={{ duration: 500 }}
 			out:transitionOut={{ duration: 500 }}
-			style="transition: 360ms {transition}; transition-property: opacity, transform;"
 			aria-hidden={dropdownOpenFinished && dropdownOpen}
 			tabindex={dropdownOpen ? 0 : -1}
 			class={`absolute left-[50%] z-50 mx-auto flex w-screen max-w-[1300px] translate-x-[-50%] flex-col px-8 pb-12 pt-[120px] ${dropdownOpen ? "pointer-events-none translate-y-[25vh] opacity-0" : ""} ${dropdownOpenFinished && dropdownOpen ? "invisible" : ""}`}
