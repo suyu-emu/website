@@ -51,11 +51,26 @@
 </script>
 
 <div class="relative h-[calc(100vh-200px)]">
-	<div class="relative flex w-full flex-col gap-4 pb-6">
+	<div class="room-grid relative flex w-full gap-4 pb-6">
 		{#each data.rooms as room, i}
 			<div class="room opacity-0" data-index={i}>
-				<Room icon={data.games[i]?.iconUrl} {room} />
+				<Room {room} />
 			</div>
 		{/each}
 	</div>
 </div>
+
+<style>
+	.room-grid {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-auto-rows: auto;
+		align-items: stretch;
+	}
+
+	@media (min-width: 750px) {
+		.room-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>

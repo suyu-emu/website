@@ -1,14 +1,14 @@
-interface SwitchGame {
+export interface SwitchGame {
 	bannerUrl: string;
 	category: string[];
 	description: string;
-	developer: null;
-	frontBoxArt: null;
+	// developer: null;
+	// frontBoxArt: null;
 	iconUrl: string;
 	id: string;
 	intro: null | string;
 	isDemo: boolean;
-	key: null;
+	// key: null;
 	languages: string[];
 	name: string;
 	nsuId: number;
@@ -16,12 +16,12 @@ interface SwitchGame {
 	publisher: string;
 	rating: number;
 	ratingContent: string[];
-	region: null;
+	// region: null;
 	releaseDate: number;
 	rightsId: string;
 	screenshots: string[];
 	size: number;
-	version: null;
+	// version: null;
 }
 export const globalData: {
 	games: SwitchGame[];

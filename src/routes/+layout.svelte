@@ -130,7 +130,7 @@
 	$: navItems = [
 		{
 			name: "Blog",
-			href: "/blog",
+			href: "/coming-soon",
 		},
 		{
 			name: "Docs",
@@ -264,7 +264,7 @@
 			<div
 				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7] max-[625px]:hidden"
 			>
-				<a href="/blog" class="px-5 py-3 transition hover:text-white">Blog</a>
+				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Blog</a>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Docs</a>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">FAQ</a>
 			</div>

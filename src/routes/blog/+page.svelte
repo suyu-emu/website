@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { page } from "$app/stores";
 	import { onDestroy, onMount } from "svelte";
 	import type { PageData } from "./$types";
@@ -57,15 +57,11 @@
 
 <h1 class="mb-8 text-[40px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Blog Posts</h1>
 {#if data.userInfo.isModerator}
-	<!-- <p class="mb-8 text-[24px] leading-[1.41] md:text-[36px] md:leading-[1.1]">
-		<a href="/blog/new">Create a new post</a>
-	</p> -->
-	<!-- wh, wha r -->
 	<div class="mb-4 ml-1 flex gap-4">
 		<a href="/blog/new" class="cta-button">Create a new post</a>
 		<a href="/blog/edit" class="cta-button">Edit a post</a>
 	</div>
-{/if}
+{/if} 
 
 <div class="grid max-w-full grid-cols-1 gap-8 lg:grid-cols-2" bind:this={cardsContainer}>
 	{#each data.posts as post}
@@ -104,4 +100,4 @@
 		font-family: "DM Sans", sans-serif;
 		font-weight: 500;
 	}
-</style>
+</style> -->

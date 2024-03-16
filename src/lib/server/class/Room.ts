@@ -1,4 +1,5 @@
 import type { IRoom, IRoomConfig, RoomPlayer } from "$types/rooms";
+import { globalData, type SwitchGame } from "../other";
 import type { SuyuUser } from "../schema";
 import { v4 } from "uuid";
 
@@ -52,6 +53,9 @@ export class Room {
 			netVersion: 1,
 			owner: this.host.username,
 			port: parseInt(parsed[1]),
+			game: globalData.games.find(
+				(g) => g.name.toUpperCase().trim() === config.gameName.toUpperCase().trim(),
+			),
 		};
 	}
 

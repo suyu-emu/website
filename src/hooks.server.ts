@@ -4,6 +4,7 @@ import { building } from "$app/environment";
 import type { Handle } from "@sveltejs/kit";
 import { WebSocketServer } from "ws";
 import { userRepo } from "$lib/server/repo";
+import { globalData } from "$lib/server/other";
 
 let server: WebSocketServer;
 
@@ -22,6 +23,20 @@ function initServer() {
 	} catch {}
 }
 
+async function fetchGames() {
+	console.log("Fetching game data");
+	const res = await fetch("https://raw.githubusercontent.com/blawar/titledb/master/US.en.json");
+	let gamesText = await res.text();
+	gamesText = gamesText.replaceAll(/\\u[0-9a-fA-F]{4}/gm, "");
+	globalData.games = Object.values(JSON.parse(gamesText));
+	console.log("Fetched game data");
+}
+
+async function setupGames() {
+	await fetchGames();
+	setInterval(fetchGames, 1000 * 60 * 60 * 12);
+}
+
 const runAllTheInitFunctions = async () => {
 	if (!db.isInitialized) await db.initialize();
 	// sigh.
@@ -34,6 +49,9 @@ const runAllTheInitFunctions = async () => {
 		} catch {
 			console.error("Could not initialize WebSocket server");
 		}
+	if (globalData.games.length === 0) {
+		await setupGames();
+	}
 };
 
 if (!building) {

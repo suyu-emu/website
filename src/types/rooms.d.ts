@@ -1,3 +1,4 @@
+import type { SwitchGame } from "$lib/server/other";
 import type { SuyuUser } from "$lib/server/schema";
 
 export interface IRoom {
@@ -14,6 +15,7 @@ export interface IRoom {
 	port: number;
 	preferredGameId: number;
 	preferredGameName: string;
+	game?: SwitchGame;
 }
 
 export interface IRoomConfig {
