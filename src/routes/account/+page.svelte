@@ -32,7 +32,7 @@
 
 <div class="relative h-[calc(100vh-200px)] flex-col gap-6 overflow-hidden">
 	<div
-		class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-black p-8 md:p-12"
+		class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -55,9 +55,9 @@
 		<h2 class="text-[36px] leading-[1.41] md:text-[48px] md:leading-[1.1]">Multiplayer</h2>
 		<p class="text-wrap text-lg leading-relaxed text-[#A6A5A7]">
 			Hey, <span
-				class="bg-gradient-to-r from-[#60c7e9] via-[#e06bb3] to-[#f94d4d] bg-clip-text font-bold text-transparent"
+				class="bg-gradient-to-r from-[#60c7e9] via-[#e06bb3] to-[#f94d4d] bg-clip-text font-black tracking-tighter text-transparent"
 				>{data.user.username}</span
-			>! This is your <i>token</i>, used to authenticate your identity within suyu. Your token
+			>! This is your <b>token</b>, used to authenticate your identity within suyu. Your token
 			should be kept private. If you believe it has been compromised, please contact us
 			immediately.
 		</p>

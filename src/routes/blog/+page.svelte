@@ -33,7 +33,7 @@
 						filter: "blur(0px)",
 					},
 				],
-				reducedMotion
+				$reducedMotion
 					? {
 							duration: 0,
 							fill: "forwards",
@@ -71,7 +71,7 @@
 	{#each data.posts as post}
 		<a href={`/blog/${post.slug}`}>
 			<div
-				class="card relative h-[250px] w-full translate-y-[-200px] overflow-hidden rounded-[2.25rem] border-2 border-solid border-zinc-700 bg-black p-8 opacity-0 blur-[20px] lg:h-[400px]"
+				class="card relative h-[250px] w-full translate-y-[-200px] overflow-hidden rounded-[2.25rem] border-2 border-solid border-zinc-700 bg-[#110d10] p-8 opacity-0 blur-[20px] lg:h-[400px]"
 			>
 				<div
 					style="--mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0,0,0,0) 100%); mask-image: var(--mask-image); -webkit-mask-image: var(--mask-image);"

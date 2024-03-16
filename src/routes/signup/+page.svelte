@@ -45,7 +45,7 @@
 <div
 	class="align-center relative flex h-[calc(100vh-200px)] flex-col items-center justify-center gap-6 overflow-hidden"
 >
-	<div class="flex h-fit w-full max-w-[500px] flex-col rounded-[2.25rem] bg-black p-10">
+	<div class="flex h-fit w-full max-w-[500px] flex-col rounded-[2.25rem] bg-[#110d10] p-10">
 		<h1 class="text-[60px] md:leading-[1.1]">Sign up</h1>
 		<div class="mt-4 flex flex-col gap-4">
 			<p>

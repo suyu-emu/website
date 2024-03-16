@@ -29,10 +29,10 @@
 			name: "Lobbies",
 			href: "/account/lobbies",
 		},
-		{
-			name: "Friends",
-			href: "/account/friends",
-		},
+		// {
+		// 	name: "Friends",
+		// 	href: "/account/friends",
+		// },
 	];
 
 	function navClick(e: MouseEvent | HTMLAnchorElement) {
@@ -144,13 +144,11 @@
 				[
 					{
 						opacity: "1",
-						filter: "blur(0px)",
-						transform: "translateY(0px)",
+						marginTop: "0px",
 					},
 					{
 						opacity: "0",
-						filter: "blur(20px)",
-						transform: "translateY(-50px)",
+						marginTop: "40px",
 					},
 				],
 				$reducedMotion
@@ -170,7 +168,7 @@
 
 {#key data.url}
 	<div
-		class={`navbar ${data.url} relative z-50 mb-4 flex w-max gap-1 overflow-hidden rounded-full bg-black p-1`}
+		class={`navbar ${data.url} relative z-50 mb-4 flex w-max gap-1 overflow-hidden rounded-full bg-[#110d10] p-1`}
 		bind:this={navBar}
 	>
 		<div
@@ -194,7 +192,7 @@
 {/key}
 
 <div class="relative">
-	<div class="content absolute w-full">
+	<div data-intensity-in={80} data-intensity-out={140} class="content absolute w-full">
 		<slot />
 	</div>
 </div>
