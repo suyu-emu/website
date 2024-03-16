@@ -7,8 +7,6 @@
 
 	export let data: PageData;
 
-	$: console.log(data);
-
 	function transitionIn() {
 		const rooms = document.querySelectorAll<HTMLDivElement>(".room");
 		rooms.forEach((room, i) => {
