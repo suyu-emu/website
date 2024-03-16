@@ -36,9 +36,12 @@ export async function load({ request }) {
 	const user = await useModeratorAuth(request);
 	return {
 		posts,
-		userInfo: JSON.parse(JSON.stringify(user)) as {
+		userInfo: (JSON.parse(JSON.stringify(user)) as {
 			user: SuyuUser | null;
 			isModerator: boolean;
+		}) || {
+			user: null,
+			isModerator: false,
 		},
 	};
 }

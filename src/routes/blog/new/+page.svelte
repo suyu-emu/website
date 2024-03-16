@@ -1,6 +1,9 @@
 <script lang="ts">
 	import SvelteMarkdown from "svelte-markdown";
 	import CodeRenderer from "$components/CodeRenderer.svelte";
+	import type { PageData } from "./$types";
+	import { onMount } from "svelte";
+	import { goto } from "$app/navigation";
 
 	let content = "";
 
@@ -8,6 +11,12 @@
 		event.preventDefault();
 		console.log(content);
 	};
+
+	export let data: PageData;
+
+	onMount(() => {
+		if (!data.userInfo.isModerator) goto("/blog");
+	});
 </script>
 
 <div class="flex h-[calc(100vh-196px)] min-h-[32rem] w-full flex-row gap-8">
