@@ -29,7 +29,7 @@
 			<textarea
 				id="write"
 				bind:value={content}
-				class="h-full w-full resize-none rounded-2xl !border-none bg-black p-4 font-[Consolas] !outline-none ring ring-[#ffffff11] focus:ring-[#ffffff44]"
+				class="h-full w-full resize-none rounded-2xl !border-none bg-[#110d10] p-4 font-[Consolas] !outline-none ring ring-[#ffffff11] focus:ring-[#ffffff44]"
 			></textarea>
 		</form>
 	</div>

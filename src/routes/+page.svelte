@@ -6,9 +6,9 @@
 	import { Dialog } from "radix-svelte";
 
 	export let data: PageData;
-	$: memberCount = parseFloat(data.memberCount.toPrecision(2));
-	$: contributors = parseFloat(data.roleMembers["1214817156420862012"].toPrecision(2));
-	$: starCount = parseFloat(data.starCount.toPrecision(2));
+	$: memberCount = parseFloat(data.memberCount?.toPrecision(2));
+	$: contributors = parseFloat(data.roleMembers["1214817156420862012"]?.toPrecision(2));
+	$: starCount = parseFloat(data.starCount?.toPrecision(2));
 	let metadata = {
 		url: "https://suyu.dev",
 		title: "suyu - Open-source, non-profit Switch emulator",
@@ -40,7 +40,7 @@
 </svelte:head>
 
 <div
-	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-[rgba(0,0,0,0.25)] p-8 backdrop-blur-xl md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
+	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-[#110d10] p-8 md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
 >
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@
 			</Dialog.Trigger>
 			<Dialog.Portal>
 				<Dialog.Overlay
-					class="fixed inset-0 z-[9999] bg-black/80 data-[state=open]:animate-[overlayShow_555ms_cubic-bezier(.16,1,.3,1)]"
+					class="fixed inset-0 z-[9999] bg-[#110d10]/80 data-[state=open]:animate-[overlayShow_555ms_cubic-bezier(.16,1,.3,1)]"
 				/>
 				<Dialog.Content
 					class="fixed left-[50%] top-[50%] z-[9999] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%]
@@ -142,7 +142,7 @@
 
 <div class="flex w-full flex-col lg:flex-row">
 	<div
-		class="flex w-full flex-shrink-0 flex-col gap-8 rounded-b-[2.25rem] bg-black p-12 lg:w-[35%]"
+		class="flex w-full flex-shrink-0 flex-col gap-8 rounded-b-[2.25rem] bg-[#110d10] p-12 lg:w-[35%]"
 	>
 		<h1 class="text-[48px] leading-[0.9]">By the numbers</h1>
 		<div class="flex flex-col gap-0">
@@ -200,12 +200,12 @@
 			<div class="text-[#A6A5A7]">members on Discord</div>
 		</div>
 	</div>
-	<div class="flex w-full flex-1 rounded-[2.25rem] bg-black lg:rounded-tl-none">
+	<div class="flex w-full flex-1 rounded-[2.25rem] bg-[#110d10] lg:rounded-tl-none">
 		<div
 			class="flex w-full flex-1 rounded-[2.25rem] rounded-bl-none rounded-tr-none bg-[#131215] pt-8 lg:pl-8"
 		>
 			<div
-				class="h-full w-full overflow-hidden rounded-[2.25rem] bg-black shadow-lg ring ring-[#ffffff11]"
+				class="h-full w-full overflow-hidden rounded-[2.25rem] bg-[#110d10] shadow-lg ring ring-[#ffffff11]"
 			>
 				<img
 					class="h-full max-h-[496px] w-full object-cover"
@@ -287,7 +287,7 @@
 </div>
 
 <div
-	class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-black p-8 md:p-12"
+	class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
 >
 	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
 		we’re passionate about preserving games.

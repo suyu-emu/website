@@ -1,5 +1,6 @@
 import { building } from "$app/environment";
 import { DISCORD_USER_TOKEN, GITLAB_API_TOKEN } from "$env/static/private";
+import { globalData } from "$lib/server/other";
 
 let memberCount = 0;
 let starCount = 0;
@@ -40,13 +41,25 @@ async function fetchServerSideData() {
 	console.log("Stars count:", starCount);
 }
 
-if (!building) {
-	await fetchServerSideData();
-	setInterval(fetchServerSideData, 1000 * 60 * 10);
+async function fetchSlowServerSideData() {
+	console.log("Fetching game data");
+	const res = await fetch("https://raw.githubusercontent.com/blawar/titledb/master/US.en.json");
+	let gamesText = await res.text();
+	gamesText = gamesText.replaceAll(/\\u[0-9a-fA-F]{4}/gm, "");
+	globalData.games = Object.values(JSON.parse(gamesText));
+	console.log("Fetched game data");
 }
 
-export async function load(opts) {
+if (!building) {
+	await Promise.all([await fetchServerSideData(), await fetchSlowServerSideData()]);
+	setInterval(fetchServerSideData, 1000 * 60 * 10);
+	setInterval(fetchSlowServerSideData, 1000 * 60 * 60 * 12);
+}
+
+export async function load({ cookies }) {
+	const token = cookies.get("token");
 	return {
+		tokenCookie: token,
 		memberCount,
 		starCount,
 		roleMembers,

@@ -21,7 +21,7 @@
 		href: string;
 	}
 
-	const token = writable("");
+	const token = writable(data.tokenCookie || "");
 
 	function transitionIn(node: HTMLElement, { duration = 360 }: TransitionConfig) {
 		if ($reducedMotion)
@@ -29,7 +29,7 @@
 				duration: 0,
 			};
 		node = node.querySelector(".content") || node;
-		const intensity = node.dataset.intensity || "160";
+		const intensity = node.dataset.intensityIn || "160";
 		const UA = navigator.userAgent;
 		const ff = UA.indexOf("Firefox") > -1;
 		if (!dropdownCloseFinished) {
@@ -86,7 +86,7 @@
 				duration: 0,
 			};
 		node = node.querySelector(".content") || node;
-		const intensity = node.dataset.intensity || "160";
+		const intensity = node.dataset.intensityOut || "240";
 		if (!dropdownCloseFinished)
 			return {
 				duration: 0,
@@ -149,8 +149,8 @@
 			href: "https://gitlab.com/suyu-emu/",
 		},
 		{
-			name: $token ? "Account" : "Sign up",
-			href: $token ? "/account" : "/signup",
+			name: $token || data.tokenCookie ? "Account" : "Sign up",
+			href: $token || data.tokenCookie ? "/account" : "/signup",
 		},
 	] as NavItem[];
 
@@ -216,10 +216,11 @@
 	});
 </script>
 
+<!-- unfortunately, firefox is horrendous at rendering transforms so we can't enable it there -->
 {#if navigator.userAgent.indexOf("Firefox") === -1}
 	<div
-		class="opacity-10"
-		style="position: fixed; width: 100vw; height: 100vh; --mask-image: linear-gradient(to bottom, transparent 50px, black 150px); mask-image: var(--mask-image); -webkit-mask-image: var(--mask-image);"
+		class="opacity-5"
+		style="position: fixed; width: 100vw; height: 100vh; --mask-image: linear-gradient(to bottom, transparent 50px, black 150px, transparent); mask-image: var(--mask-image); -webkit-mask-image: var(--mask-image);"
 	>
 		<BackgroundProvider size={90} gap={16} speed={0.25} />
 	</div>
@@ -318,7 +319,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`${navigator.userAgent.indexOf("Firefox") > -1 ? "bg-[#0e0d10]" : "bg-[rgba(0,0,0,0.25)] backdrop-blur-xl"} fixed left-0 z-[99999] h-screen w-full p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
+		class={`fixed left-0 z-[99999] h-screen w-full bg-[#0e0d10] p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
