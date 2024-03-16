@@ -22,7 +22,7 @@
 
 	const navItems: NavItem[] = [
 		{
-			name: "Online Services",
+			name: "Multiplayer",
 			href: "/account",
 		},
 		{
@@ -30,8 +30,8 @@
 			href: "/account/lobbies",
 		},
 		{
-			name: "Settings",
-			href: "/account/settings",
+			name: "Friends",
+			href: "/account/friends",
 		},
 	];
 
@@ -54,7 +54,11 @@
 		const pillBounds = indicator.getBoundingClientRect();
 		indicator.style.transform = `translateX(${bounds.left - navBounds.left}px)`;
 		indicator.style.width = `${bounds.width}px`;
-		if ((selected !== 0 && selected !== navItems.length - 1) || $reducedMotion) return;
+		if (
+			// (selected !== 0 && selected !== navItems.length - 1) ||
+			$reducedMotion
+		)
+			return;
 		indicator.offsetHeight;
 		const transformFactor = bounds.left - pillBounds.left;
 		navBar.animate(
@@ -64,14 +68,9 @@
 					easing: "ease-out",
 				},
 				{
-					transform: `translateX(${transformFactor / 100}px)`,
-					offset: 0.1,
+					transform: `translateX(${transformFactor / 50}px)`,
+					offset: 0.4,
 					easing: "ease-out",
-				},
-				{
-					transform: `translateX(${-transformFactor / 200}px)`,
-					offset: 0.8,
-					easing: "ease-in",
 				},
 				{
 					transform: "translateX(0px)",
@@ -79,8 +78,8 @@
 				},
 			],
 			{
-				duration: 500,
-				delay: 170,
+				duration: 360,
+				delay: 0,
 			},
 		);
 	}

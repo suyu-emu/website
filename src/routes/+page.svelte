@@ -40,7 +40,7 @@
 </svelte:head>
 
 <div
-	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-black p-8 md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
+	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-[rgba(0,0,0,0.25)] p-8 backdrop-blur-xl md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
 >
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -60,8 +60,9 @@
 			stroke="white"
 		/>
 	</svg>
-	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
-		suyu is an open-source, non-profit Switch emulator
+	<h1 class="text-[24px] leading-[1.41] md:text-[56px] md:leading-[1.1]">
+		<span class="font-bold text-[#60c7e9]">suyu</span> is a fully open-source
+		<span class="font-bold text-[#f94d4d]">Switch</span> emulator
 	</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
 		suyu is a familiar C++ based Switch emulator with a focus on compatibility. Completely free

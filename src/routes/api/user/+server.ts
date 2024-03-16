@@ -39,7 +39,7 @@ export async function POST({ request, getClientAddress }) {
 			error: "missing fields",
 		});
 	}
-	if (body.username.length < 3 || body.username.length > 24) {
+	if (body.username.length < 3 || body.username.length > 24 || body.username.trim() === "") {
 		return json<CreateAccountResponse>({
 			success: false,
 			error: "invalid username",

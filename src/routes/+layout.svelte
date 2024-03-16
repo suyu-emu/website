@@ -213,6 +213,14 @@
 	});
 </script>
 
+<div
+	style="background: radial-gradient(50% 50%, rgba(255,0,0,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; left: calc(25% - 400px);"
+/>
+
+<div
+	style="background: radial-gradient(50% 50%, rgba(0,128,255,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; right: calc(25% - 400px);"
+/>
+
 <main
 	class={`min-h-full w-full ${dropdownOpen || !dropdownCloseFinished ? "overflow-hidden" : ""}`}
 >

@@ -52,12 +52,14 @@
 				stroke="white"
 			/>
 		</svg>
-		<h1 class="text-[36px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
-			suyu Online Services
-		</h1>
+		<h2 class="text-[36px] leading-[1.41] md:text-[48px] md:leading-[1.1]">Multiplayer</h2>
 		<p class="text-wrap text-lg leading-relaxed text-[#A6A5A7]">
-			Your token should be kept private. If you believe it has been compromised, please
-			contact us immediately.
+			Hey, <span
+				class="bg-gradient-to-r from-[#60c7e9] via-[#e06bb3] to-[#f94d4d] bg-clip-text font-bold text-transparent"
+				>{data.user.username}</span
+			>! This is your <i>token</i>, used to authenticate your identity within suyu. Your token
+			should be kept private. If you believe it has been compromised, please contact us
+			immediately.
 		</p>
 		<div class="flex gap-4">
 			<div
@@ -71,10 +73,6 @@
 				</p>
 			</div>
 			<button class="button-sm" on:click={copyToken}>{copyText}</button>
-		</div>
-		<div class="flex gap-4">
-			<a href="/account/friends" class="button-sm">Manage Friends</a>
-			<a href="/account/rooms" class="button-sm">Rooms</a>
 		</div>
 	</div>
 </div>
