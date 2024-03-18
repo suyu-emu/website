@@ -29,10 +29,10 @@
 			name: "Public Game Lobby",
 			href: "/account/lobby",
 		},
-		// {
-		// 	name: "Friends",
-		// 	href: "/account/friends",
-		// },
+		{
+			name: "Friends",
+			href: "/account/friends",
+		},
 	];
 
 	function navClick(e: MouseEvent | HTMLAnchorElement) {
@@ -80,11 +80,10 @@
 			],
 			$reducedMotion
 				? {
-						duration: 360,
-						delay: 0,
+						duration: 0,
 					}
 				: {
-						duration: 0,
+						duration: 360,
 					},
 		);
 	}
