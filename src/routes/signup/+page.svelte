@@ -13,8 +13,9 @@
 
 	let usernameInput = "";
 	let emailInput = "";
+	let passwordInput = "";
 	let captchaToken = "";
-	$: disabled = !usernameInput || !emailInput || !captchaToken;
+	$: disabled = !usernameInput || !emailInput || !captchaToken || !passwordInput;
 
 	export let data: PageData;
 
@@ -25,6 +26,7 @@
 			username: usernameInput,
 			email: emailInput,
 			captchaToken,
+			password: passwordInput,
 		});
 		if (!res.success) {
 			// TODO: modal
@@ -48,37 +50,48 @@
 	<div class="flex h-fit w-full max-w-[500px] flex-col rounded-[2.25rem] bg-[#110d10] p-10">
 		<h1 class="text-[48px] md:text-[60px] md:leading-[1.1]">Sign up</h1>
 		<div class="mt-4 flex flex-col gap-4">
-			<p class="useless-text">
-				suyu believes in user privacy; as such, usernames are distributed on a first-come,
-				first-serve basis, with no password required. Accounts are used for:
-			</p>
+			<p class="useless-text">Accounts are used for:</p>
 			<ul class="list [&>*]:before:mr-3 [&>*]:before:content-['•']">
 				<li>Creating rooms</li>
 				<li>Adding friends</li>
 			</ul>
-			<p>
-				Lost your account? <a class="link" href="https://discord.gg/suyu" target="_blank"
-					>Contact us</a
-				>.
-			</p>
-			<input
-				bind:value={emailInput}
-				maxlength="128"
-				class="input"
-				type="text"
-				placeholder="Recovery Email"
-			/>
-			<input
-				bind:value={usernameInput}
-				maxlength="24"
-				class="input"
-				type="text"
-				placeholder="Username"
-			/>
-			<div class="h-[78px]">
-				<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
-			</div>
-			<button {disabled} on:click={signUp} class="cta-button mt-2">Sign up</button>
+			<form
+				class="contents"
+				on:submit={(e) => {
+					e.preventDefault();
+					signUp();
+				}}
+			>
+				<input
+					bind:value={emailInput}
+					maxlength="128"
+					class="input"
+					type="text"
+					placeholder="Email"
+					autocomplete="email"
+				/>
+				<input
+					bind:value={usernameInput}
+					maxlength="24"
+					class="input"
+					type="text"
+					autocomplete="off"
+					placeholder="Username"
+				/>
+				<input
+					bind:value={passwordInput}
+					class="input"
+					type="password"
+					placeholder="Password"
+					autocomplete="new-password"
+				/>
+				<div class="h-[78px]">
+					<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
+				</div>
+				<button {disabled} type="submit" on:click={signUp} class="cta-button mt-2"
+					>Sign up</button
+				>
+			</form>
 		</div>
 	</div>
 </div>

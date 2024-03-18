@@ -26,8 +26,8 @@
 			href: "/account",
 		},
 		{
-			name: "Lobbies",
-			href: "/account/lobbies",
+			name: "Public Game Lobby",
+			href: "/account/lobby",
 		},
 		// {
 		// 	name: "Friends",
@@ -61,6 +61,7 @@
 			return;
 		indicator.offsetHeight;
 		const transformFactor = bounds.left - pillBounds.left;
+
 		navBar.animate(
 			[
 				{
@@ -77,17 +78,20 @@
 					easing: "ease-in",
 				},
 			],
-			{
-				duration: 360,
-				delay: 0,
-			},
+			$reducedMotion
+				? {
+						duration: 360,
+						delay: 0,
+					}
+				: {
+						duration: 0,
+					},
 		);
 	}
 
 	afterNavigate(({ from }) => {
 		if (from) {
 			if (!from.url.pathname.startsWith("/account")) {
-				console.log("!");
 				navBar.style.opacity = "0";
 				navBar.animate(
 					[
@@ -164,6 +168,14 @@
 			};
 		}
 	});
+
+	onMount(() => {
+		setTimeout(() => {
+			const items = Array.from(document.querySelectorAll(".navitem")) as HTMLAnchorElement[];
+			const item = items.find((i) => new URL(i.href).pathname === data.url);
+			navClick({ target: item } as unknown as MouseEvent);
+		}, 10);
+	});
 </script>
 
 {#key data.url}
@@ -196,3 +208,12 @@
 		<slot />
 	</div>
 </div>
+
+<style>
+	@media (max-width: 750px) {
+		.navbar {
+			margin-right: 0;
+			margin-left: 0;
+		}
+	}
+</style>

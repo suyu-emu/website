@@ -4,6 +4,7 @@
 	import { getContext } from "svelte";
 	import type { PageData } from "./$types";
 	import type { Writable } from "svelte/store";
+	import cookie from "cookiejs";
 
 	const token = getContext<Writable<string>>("token");
 
@@ -27,6 +28,12 @@
 		setTimeout(() => {
 			copyText = "Copy token";
 		}, 2000);
+	}
+
+	function signOut() {
+		$token = "";
+		cookie.remove("token");
+		goto("/login");
 	}
 </script>
 

@@ -117,7 +117,7 @@
 			</Dialog.Portal>
 		</Dialog.Root>
 		<a
-			href="https://gitlab.com/suyu-emu/"
+			href="https://gitlab.com/suyu-emu/suyu"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
@@ -259,7 +259,7 @@
 		</svg>
 	</a>
 	<a
-		href="https://gitlab.com/suyu-emu/"
+		href="https://gitlab.com/suyu-emu/suyu"
 		target="_blank"
 		rel="noreferrer noopener"
 		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
