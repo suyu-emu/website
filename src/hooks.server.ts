@@ -39,10 +39,6 @@ async function setupGames() {
 
 const runAllTheInitFunctions = async () => {
 	if (!db.isInitialized) await db.initialize();
-	// sigh.
-	const user = await userRepo.findOne({ where: { username: "nullptr" } });
-	user!.roles = ["moderator"];
-	await userRepo.save(user!);
 	if (!server)
 		try {
 			initServer();

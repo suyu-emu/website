@@ -1,5 +1,5 @@
 import type { Role } from "$types/db";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class SuyuUser extends BaseEntity {
@@ -27,4 +27,23 @@ export class SuyuUser extends BaseEntity {
 		select: false,
 	})
 	email: string;
+
+	@Column("text", {
+		select: false,
+	})
+	password: string;
+
+	@ManyToMany(() => SuyuUser)
+	friends: SuyuUser[];
+}
+
+export class FriendshipRequest extends BaseEntity {
+	@PrimaryGeneratedColumn("uuid")
+	id: string;
+
+	@OneToOne(() => SuyuUser)
+	from: SuyuUser;
+
+	@OneToOne(() => SuyuUser)
+	to: SuyuUser;
 }

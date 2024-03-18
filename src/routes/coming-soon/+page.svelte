@@ -3,7 +3,7 @@
 </svelte:head>
 
 <div
-	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] md:p-12"
+	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
 >
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

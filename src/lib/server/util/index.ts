@@ -19,3 +19,23 @@ export async function getJwtData(token: string): Promise<IJwtData> {
 		});
 	});
 }
+
+export class RateLimiter {
+	// allow 5 requests per minute
+
+	cache = new Map<string, number>();
+
+	constructor() {}
+
+	isLimited(ip: string): boolean {
+		// if the last request was in the last minute, return true
+		if (this.cache.has(ip)) {
+			if (Date.now() - this.cache.get(ip)! < 5000) {
+				return true;
+			}
+		}
+		// set the last request to now
+		this.cache.set(ip, Date.now());
+		return false;
+	}
+}

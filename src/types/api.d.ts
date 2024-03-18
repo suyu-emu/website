@@ -11,6 +11,7 @@ export interface CreateAccountRequest {
 	username: string;
 	email: string;
 	captchaToken: string;
+	password: string;
 }
 
 export interface CreateAccountResponseSuccess {
@@ -32,3 +33,15 @@ export interface GetUserResponseSuccess {
 }
 
 export type GetUserResponse = GetUserResponseSuccess | GenericFailureResponse;
+
+export interface LoginRequest {
+	email: string;
+	password: string;
+}
+
+export interface LoginResponseSuccess {
+	success: true;
+	token: string;
+}
+
+export type LoginResponse = LoginResponseSuccess | GenericFailureResponse;

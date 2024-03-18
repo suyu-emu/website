@@ -1,8 +1,18 @@
-import type { CreateAccountRequest, CreateAccountResponse, GetUserResponse } from "$types/api";
+import type {
+	CreateAccountRequest,
+	CreateAccountResponse,
+	GetUserResponse,
+	LoginRequest,
+	LoginResponse,
+} from "$types/api";
 
 const apiUsers = {
 	async createAccount(body: CreateAccountRequest): Promise<CreateAccountResponse> {
 		return await SuyuAPI.req("POST", "/api/user", body);
+	},
+
+	async login(body: LoginRequest): Promise<LoginResponse> {
+		return await SuyuAPI.req("POST", "/api/user/login", body);
 	},
 
 	async deleteAccount() {

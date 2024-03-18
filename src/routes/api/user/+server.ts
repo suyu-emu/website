@@ -2,7 +2,7 @@
 
 import { userRepo } from "$lib/server/repo";
 import type { SuyuUser } from "$lib/server/schema";
-import { json } from "$lib/server/util";
+import { RateLimiter, json } from "$lib/server/util";
 import { useAuth } from "$lib/util/api";
 import type {
 	CreateAccountRequest,
@@ -16,6 +16,9 @@ import { verify } from "hcaptcha";
 import { PUBLIC_SITE_KEY } from "$env/static/public";
 import { HCAPTCHA_KEY } from "$env/static/private";
 import validator from "validator";
+import bcrypt from "bcrypt";
+
+const rateLimit = new RateLimiter();
 
 const randomBytes = promisify(crypto.randomBytes);
 
@@ -32,8 +35,14 @@ async function genKey(username: string) {
 }
 
 export async function POST({ request, getClientAddress }) {
+	if (rateLimit.isLimited(getClientAddress())) {
+		return json<CreateAccountResponse>({
+			success: false,
+			error: "rate limited",
+		});
+	}
 	const body: CreateAccountRequest = await request.json();
-	if (!body.username || !body.email || !body.captchaToken) {
+	if (!body.username || !body.email || !body.captchaToken || !body.password) {
 		return json<CreateAccountResponse>({
 			success: false,
 			error: "missing fields",
@@ -77,14 +86,22 @@ export async function POST({ request, getClientAddress }) {
 	}
 	// the api key can only be 80 characters total, including the username and colon
 	const key = await genKey(body.username);
+	const password = await bcrypt.hash(body.password, 10);
+	// sha256 hash of the email, trimmed and to lowercase
+	const emailHash = crypto
+		.createHash("sha256")
+		.update(body.email.trim().toLowerCase())
+		.digest("hex");
 	const createdUser: SuyuUser = userRepo.create({
 		username: body.username,
-		avatarUrl: `https://avatars.githubusercontent.com/u/${Math.floor(Math.random() * 100000000)}?v=4`,
+		avatarUrl: `https://gravatar.com/avatar/${emailHash}?d=retro`,
 		displayName: body.username,
 		roles: ["user"],
 		apiKey: key,
 		email: body.email,
+		password,
 	});
+	console.log(createdUser);
 	await userRepo.save(createdUser);
 	return json<CreateAccountResponse>({
 		success: true,
@@ -93,7 +110,12 @@ export async function POST({ request, getClientAddress }) {
 	});
 }
 
-export async function GET({ request }) {
+export async function GET({ request, getClientAddress }) {
+	if (rateLimit.isLimited(getClientAddress()))
+		return json<GetUserResponse>({
+			success: false,
+			error: "rate limited",
+		});
 	const user = await useAuth(request);
 	if (!user) {
 		return json<GetUserResponse>({
@@ -107,7 +129,12 @@ export async function GET({ request }) {
 	});
 }
 
-export async function DELETE({ request }) {
+export async function DELETE({ request, getClientAddress }) {
+	if (rateLimit.isLimited(getClientAddress()))
+		return json<DeleteAccountResponse>({
+			success: false,
+			error: "rate limited",
+		});
 	const user = await useAuth(request);
 	if (!user) {
 		return json<DeleteAccountResponse>({

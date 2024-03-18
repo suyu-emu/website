@@ -12,6 +12,7 @@
 	import { generateTransition, transition } from "$lib/util/animation";
 	import { reducedMotion } from "$lib/accessibility";
 	import BackgroundProvider from "$components/BackgroundProvider.svelte";
+	import AccountButton from "$components/AccountButton.svelte";
 
 	export let data: PageData;
 
@@ -146,7 +147,7 @@
 		},
 		{
 			name: "GitLab",
-			href: "https://gitlab.com/suyu-emu/",
+			href: "https://gitlab.com/suyu-emu/suyu",
 		},
 		{
 			name: $token || data.tokenCookie ? "Account" : "Sign up",
@@ -286,9 +287,16 @@
 					>
 						<DiscordSolid />
 					</a>
-					<a href={$token ? "/account" : "/signup"} class="button-sm"
+					{#if $token}
+						<!-- <a href={$token ? "/account" : "/signup"} class="button-sm"
 						>{$token ? "Account" : "Sign up"}</a
-					>
+					> -->
+						<!-- <a href="/account" class="button-sm">Account</a> -->
+						<AccountButton user={data.user} />
+					{:else}
+						<a href="/login" class="button-sm">Log in</a>
+						<a href="/signup" class="button-sm">Sign up</a>
+					{/if}
 				</div>
 				<div class="relative mr-4 hidden flex-row gap-4 max-[625px]:flex">
 					<button
@@ -319,7 +327,7 @@
 	<div
 		style="transition: 180ms ease;"
 		aria-hidden={!dropdownOpenFinished && !dropdownOpen}
-		class={`fixed left-0 z-[99999] h-screen w-full bg-[#0e0d10] p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
+		class={`fixed left-0 z-[100] h-screen w-full bg-[#0e0d10] p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
 			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>

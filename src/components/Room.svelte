@@ -18,21 +18,26 @@
 			); mask-image: var(--mask-image); -webkit-mask-image: var(--mask-image);
 			"
 	/>
-	<div class="relative z-30 flex items-stretch gap-6">
+	<div class="relative z-30 flex min-h-[0] min-w-[0] items-center gap-6">
 		{#if room.game?.iconUrl}
 			<img
 				src={room.game.iconUrl}
 				alt="Icon for '{room.preferredGameName}'"
-				class="w-[100px] rounded-2xl object-cover"
+				class="flex aspect-square max-h-[84px] max-w-[84px] shrink-0 rounded-2xl object-cover md:max-h-[148px] md:max-w-[148px]"
 			/>
 		{/if}
-		<div class="flex flex-col">
-			<h2 class="mb-2 text-[20px] leading-[1.41] md:text-[28px] md:leading-[1.1]">
-				{room.name}
-				<span class="ml-1 text-base font-normal text-gray-300"
+		<div class="flex h-full w-full flex-col overflow-hidden">
+			<div class="flex items-center">
+				<h2
+					class="mb-2 overflow-hidden text-ellipsis whitespace-nowrap text-[20px] leading-[1.41] md:text-[28px] md:leading-[1.1]"
+				>
+					{room.name}
+				</h2>
+				<span
+					class="mb-[6px] ml-2 overflow-hidden text-ellipsis whitespace-nowrap text-base font-normal text-gray-300"
 					>({room.game?.name || "No preferred game"})</span
 				>
-			</h2>
+			</div>
 			<p class="flex-grow">{room.description}</p>
 			<div class="mt-2 text-sm text-gray-300">
 				{room.players.length} / {room.maxPlayers} | {#if room.players.length > 4}
