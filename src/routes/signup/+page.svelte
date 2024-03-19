@@ -6,7 +6,7 @@
 	import { SuyuAPI } from "$lib/client/api";
 	import type { PageData } from "./$types";
 	import type { Writable } from "svelte/store";
-	import { getContext } from "svelte";
+	import { getContext, onMount } from "svelte";
 
 	const token = getContext<Writable<string>>("token");
 	if ($token) goto("/account");
@@ -42,6 +42,14 @@
 	async function captchaComplete(event: CustomEvent<any>) {
 		captchaToken = event.detail.token;
 	}
+
+	let shouldLoadCaptcha = false;
+
+	onMount(() => {
+		setTimeout(() => {
+			shouldLoadCaptcha = true;
+		}, 500);
+	});
 </script>
 
 <div
@@ -86,7 +94,13 @@
 					autocomplete="new-password"
 				/>
 				<div class="h-[78px]">
-					<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
+					{#if shouldLoadCaptcha}
+						<HCaptcha
+							on:success={captchaComplete}
+							theme="dark"
+							sitekey={PUBLIC_SITE_KEY}
+						/>
+					{/if}
 				</div>
 				<button {disabled} type="submit" on:click={signUp} class="cta-button mt-2"
 					>Sign up</button

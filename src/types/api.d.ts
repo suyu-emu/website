@@ -37,6 +37,7 @@ export type GetUserResponse = GetUserResponseSuccess | GenericFailureResponse;
 export interface LoginRequest {
 	email: string;
 	password: string;
+	captchaToken: string;
 }
 
 export interface LoginResponseSuccess {

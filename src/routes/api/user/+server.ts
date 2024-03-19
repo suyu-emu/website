@@ -2,7 +2,7 @@
 
 import { userRepo } from "$lib/server/repo";
 import type { SuyuUser } from "$lib/server/schema";
-import { RateLimiter, json } from "$lib/server/util";
+import { json } from "$lib/server/util";
 import { useAuth } from "$lib/util/api";
 import type {
 	CreateAccountRequest,
@@ -17,8 +17,6 @@ import { PUBLIC_SITE_KEY } from "$env/static/public";
 import { HCAPTCHA_KEY } from "$env/static/private";
 import validator from "validator";
 import bcrypt from "bcrypt";
-
-const rateLimit = new RateLimiter();
 
 const randomBytes = promisify(crypto.randomBytes);
 
@@ -35,12 +33,6 @@ async function genKey(username: string) {
 }
 
 export async function POST({ request, getClientAddress }) {
-	if (rateLimit.isLimited(getClientAddress())) {
-		return json<CreateAccountResponse>({
-			success: false,
-			error: "rate limited",
-		});
-	}
 	const body: CreateAccountRequest = await request.json();
 	if (!body.username || !body.email || !body.captchaToken || !body.password) {
 		return json<CreateAccountResponse>({
@@ -111,11 +103,6 @@ export async function POST({ request, getClientAddress }) {
 }
 
 export async function GET({ request, getClientAddress }) {
-	if (rateLimit.isLimited(getClientAddress()))
-		return json<GetUserResponse>({
-			success: false,
-			error: "rate limited",
-		});
 	const user = await useAuth(request);
 	if (!user) {
 		return json<GetUserResponse>({
@@ -130,11 +117,6 @@ export async function GET({ request, getClientAddress }) {
 }
 
 export async function DELETE({ request, getClientAddress }) {
-	if (rateLimit.isLimited(getClientAddress()))
-		return json<DeleteAccountResponse>({
-			success: false,
-			error: "rate limited",
-		});
 	const user = await useAuth(request);
 	if (!user) {
 		return json<DeleteAccountResponse>({

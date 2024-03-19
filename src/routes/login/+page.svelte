@@ -13,16 +13,20 @@
 
 	let emailInput = "";
 	let passwordInput = "";
-	$: disabled = !emailInput || !passwordInput;
+	let captchaToken = "";
+	$: disabled = !emailInput || !passwordInput || !captchaToken;
 
 	export let data: PageData;
 
 	if (Object.keys(data.user).length !== 0 && browser) goto("/account");
 
+	let shouldLoadCaptcha = false;
+
 	async function logIn() {
 		const res = await SuyuAPI.users.login({
 			email: emailInput,
 			password: passwordInput,
+			captchaToken,
 		});
 		if (!res.success) {
 			// TODO: modal
@@ -38,6 +42,15 @@
 	function enter(e: KeyboardEvent) {
 		if (e.key === "Enter") logIn();
 	}
+	async function captchaComplete(event: CustomEvent<any>) {
+		captchaToken = event.detail.token;
+	}
+
+	onMount(async () => {
+		setTimeout(() => {
+			shouldLoadCaptcha = true;
+		}, 500);
+	});
 </script>
 
 <div
@@ -67,6 +80,11 @@
 				placeholder="Password"
 				on:keydown={enter}
 			/>
+			<div class="h-[78px]">
+				{#if shouldLoadCaptcha}
+					<HCaptcha on:success={captchaComplete} theme="dark" sitekey={PUBLIC_SITE_KEY} />
+				{/if}
+			</div>
 			<button {disabled} on:click={logIn} class="cta-button mt-2">Log in</button>
 		</div>
 	</div>
