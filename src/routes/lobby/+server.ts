@@ -19,11 +19,10 @@ export async function POST({ request, getClientAddress }) {
 	// TODO: per-ip room limit
 	const body: IRoom = await request.json();
 	/* description may contain "### END DESCRIPTION ###" on its own line. if it does, get all lines after that */
-	const parsedDescription = body.description.split("### END DESCRIPTION ###");
-	console.log(parsedDescription);
+	const parsedDescription = body.description?.split("### END DESCRIPTION ###");
 	const description = parsedDescription?.slice(1)?.join("### END DESCRIPTION ###") || "";
 	const opts: { [key: string]: string } = {};
-	description.split("\n").forEach((line) => {
+	description?.split("\n").forEach((line) => {
 		const [key, ...values] = line.split("=");
 		const value = values.join("=").trim();
 		if (!key || !value) return;
@@ -44,6 +43,7 @@ export async function POST({ request, getClientAddress }) {
 	const user = await useAuth(token);
 	console.log(user);
 	if (!user) return new Response(null, { status: 401 });
+	const borkedIp = getClientAddress();
 	const room = RoomManager.createRoom({
 		name: body.name,
 		description: parsedDescription[0] || "",
@@ -57,7 +57,7 @@ export async function POST({ request, getClientAddress }) {
 			},
 		],
 		maxPlayers: body.maxPlayers,
-		ip: `${opts.ip || request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || getClientAddress().split(":").at(-1)}:${body.port}`,
+		ip: `${opts.ip || request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || borkedIp.includes("127.0.0.1") ? "127.0.0.1" : borkedIp}:${body.port}`,
 		host: user,
 		hasPassword: body.hasPassword || false,
 	});
