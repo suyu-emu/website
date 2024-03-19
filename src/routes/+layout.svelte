@@ -17,6 +17,9 @@
 	export let data: PageData;
 
 	// TODO: refactor
+
+	const navigator = browser ? window.navigator : { userAgent: "" };
+
 	interface NavItem {
 		name: string;
 		href: string;
