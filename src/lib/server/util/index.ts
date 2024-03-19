@@ -3,11 +3,12 @@ import type { Role } from "$types/db";
 import { PUBLIC_KEY } from "../secrets/secrets.json";
 import jwt from "jsonwebtoken";
 
-export function json<T>(body: T): Response {
+export function json<T>(body: T, status?: number): Response {
 	return new Response(JSON.stringify(body), {
 		headers: {
 			"content-type": "application/json;charset=UTF-8",
 		},
+		status: status || 200,
 	});
 }
 

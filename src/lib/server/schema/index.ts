@@ -1,5 +1,15 @@
 import type { Role } from "$types/db";
-import { BaseEntity, Column, Entity, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToMany,
+	ManyToOne,
+	OneToMany,
+	OneToOne,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class SuyuUser extends BaseEntity {
@@ -33,17 +43,59 @@ export class SuyuUser extends BaseEntity {
 	})
 	password: string;
 
-	@ManyToMany(() => SuyuUser)
-	friends: SuyuUser[];
+	@OneToMany(() => Friendship, (friendship) => friendship.from, {
+		eager: true,
+	})
+	sentFriendRequests: Friendship[];
+
+	@OneToMany(() => Friendship, (friendship) => friendship.to, {
+		eager: true,
+	})
+	receivedFriendRequests: Friendship[];
+
+	async getFriendRequests() {
+		return await Friendship.find({
+			where: {
+				to: {
+					id: this.id,
+				},
+				accepted: false,
+			},
+			loadEagerRelations: true,
+			relations: ["from", "to"],
+		});
+	}
+
+	async getFriends() {
+		const sent = await Friendship.find({
+			where: {
+				from: this,
+				accepted: true,
+			},
+		});
+		const received = await Friendship.find({
+			where: {
+				to: this,
+				accepted: true,
+			},
+		});
+		return sent.map((f) => f.to).concat(received.map((f) => f.from));
+	}
 }
 
-export class FriendshipRequest extends BaseEntity {
+@Entity()
+export class Friendship extends BaseEntity {
 	@PrimaryGeneratedColumn("uuid")
 	id: string;
 
-	@OneToOne(() => SuyuUser)
+	@ManyToOne(() => SuyuUser, (user) => user.sentFriendRequests)
+	@JoinColumn()
 	from: SuyuUser;
 
-	@OneToOne(() => SuyuUser)
+	@ManyToOne(() => SuyuUser, (user) => user.receivedFriendRequests)
+	@JoinColumn()
 	to: SuyuUser;
+
+	@Column("boolean")
+	accepted: boolean;
 }

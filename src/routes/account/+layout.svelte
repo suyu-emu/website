@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { transition } from "$lib/util/animation";
-	import { onMount } from "svelte";
+	import { onMount, tick } from "svelte";
 	import type { PageData } from "./$types";
 	import { page } from "$app/stores";
 	import { writable } from "svelte/store";
@@ -29,10 +29,10 @@
 			name: "Public Game Lobby",
 			href: "/account/lobby",
 		},
-		{
-			name: "Friends",
-			href: "/account/friends",
-		},
+		// {
+		// 	name: "Friends",
+		// 	href: "/account/friends",
+		// },
 	];
 
 	function navClick(e: MouseEvent | HTMLAnchorElement) {
@@ -141,7 +141,7 @@
 
 	beforeNavigate(({ to }) => {
 		if (!to) return;
-		if (!to.url.pathname.startsWith("/account")) {
+		if (!to.url.pathname.startsWith("/account") && to.url.hostname === location.hostname) {
 			if (navBar.style.opacity === "0") return;
 			navBar.animate(
 				[
@@ -168,12 +168,11 @@
 		}
 	});
 
-	onMount(() => {
-		setTimeout(() => {
-			const items = Array.from(document.querySelectorAll(".navitem")) as HTMLAnchorElement[];
-			const item = items.find((i) => new URL(i.href).pathname === data.url);
-			navClick({ target: item } as unknown as MouseEvent);
-		}, 10);
+	onMount(async () => {
+		await tick(); // if this doesn't work, do setTimeout on 10ms or so
+		const items = Array.from(document.querySelectorAll(".navitem")) as HTMLAnchorElement[];
+		const item = items.find((i) => new URL(i.href).pathname === data.url);
+		navClick({ target: item } as unknown as MouseEvent);
 	});
 </script>
 

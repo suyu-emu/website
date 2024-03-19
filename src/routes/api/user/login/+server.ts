@@ -3,14 +3,7 @@ import { RateLimiter, json } from "$lib/server/util/index.js";
 import type { LoginResponse, LoginRequest } from "$types/api";
 import bcrypt from "bcrypt";
 
-const rateLimit = new RateLimiter();
-
 export async function POST({ request, getClientAddress }) {
-	if (rateLimit.isLimited(getClientAddress()))
-		return json<LoginResponse>({
-			success: false,
-			error: "rate limited",
-		});
 	const body: LoginRequest = await request.json();
 	if (
 		!body.email ||
@@ -29,6 +22,7 @@ export async function POST({ request, getClientAddress }) {
 			email: body.email,
 		},
 		select: ["password", "apiKey"],
+		loadEagerRelations: false,
 	});
 	if (!user)
 		return json<LoginResponse>({
