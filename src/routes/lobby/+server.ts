@@ -44,7 +44,6 @@ export async function POST({ request, getClientAddress }) {
 	const user = await useAuth(token);
 	console.log(user);
 	if (!user) return new Response(null, { status: 401 });
-	console.log(body, getClientAddress());
 	const room = RoomManager.createRoom({
 		name: body.name,
 		description: parsedDescription[0] || "",
@@ -62,5 +61,6 @@ export async function POST({ request, getClientAddress }) {
 		host: user,
 		hasPassword: body.hasPassword || false,
 	});
+	console.log("Room added:", JSON.stringify(room, null, 2));
 	return json(room.toJSON());
 }
