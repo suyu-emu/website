@@ -24,7 +24,7 @@ export async function load({ request }) {
 					.split(".md")
 					.slice(0, -1)
 					.join(".md")
-					.replace(/^\w/gm, (c) => c.toUpperCase());
+					.replace(/^\w/gm, (c) => c?.toUpperCase());
 			// remove title from contents
 			return {
 				contents: contents.split("\n").slice(1).join("\n"),

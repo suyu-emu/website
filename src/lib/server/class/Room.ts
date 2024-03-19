@@ -54,7 +54,7 @@ export class Room {
 			owner: this.host.username,
 			port: parseInt(parsed[1]),
 			game: globalData.games.find(
-				(g) => g.name.toUpperCase().trim() === config.gameName.toUpperCase().trim(),
+				(g) => g.name?.toUpperCase().trim() === config.gameName?.toUpperCase().trim(),
 			),
 		};
 	}
