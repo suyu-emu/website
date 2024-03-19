@@ -1,6 +1,6 @@
 /* api types */
 
-import type { SuyuUser } from "$lib/server/schema";
+import type { Friendship, SuyuUser } from "$lib/server/schema";
 
 export interface GenericFailureResponse {
 	success: false;
@@ -45,3 +45,38 @@ export interface LoginResponseSuccess {
 }
 
 export type LoginResponse = LoginResponseSuccess | GenericFailureResponse;
+
+export interface GetNotificationsResponseSuccess {
+	success: true;
+	notifications: Friendship[];
+}
+
+export type GetNotificationsResponse = GetNotificationsResponseSuccess | GenericFailureResponse;
+
+export interface SendFriendRequestRequest {
+	to: string;
+}
+
+export interface SendFriendRequestResponseSuccess {
+	success: true;
+}
+
+export type SendFriendRequestResponse = SendFriendRequestResponseSuccess | GenericFailureResponse;
+
+export interface DeleteRelationshipRequest {
+	id: string;
+}
+
+export interface DeleteRelationshipResponseSuccess {
+	success: true;
+	friendships: Friendship[];
+}
+
+export type DeleteRelationshipResponse = DeleteRelationshipResponseSuccess | GenericFailureResponse;
+
+export interface GetRelationshipsResponseSuccess {
+	success: true;
+	friendships: Friendship[];
+}
+
+export type GetRelationshipsResponse = GetRelationshipsResponseSuccess | GenericFailureResponse;

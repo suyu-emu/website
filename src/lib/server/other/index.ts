@@ -1,3 +1,5 @@
+import type { Assets } from "../../../routes/api/webhooks/release/+server";
+
 export interface SwitchGame {
 	bannerUrl: string;
 	category: string[];
@@ -23,6 +25,8 @@ export interface SwitchGame {
 	size: number;
 	// version: null;
 }
+
 export const globalData: {
 	games: SwitchGame[];
-} = { games: [] };
+	assets: Assets | null;
+} = { games: [], assets: null };

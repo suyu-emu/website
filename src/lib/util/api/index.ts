@@ -5,7 +5,10 @@ import type { IJwtData } from "$types/auth";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 
-export async function useAuth(request: Request | string): Promise<SuyuUser | null> {
+export async function useAuth(
+	request: Request | string,
+	eager?: boolean,
+): Promise<SuyuUser | null> {
 	const cookies = cookie.parse(
 		typeof request !== "string" ? request.headers.get("cookie") || "" : "",
 	);
@@ -22,6 +25,8 @@ export async function useAuth(request: Request | string): Promise<SuyuUser | nul
 			where: {
 				apiKey: decoded.apiKey,
 			},
+			loadEagerRelations: eager || false,
+			relations: eager ? ["sentFriendRequests", "receivedFriendRequests"] : [],
 		});
 		return user;
 	}
@@ -29,6 +34,8 @@ export async function useAuth(request: Request | string): Promise<SuyuUser | nul
 		where: {
 			apiKey,
 		},
+		loadEagerRelations: eager || false,
+		relations: eager ? ["sentFriendRequests", "receivedFriendRequests"] : [],
 	});
 	return user;
 }

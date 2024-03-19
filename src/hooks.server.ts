@@ -5,6 +5,7 @@ import type { Handle } from "@sveltejs/kit";
 import { WebSocketServer } from "ws";
 import { userRepo } from "$lib/server/repo";
 import { globalData } from "$lib/server/other";
+import type { Assets } from "./routes/api/webhooks/release/+server";
 
 let server: WebSocketServer;
 
@@ -39,12 +40,12 @@ async function setupGames() {
 
 const runAllTheInitFunctions = async () => {
 	if (!db.isInitialized) await db.initialize();
-	if (!server)
-		try {
-			initServer();
-		} catch {
-			console.error("Could not initialize WebSocket server");
-		}
+	// if (!server)
+	// 	try {
+	// 		initServer();
+	// 	} catch {
+	// 		console.error("Could not initialize WebSocket server");
+	// 	}
 	if (globalData.games.length === 0) {
 		await setupGames();
 	}

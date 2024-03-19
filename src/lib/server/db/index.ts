@@ -1,10 +1,10 @@
 import { DataSource } from "typeorm";
-import { SuyuUser } from "../schema";
+import { Friendship, SuyuUser } from "../schema";
 
 export const db = new DataSource({
 	type: "better-sqlite3",
 	database: "db.sqlite",
-	entities: [SuyuUser],
+	entities: [SuyuUser, Friendship],
 	synchronize: true,
 	subscribers: [],
 	migrations: [],

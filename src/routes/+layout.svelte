@@ -149,10 +149,28 @@
 			name: "GitLab",
 			href: "https://gitlab.com/suyu-emu/suyu",
 		},
-		{
-			name: $token || data.tokenCookie ? "Account" : "Sign up",
-			href: $token || data.tokenCookie ? "/account" : "/signup",
-		},
+		// {
+		// 	name: $token || data.tokenCookie ? "Account" : "Sign up",
+		// 	href: $token || data.tokenCookie ? "/account" : "/signup",
+		// },
+		$token || data.tokenCookie
+			? {
+					name: "Account",
+					href: "/account",
+				}
+			: {
+					name: "Sign up",
+					href: "/signup",
+				},
+		$token || data.tokenCookie
+			? {
+					name: "Log out",
+					href: "/logout",
+				}
+			: {
+					name: "Log in",
+					href: "/login",
+				},
 	] as NavItem[];
 
 	$: {
@@ -227,13 +245,15 @@
 	</div>
 {/if}
 
-<div
-	style="background: radial-gradient(50% 50%, rgba(255,0,0,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; left: calc(25% - 400px);"
-/>
+<div class="bg">
+	<div
+		style="background: radial-gradient(50% 50%, rgba(255,0,0,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; left: calc(25% - 400px);"
+	/>
 
-<div
-	style="background: radial-gradient(50% 50%, rgba(0,128,255,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; right: calc(25% - 400px);"
-/>
+	<div
+		style="background: radial-gradient(50% 50%, rgba(0,128,255,0.05), transparent); z-index: -1; width: 800px ;height: 800px; position: fixed; top: -50%; right: calc(25% - 400px);"
+	/>
+</div>
 
 <main
 	class={`min-h-full w-full ${dropdownOpen || !dropdownCloseFinished ? "overflow-hidden" : ""}`}
