@@ -37,7 +37,6 @@ export class Room {
 		// ip: string,
 		config: IRoomConfig,
 	) {
-		const parsed = config.ip.split(":");
 		this.host = config.host;
 		this.roomInfo = {
 			name: config.name,
@@ -46,13 +45,13 @@ export class Room {
 			preferredGameId: config.gameId,
 			players: config.players,
 			maxPlayers: config.maxPlayers,
-			address: parsed[0],
+			address: config.ip,
 			externalGuid: v4(),
 			hasPassword: config.hasPassword,
 			id: v4(),
 			netVersion: 1,
 			owner: this.host.username,
-			port: parseInt(parsed[1]),
+			port: config.port,
 			game: globalData.games.find(
 				(g) => g.name?.toUpperCase().trim() === config.gameName?.toUpperCase().trim(),
 			),

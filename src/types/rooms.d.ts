@@ -27,6 +27,7 @@ export interface IRoomConfig {
 	players: RoomPlayer[];
 	maxPlayers: number;
 	ip: string;
+	port: number;
 	host: SuyuUser;
 }
 
