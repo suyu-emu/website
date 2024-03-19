@@ -58,7 +58,7 @@ export async function POST({ request, getClientAddress }) {
 			},
 		],
 		maxPlayers: body.maxPlayers,
-		ip: `${opts.ip || getClientAddress().split(":").at(-1)}:${body.port}`,
+		ip: `${opts.ip || request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || getClientAddress().split(":").at(-1)}:${body.port}`,
 		host: user,
 		hasPassword: body.hasPassword || false,
 	});
