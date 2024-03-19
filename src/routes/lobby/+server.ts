@@ -57,7 +57,7 @@ export async function POST({ request, getClientAddress }) {
 			},
 		],
 		maxPlayers: body.maxPlayers,
-		ip: `${opts.ip || request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || borkedIp.includes("127.0.0.1") ? "127.0.0.1" : borkedIp}:${body.port}`,
+		ip: `${opts.ip || request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || (borkedIp.includes("127.0.0.1") ? "127.0.0.1" : borkedIp)}:${body.port}`,
 		host: user,
 		hasPassword: body.hasPassword || false,
 	});
