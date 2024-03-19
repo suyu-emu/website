@@ -44,6 +44,7 @@ export async function POST({ request, getClientAddress }) {
 	const user = await useAuth(token);
 	console.log(user);
 	if (!user) return new Response(null, { status: 401 });
+	console.log(body, getClientAddress());
 	const room = RoomManager.createRoom({
 		name: body.name,
 		description: parsedDescription[0] || "",
