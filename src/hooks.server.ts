@@ -6,6 +6,7 @@ import { WebSocketServer } from "ws";
 import { userRepo } from "$lib/server/repo";
 import { globalData } from "$lib/server/other";
 import type { Assets } from "./routes/api/webhooks/release/+server";
+import { RoomManager } from "$lib/server/class/Room";
 
 let server: WebSocketServer;
 
@@ -36,6 +37,7 @@ async function fetchGames() {
 async function setupGames() {
 	await fetchGames();
 	setInterval(fetchGames, 1000 * 60 * 60 * 12);
+	setInterval(RoomManager.checkTimeouts, 1000);
 }
 
 const runAllTheInitFunctions = async () => {
