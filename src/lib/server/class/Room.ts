@@ -5,10 +5,30 @@ import { v4 } from "uuid";
 
 export class RoomManager {
 	private static rooms: Room[] = [];
+	static roomTimeout: Record<string, number> = {}; // room id, last heard from
 	static createRoom(room: IRoomConfig) {
+		const existingRoom = this.rooms.find((r) => r.host.username === room.host.username);
+		if (existingRoom) {
+			existingRoom.delete();
+		}
 		const newRoom = new Room(room);
+		this.roomTimeout[newRoom.roomInfo.id] = Date.now();
 		this.rooms.push(newRoom);
 		return newRoom;
+	}
+
+	static checkTimeouts() {
+		if (!this.rooms) return;
+		const now = Date.now();
+		this.rooms.forEach((room) => {
+			if (now - this.roomTimeout[room.roomInfo.id] > 1000 * 60) {
+				room.delete();
+			}
+		});
+	}
+
+	static refreshRoom(id: string) {
+		this.roomTimeout[id] = Date.now();
 	}
 
 	static getRooms() {
