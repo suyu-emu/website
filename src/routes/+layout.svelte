@@ -290,7 +290,7 @@
 			>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Blog</a>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Docs</a>
-				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">FAQ</a>
+				<a href="/faq" class="px-5 py-3 transition hover:text-white">FAQ</a>
 			</div>
 			<div class="flex w-full flex-row items-center justify-end text-[#A6A5A7]">
 				<div class="flex flex-row gap-4 max-[625px]:hidden">
