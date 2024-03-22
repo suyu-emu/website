@@ -21,13 +21,22 @@ export async function useAuth(
 		const decoded: IJwtData = jwt.verify(token, Buffer.from(PUBLIC_KEY), {
 			algorithms: ["RS256"],
 		}) as IJwtData;
-		const user = await userRepo.findOne({
+		let user = await userRepo.findOne({
 			where: {
 				apiKey: decoded.apiKey,
 			},
 			loadEagerRelations: eager || false,
 			relations: eager ? ["sentFriendRequests", "receivedFriendRequests"] : [],
 		});
+		if (!user) {
+			user = await userRepo.findOne({
+				where: {
+					id: decoded.id,
+				},
+				loadEagerRelations: eager || false,
+				relations: eager ? ["sentFriendRequests", "receivedFriendRequests"] : [],
+			});
+		}
 		return user;
 	}
 	const user = await userRepo.findOne({
