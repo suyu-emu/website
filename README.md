@@ -1,22 +1,14 @@
-# create-svelte
+# Suyu website
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This project contains the source code for the Suyu website, found at [suyu.dev](https://suyu.dev)
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
 ## Developing
+If you are deeloping, please take note of the `.env.example` & the secrets config (found at src/lib/server/secrets/secrets.example.json). 
+At minimum, please make sure to clone the `secrets.example.json` file and rename it to `secrets.json`. Otherwise, the project will not run or build (you don't have to edit the values to get it running, but you can if you'd like).
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), you can start a development server by running:
 
 ```bash
 npm run dev
@@ -27,12 +19,9 @@ npm run dev -- --open
 
 ## Building
 
-To create a production version of your app:
+To create a production version of our app, you can run:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

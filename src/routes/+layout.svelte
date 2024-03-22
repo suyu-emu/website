@@ -142,15 +142,15 @@
 		},
 		{
 			name: "FAQ",
-			href: "/coming-soon",
+			href: "/faq",
 		},
 		{
 			name: "Discord",
 			href: "https://discord.gg/suyu",
 		},
 		{
-			name: "GitLab",
-			href: "https://gitlab.com/suyu-emu/suyu",
+			name: "Git",
+			href: "https://git.suyu.dev/suyu/suyu",
 		},
 		// {
 		// 	name: $token || data.tokenCookie ? "Account" : "Sign up",
@@ -290,13 +290,13 @@
 			>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Blog</a>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Docs</a>
-				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">FAQ</a>
+				<a href="/faq" class="px-5 py-3 transition hover:text-white">FAQ</a>
 			</div>
 			<div class="flex w-full flex-row items-center justify-end text-[#A6A5A7]">
 				<div class="flex flex-row gap-4 max-[625px]:hidden">
 					<a
 						class="p-2 transition hover:text-white"
-						href="https://gitlab.com/suyu-emu/suyu"
+						href="https://git.suyu.dev/suyu/suyu"
 						rel="noreferrer noopener"
 						target="_blank"
 					>
