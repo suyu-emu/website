@@ -70,7 +70,7 @@
 	</p>
 	<div class="flex flex-col gap-4 md:flex-row">
 		<a
-			href="https://suyu.dev/download"
+			href="/download"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="cta-button"
