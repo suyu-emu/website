@@ -18,6 +18,7 @@ export async function GET({ request }) {
 export async function POST({ request, getClientAddress }) {
 	// TODO: per-ip room limit
 	const body: IRoom = await request.json();
+	console.log(body, request.headers);
 	/* description may contain "### END DESCRIPTION ###" on its own line. if it does, get all lines after that */
 	const parsedDescription = body.description?.split("### END DESCRIPTION ###");
 	const description = parsedDescription?.slice(1)?.join("### END DESCRIPTION ###") || "";
