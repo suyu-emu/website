@@ -142,15 +142,15 @@
 		},
 		{
 			name: "FAQ",
-			href: "/coming-soon",
+			href: "/faq",
 		},
 		{
 			name: "Discord",
 			href: "https://discord.gg/suyu",
 		},
 		{
-			name: "GitLab",
-			href: "https://gitlab.com/suyu-emu/suyu",
+			name: "Git",
+			href: "https://git.suyu.dev/suyu/suyu",
 		},
 		// {
 		// 	name: $token || data.tokenCookie ? "Account" : "Sign up",
@@ -296,7 +296,7 @@
 				<div class="flex flex-row gap-4 max-[625px]:hidden">
 					<a
 						class="p-2 transition hover:text-white"
-						href="https://gitlab.com/suyu-emu/suyu"
+						href="https://git.suyu.dev/suyu/suyu"
 						rel="noreferrer noopener"
 						target="_blank"
 					>
