@@ -1,9 +1,8 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    // Note: This is an absolutely terrible and unoptimized way to do this. Feel free to change it xd
     onMount(async () => {
         const UA = navigator.userAgent;
-        const url = `https://gitlab.com/api/v4/projects/55558123/releases`; // 55558123 = Suyu repo ID
+        const url = `https://gitlab.com/api/v4/projects/55919530/repository/tree`;
         async function getTag() { 
             try {
                 const response = await fetch(url, {
@@ -12,12 +11,39 @@
                     },
                 });
                 // Convert to JSON
-                const releases = await response.json();
+                let files = await response.json();
                 
+                files = files.filter((f) => f.name.startsWith("v") && f.type === "tree");
+                // get the latest release using the version number
+                // thanks, copilot!!
+                const latestRelease = files.reduce((a, b) => {
+                    const aVersion = a.name.replace("v", "").split(".");
+                    const bVersion = b.name.replace("v", "").split(".");
+                    if (aVersion[0] > bVersion[0]) {
+                        return a;
+                    } else if (aVersion[0] < bVersion[0]) {
+                        return b;
+                    } else {
+                        if (aVersion[1] > bVersion[1]) {
+                            return a;
+                        } else if (aVersion[1] < bVersion[1]) {
+                            return b;
+                        } else {
+                            if (aVersion[2] > bVersion[2]) {
+                                return a;
+                            } else if (aVersion[2] < bVersion[2]) {
+                                return b;
+                            } else {
+                                return a;
+                            }
+                        }
+                    }
+                });
+
                 // Release found
-                if (releases && releases.length > 0) {
-                    console.log("Latest release tag:", releases[0].tag_name);
-                    return releases[0].tag_name; // Assuming the first result is the latest
+                if (latestRelease) {
+                    console.log("Latest release tag:", latestRelease.name);
+                    return latestRelease.name; // Assuming the first result is the latest
                 } else {
                     console.log("No releases found.");
                     return null;
@@ -28,7 +54,6 @@
             }
         }
         const latestRelease = await getTag();
-        // give it time so the user can see the message
         setTimeout(() => {
             if (UA.includes("Windows")) {
                 window.location.href = `https://gitlab.com/suyu-emu/suyu-releases/-/raw/master/${latestRelease}/Suyu-Windows_x64.7z`;

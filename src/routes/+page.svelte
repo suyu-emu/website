@@ -72,7 +72,6 @@
 	<div class="flex flex-col gap-4 md:flex-row">
 		<a
 			href="/download"
-			target="_blank"
 			rel="noreferrer noopener"
 			class="cta-button"
 		>
