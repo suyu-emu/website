@@ -52,7 +52,7 @@
 						{player.nickname}{#if player !== room.players[room.players.length - 1]},{" "}
 						{/if}
 					{/each}
-				{/if} | {room.hasPassword ? "Private" : "Public"} | {room.address}:{room.port}
+				{/if} | {room.hasPassword ? "Private" : "Public"}
 			</div>
 		</div>
 	</div>
