@@ -2,6 +2,7 @@
 	import embedImage from "$assets/branding/suyu__Embed-Image.png";
 	import type { PageData } from "./$types";
 	import suyuWindow from "$assets/mockups/suyuwindow.png";
+	import HomepageCounter from "$components/HomepageCounter.svelte";
 	import { XCircleOutline } from "flowbite-svelte-icons";
 	import { Dialog } from "radix-svelte";
 
@@ -76,12 +77,10 @@
 			class="cta-button"
 		>
 				Download <svg
-				class=""
-				style="--icon-color:#000"
 				width="16"
 				height="16"
 				viewBox="0 0 16 16"
-				fill="#000"
+				fill="currentColor"
 				role="img"
 				focusable="false"
 				aria-hidden="true"
@@ -97,12 +96,10 @@
 			class="button text-[#8A8F98]"
 		>
 			Contribute <svg
-				class=""
-				style="--icon-color:#8A8F98"
 				width="16"
 				height="16"
 				viewBox="0 0 16 16"
-				fill="#8A8F98"
+				fill="currentColor"
 				role="img"
 				focusable="false"
 				aria-hidden="true"
@@ -119,60 +116,10 @@
 		class="flex w-full flex-shrink-0 flex-col gap-8 rounded-b-[2.25rem] bg-[#110d10] p-12 lg:w-[35%]"
 	>
 		<h1 class="text-[48px] leading-[0.9]">By the numbers</h1>
-		<div class="flex flex-col gap-0">
-			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
-				<!-- <AnimatedCounter
-					values={Array.from({ length: contributors + 1 }, (_, i) => i.toString())}
-					startImmediately={false}
-					direction="up"
-					loop={false}
-					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-					initialValue={(contributors - 1).toString()}
-				/>+ -->
-				{contributors}+
-			</h2>
-			<div class="text-[#A6A5A7]">dedicated contributors</div>
-		</div>
-		<div class="flex flex-col gap-0">
-			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
-				{starCount}+
-			</h2>
-			<div class="text-[#A6A5A7]">GitLab stars</div>
-		</div>
-		<div class="flex flex-col gap-0">
-			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
-				<!-- <AnimatedCounter
-					values={// array from 0 - 4000 with steps of 100
-					Array.from({ length: 41 }, (_, i) => (i * 100).toString())}
-					startImmediately={false}
-					direction="up"
-					loop={false}
-					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-					initialValue={"3900"}
-				/>+ -->
-				4000+
-			</h2>
-			<div class="text-[#A6A5A7]">supported games</div>
-		</div>
-		<div class="flex flex-col gap-0">
-			<h2 class="flex items-center gap-1 text-[40px] leading-[1.1]">
-				<!-- <AnimatedCounter
-					values={Array.from(
-						{
-							length: memberCount / 100 + 1,
-						},
-						(_, i) => (i * 100).toString(),
-					)}
-					startImmediately={false}
-					direction="up"
-					loop={false}
-					ease="cubic-bezier(0.25, 0.1, 0.25, 1)"
-					initialValue={(memberCount - 100).toString()}
-				/>+ -->
-				{memberCount}+
-			</h2>
-			<div class="text-[#A6A5A7]">members on Discord</div>
-		</div>
+		<HomepageCounter count={contributors} subText="dedicated contributors" />
+		<HomepageCounter count={starCount} subText="GitLab stars" />
+		<HomepageCounter count={4000} subText="supported games" />
+		<HomepageCounter count={memberCount} subText="members on Discord" />
 	</div>
 	<div class="flex w-full flex-1 rounded-[2.25rem] bg-[#110d10] lg:rounded-tl-none">
 		<div
