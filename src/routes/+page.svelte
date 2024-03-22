@@ -71,7 +71,7 @@
 	</p>
 	<div class="flex flex-col gap-4 md:flex-row">
 		<a
-			href="https://gitlab.com/suyu-emu/suyu/-/releases"
+			href="/download"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="cta-button"
@@ -90,7 +90,7 @@
 			>
 		</a>
 		<a
-			href="https://gitlab.com/suyu-emu/suyu"
+			href="https://git.suyu.dev/suyu/suyu"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
@@ -180,14 +180,14 @@
 		</svg>
 	</a>
 	<a
-		href="https://gitlab.com/suyu-emu/suyu"
+		href="https://git.suyu.dev/suyu/suyu"
 		target="_blank"
 		rel="noreferrer noopener"
 		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
 	>
-		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitLab</h2>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Git</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			GitLab is where all the magic of suyu happens. We're always looking for new contributors
+			Our Git instance is where all the magic of suyu happens. We're always looking for new contributors
 			to help us out, so feel free to check out our code.
 		</p>
 		<svg
