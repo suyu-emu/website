@@ -66,5 +66,11 @@ export async function POST({ request, getClientAddress }) {
 		hasPassword: body.hasPassword || false,
 	});
 	console.log("Room added:", JSON.stringify(room, null, 2));
+	// push every room to the top which starts with `[SUYU OFFICIAL]` and was created with username "suyu"
+	const suyuRoom = RoomManager.rooms.find((r) => r.roomInfo.name.startsWith("[SUYU OFFICIAL]"));
+	if (suyuRoom && user.username === "suyu") {
+		RoomManager.rooms.splice(RoomManager.rooms.indexOf(suyuRoom), 1);
+		RoomManager.rooms.unshift(suyuRoom);
+	}
 	return json(room.toJSON());
 }
