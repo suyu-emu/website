@@ -4,7 +4,7 @@ import type { SuyuUser } from "../schema";
 import { v4 } from "uuid";
 
 export class RoomManager {
-	private static rooms: Room[] = [];
+	static rooms: Room[] = [];
 	static roomTimeout: Record<string, number> = {}; // room id, last heard from
 	static createRoom(room: IRoomConfig) {
 		const existingRoom = this.rooms.find((r) => r.host.username === room.host.username);
