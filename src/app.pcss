@@ -41,6 +41,22 @@ h3 {
 	@apply outline-none ring-2 ring-sky-400;
 }
 
+::-webkit-scrollbar {
+	@apply w-[8px];
+}
+
+::-webkit-scrollbar-track {
+	@apply bg-[var(--page-bg)]
+}
+
+::-webkit-scrollbar-thumb {
+	@apply rounded-xl bg-[#3c4f7c]
+}
+
+::-webkit-scrollbar-thumb:hover {
+	@apply bg-[#526ca8]
+}
+
 .cta-button {
 	background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
 		radial-gradient(109.26% 109.26% at 49.83% 13.37%, #ffffff 0%, #babaca 100%);
