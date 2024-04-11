@@ -23,6 +23,8 @@
 	interface NavItem {
 		name: string;
 		href: string;
+		title: string;
+		target: string;
 	}
 
 	const token = writable(data.tokenCookie || "");
@@ -135,22 +137,38 @@
 		{
 			name: "Blog",
 			href: "/coming-soon",
+			title: "Coming Soon",
+			target: "_self",
 		},
 		{
 			name: "Docs",
 			href: "/coming-soon",
+			title: "Coming Soon",
+			target: "_self",
 		},
 		{
 			name: "FAQ",
 			href: "/faq",
+			title: "Coming Soon",
+			target: "_self",
 		},
-		{
-			name: "Discord",
-			href: "https://discord.gg/suyu",
-		},
+		// {
+		// 	name: "Compatibility",
+		// 	href: "/compatibility",
+		// 	title: "Compatibility",
+		// 	target: "_self",
+		// },
+		// {
+		// 	name: "Matrix",
+		// 	href: "",
+		// 	title: "Suyu Matrix Server",
+		// 	target: "_blank",
+		// },
 		{
 			name: "Git",
 			href: "https://git.suyu.dev/suyu/suyu",
+			title: "Suyu Git Repo",
+			target: "_blank",
 		},
 		// {
 		// 	name: $token || data.tokenCookie ? "Account" : "Sign up",
@@ -278,38 +296,42 @@
 			<div class="flex w-full flex-row items-center justify-start gap-8">
 				<a
 					href="/"
+					title="Suyu Home"
 					on:click={() => {
-						if (dropdownOpen && window.innerWidth < 625) toggleDropdown();
+						if (dropdownOpen && window.innerWidth < 800) toggleDropdown();
 					}}
 				>
 					<Logo size={28} />
 				</a>
 			</div>
 			<div
-				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7] max-[625px]:hidden"
+				class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7] max-[800px]:hidden"
 			>
-				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Blog</a>
-				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white">Docs</a>
-				<a href="/faq" class="px-5 py-3 transition hover:text-white">FAQ</a>
+				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Blog</a>
+				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Docs</a>
+				<a href="/faq" class="px-5 py-3 transition hover:text-white" title="Coming Soon">FAQ</a>
+				<!-- <a href="/compatibility" class="px-5 py-3 transition hover:text-white" title="Compatibility">Compatibility</a> -->
 			</div>
 			<div class="flex w-full flex-row items-center justify-end text-[#A6A5A7]">
-				<div class="flex flex-row gap-4 max-[625px]:hidden">
+				<div class="flex flex-row gap-4 max-[800px]:hidden">
 					<a
 						class="p-2 transition hover:text-white"
 						href="https://git.suyu.dev/suyu/suyu"
 						rel="noreferrer noopener"
 						target="_blank"
+						title="Suyu Git Repo"
 					>
 						<CodeBranchOutline />
 					</a>
-					<a
+					<!-- <a
 						class="p-2 transition hover:text-white"
-						href="https://discord.gg/suyu"
+						href=""
 						rel="noreferrer noopener"
 						target="_blank"
+						title="Suyu Matrix Server"
 					>
 						<DiscordSolid />
-					</a>
+					</a> -->
 					{#if $token}
 						<!-- <a href={$token ? "/account" : "/signup"} class="button-sm"
 						>{$token ? "Account" : "Sign up"}</a
@@ -321,7 +343,7 @@
 						<a href="/signup" class="button-sm">Sign up</a>
 					{/if}
 				</div>
-				<div class="relative mr-4 hidden flex-row gap-4 max-[625px]:flex">
+				<div class="relative mr-4 hidden flex-row gap-4 max-[800px]:flex">
 					<button
 						aria-label={dropdownOpen ? "Close navigation" : "Open navigation"}
 						aria-expanded={dropdownOpen}
@@ -399,6 +421,8 @@
 						? 'translate-y-0 opacity-100 filter-none'
 						: '-translate-y-24 opacity-0 blur-md'} "
 					href={item.href}
+					title={item.title}
+					target={item.target}
 					on:click={() => toggleDropdown()}
 				>
 					<h1 class="w-full text-5xl">{item.name}</h1>

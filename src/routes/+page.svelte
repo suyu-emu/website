@@ -8,8 +8,8 @@
 
 	export let data: PageData;
 	$: memberCount = parseFloat(data.memberCount?.toPrecision(2));
-	$: contributors = parseFloat(data.roleMembers?.["1214817156420862012"]?.toPrecision(2));
-	$: gitCommits = parseFloat(data.gitCommits?.toPrecision(2));
+	$: contributors = parseFloat(data.roleMembers["1214817156420862012"]?.toPrecision(2));
+	$: starCount = parseFloat(data.starCount?.toPrecision(2));
 	let metadata = {
 		url: "https://suyu.dev",
 		title: "suyu - Open-source, non-profit Switch emulator",
@@ -40,6 +40,12 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
+<article class="border-l-[4px] border-solid border-color-[#DBDBDB] rounded-[10px] bg-[#110d10] pt-[10px] inline-block mb-[20px]">
+<div class="ml-[10px]">
+	<p class="text-[20px] font-bold mb-[2px]">Notice: Suyu Discord Deleted</p>
+	<p class="text-[#A6A5A7] pb-[10px] mr-[12px]">The Suyu Discord Server has been unlawfully DMCA'd, by who we believe is Nintendo Co., Ltd. Whilst we are not pressing charges, we will continue with the development of the emulator as intended. We are moving our communications to a self-hosted Matrix Server for the foreseeable future. Please check back within the next 48 hours for an update as our dev team works hard behind the scenes to get the server implemented. Thank you for sticking with us through this tough journey. We will continue to fight for the right to legal emulation, as shown in <a href="https://www.copyright.gov/fair-use/summaries/sony-connectix-9thcir2000.pdf" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]"><i>Sega Enterprises Ltd. v. Accolade, Inc.</i></a> and <a href="https://www.copyright.gov/fair-use/summaries/sony-connectix-9thcir2000.pdf" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]"><i>Sony Computer Entertainment v. Connectix Corporation</i></a>. We are curerntly in the process of auditing our code for copyright infringing content. If you would like to assist, please contribute to the project via our Git. Thank you.</p>
+</div>
+</article>
 <div
 	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-[#110d10] p-8 md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
 >
@@ -70,8 +76,13 @@
 		and open-source, forever.
 	</p>
 	<div class="flex flex-col gap-4 md:flex-row">
-		<a href="/download" rel="noreferrer noopener" class="cta-button">
-			Download <svg
+		<a
+			href="/download"
+			rel="noreferrer noopener"
+			class="cta-button"
+			title="Download Suyu"
+		>
+				Download <svg
 				width="16"
 				height="16"
 				viewBox="0 0 16 16"
@@ -89,6 +100,7 @@
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
+			title="Suyu Git Repo"
 		>
 			Contribute <svg
 				width="16"
@@ -148,16 +160,13 @@
 </div>
 
 <div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
-	<a
-		href="https://discord.gg/suyu/"
-		target="_blank"
-		rel="noreferrer noopener"
-		class="relative w-full rounded-[2.25rem] bg-[#5451ff] p-12"
+	<div
+		class="relative w-full rounded-[2.25rem] bg-[#662d91] p-12"
+		title="Suyu Matrix Server"
 	>
-		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discord</h2>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Matrix</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Join our Discord server to chat with {memberCount}+ suyu users and developers. Get the
-			latest updates and help with any issues you have.
+			Our new Matrix Server is currently being implemented. Please check back here soon for more details. Please view the notice at the top of the page for more information. Thank you.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -166,24 +175,25 @@
 			stroke="currentColor"
 			class="absolute right-12 top-12 h-12 w-12"
 		>
-			<path
+			<!-- <path
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				stroke-width="4"
 				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-			/>
+			/> -->
 		</svg>
-	</a>
+	</div>
 	<a
 		href="https://git.suyu.dev/suyu/suyu"
 		target="_blank"
 		rel="noreferrer noopener"
 		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
+		title="Suyu Git Repo"
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Git</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Our Git instance is where all the magic of suyu happens. We're always looking for new
-			contributors to help us out, so feel free to check out our code.
+			Our Git instance is where all the magic of suyu happens. We're always looking for new contributors
+			to help us out, so feel free to check out our code.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
