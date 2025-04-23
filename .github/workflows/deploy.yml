@@ -50,6 +50,9 @@ jobs:
 
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
+      
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Browserlist Fix
         run: npx update-browserslist-db@latest --legacy-peer-deps
