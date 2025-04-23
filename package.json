@@ -77,9 +77,3 @@
 		"ws": "^8.16.0"
 	}
 }
-
-{
-  "scripts": {
-    "build": "vite build"
-  }
-}
