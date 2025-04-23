@@ -18,7 +18,7 @@ export async function useAuth(
 	}
 	if (apiKey.startsWith("Bearer ")) {
 		const token = apiKey.replace("Bearer ", "");
-		const decoded: IJwtData = jwt.verify(token, Buffer.from(PUB_KEY), {
+		const decoded: IJwtData = jwt.verify(token, PUB_KEY, {
 			algorithms: ["RS256"],
 		}) as IJwtData;
 		let user = await userRepo.findOne({
