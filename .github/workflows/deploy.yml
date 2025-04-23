@@ -24,19 +24,19 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps  # Added --legacy-peer-deps flag
 
       - name: Svelte Kit Latest Installation
-        run: npm install @sveltejs/kit@latest
+        run: npm install @sveltejs/kit@latest --legacy-peer-deps
 
       - name: Install Pages Adapter
-        run: npm install @sveltejs/adapter-static@latest
+        run: npm install @sveltejs/adapter-static@latest --legacy-peer-deps
      
       - name: Install Cheerio
-        run: npm install cheerio
+        run: npm install cheerio --legacy-peer-deps
 
-      - name: Flowbite fixing
-        run: npm install flowbite-svelte-icons@latest
+      - name: Flowbite Fixing
+        run: npm install flowbite-svelte-icons@latest --legacy-peer-deps
 
       - name: Update Dependencies
         run: npm update
