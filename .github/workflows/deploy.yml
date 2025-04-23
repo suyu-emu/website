@@ -18,6 +18,9 @@ jobs:
    
       - name: Clear npm cache
         run: npm cache clean --force
+
+      - name: Clear Dependency Cache
+        run: rm -rf node_modules package-lock.json && npm cache clean --force
   
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -39,8 +42,8 @@ jobs:
       - name: Install Cheerio
         run: npm install cheerio --legacy-peer-deps
 
-      - name: Flowbite Fixing
-        run: npm install flowbite-svelte-icons@latest --legacy-peer-deps
+      - name: Install Specific Version of flowbite-svelte-icons
+        run: npm install flowbite-svelte-icons@1.0.0 --legacy-peer-deps
 
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
