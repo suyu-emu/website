@@ -159,9 +159,9 @@
 			target: "_blank",
 		},
 		{
-			name: "Discord",
-			href: "https://discord.gg/suyu",
-			title: "Suyu Discord Server",
+			name: "Reddit",
+			href: "https://www.reddit.com/r/suyu/",
+			title: "Suyu Reddit",
 			target: "_blank",
 		},
 		{
@@ -325,10 +325,10 @@
 					</a>
 					<a
 						class="p-2 transition hover:text-white"
-						href="https://discord.gg/suyu"
+						href="https://www.reddit.com/r/suyu/"
 						rel="noreferrer noopener"
 						target="_blank"
-						title="Suyu Discord Server"
+						title="Suyu Reddit"
 					>
 						<DiscordSolid />
 					</a>
