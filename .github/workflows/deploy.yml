@@ -3,7 +3,7 @@ name: Deploy Svelte to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this if your default branch isn't 'main'
+      - dev  # Change this if your default branch isn't 'main'
 
 jobs:
   deploy:
