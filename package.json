@@ -28,7 +28,7 @@
 		"express": "^4.18.3",
 		"flowbite": "^2.3.0",
 		"flowbite-svelte": "^0.44.24",
-		"flowbite-svelte-icons": "1",
+		"flowbite-svelte-icons": "^1.6.2",
 		"nintendo-switch-eshop": "^7.1.3",
 		"postcss": "^8.4.32",
 		"postcss-load-config": "^5.0.2",
