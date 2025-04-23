@@ -42,8 +42,11 @@ jobs:
       - name: Install Cheerio
         run: npm install cheerio --legacy-peer-deps
 
+      - name: Flowbite Version Check
+        run: npm show flowbite-svelte-icons versions
+
       - name: Install Specific Version of flowbite-svelte-icons
-        run: npm install flowbite-svelte-icons@1.0.0 --legacy-peer-deps
+        run: npm install flowbite-svelte-icons@1 --legacy-peer-deps
 
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
