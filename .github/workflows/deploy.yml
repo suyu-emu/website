@@ -7,8 +7,7 @@ on:
 
 env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
-  HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_SITE_KEY }}
-  HCAPTCHA_SECRET_KEY: ${{ secrets.HCAPTCHA_SECRET_KEY }}
+  HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_KEY }}
 
 jobs:
   deploy:
@@ -30,8 +29,7 @@ jobs:
 
       - name: Build
         env:
-          HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_SITE_KEY }}
-          HCAPTCHA_SECRET_KEY: ${{ secrets.HCAPTCHA_SECRET_KEY }}
+          HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_KEY }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
