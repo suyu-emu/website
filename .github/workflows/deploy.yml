@@ -9,6 +9,7 @@ env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
   HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
   PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
 jobs:
   deploy:
