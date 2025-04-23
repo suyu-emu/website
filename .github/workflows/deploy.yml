@@ -25,9 +25,15 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        
+      - name: Update  
+        run: npm update
 
       - name: Install Pages Adapter
         run: npm install @sveltejs/adapter-static
+     
+      - name: Install Cheerio
+        run: npm install cheerio
 
       - name: Build
         env:
