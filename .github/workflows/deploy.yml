@@ -35,6 +35,9 @@ jobs:
       - name: Install Cheerio
         run: npm install cheerio
 
+      - name: Flowbite fixing
+        run: npm install flowbite-svelte-icons@latest
+
       - name: Update Dependencies
         run: npm update
 
