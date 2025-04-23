@@ -38,9 +38,6 @@ jobs:
       - name: Flowbite Fixing
         run: npm install flowbite-svelte-icons@latest --legacy-peer-deps
 
-      - name: Update Dependencies
-        run: npm update
-
       - name: Build
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
