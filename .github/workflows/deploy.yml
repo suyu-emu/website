@@ -49,7 +49,7 @@ jobs:
         run: npm install flowbite-svelte-icons@1 --legacy-peer-deps
 
       - name: Bar3Icon stuff
-        run: npm install svelte-heroicons --save-dev
+        run: npm i svelte-hero-icons --save-dev
 
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
