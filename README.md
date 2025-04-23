@@ -1,3 +1,5 @@
+[![Deploy Svelte to GitHub Pages](https://github.com/suyu-emu/website/actions/workflows/deploy.yml/badge.svg)](https://github.com/suyu-emu/website/actions/workflows/deploy.yml)
+
 # Suyu website
 
 This project contains the source code for the Suyu website, found at [suyu.dev](https://suyu.dev)
