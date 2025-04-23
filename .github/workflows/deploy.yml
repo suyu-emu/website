@@ -4,8 +4,11 @@ on:
   push:
     branches:
       - dev  # Change this if your default branch isn't 'main'
+
 env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
+  HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_SITE_KEY }}
+  HCAPTCHA_SECRET_KEY: ${{ secrets.HCAPTCHA_SECRET_KEY }}
 
 jobs:
   deploy:
@@ -26,6 +29,9 @@ jobs:
         run: npm install @sveltejs/adapter-static
 
       - name: Build
+        env:
+          HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_SITE_KEY }}
+          HCAPTCHA_SECRET_KEY: ${{ secrets.HCAPTCHA_SECRET_KEY }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
