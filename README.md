@@ -6,7 +6,7 @@ This project contains the source code for the Suyu website, found at [suyu.dev](
 
 
 ## Developing
-If you are deeloping, please take note of the `.env.example` & the secrets config (found at src/lib/server/secrets/secrets.example.json). 
+If you are developing, please take note of the `.env.example` & the secrets config (found at src/lib/server/secrets/secrets.example.json). 
 At minimum, please make sure to clone the `secrets.example.json` file and rename it to `secrets.json`. Otherwise, the project will not run or build (you don't have to edit the values to get it running, but you can if you'd like).
 
 
