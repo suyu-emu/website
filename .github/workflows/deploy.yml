@@ -6,7 +6,7 @@ on:
       - dev  # Change this if your default branch isn't 'main'
 
 env:
-  PUBLIC_SITE_KEY: ${{ secrets.PUB_KEY }}
+  PUB_KEY: ${{ secrets.PUB_KEY }}
   HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
 
 jobs:
