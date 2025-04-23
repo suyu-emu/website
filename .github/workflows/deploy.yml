@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dev  # Change this if your default branch isn't 'main'
+env:
+  PUB_KEY: ${{ secrets.PUB_KEY }}
 
 jobs:
   deploy:
