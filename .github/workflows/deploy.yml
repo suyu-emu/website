@@ -51,6 +51,9 @@ jobs:
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
 
+      - name: Browserlist Fix
+        run: npx update-browserslist-db@latest --legacy-peer-deps
+
       - name: Build
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
