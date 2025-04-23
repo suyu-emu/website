@@ -1,51 +1,44 @@
 import { building } from "$app/environment";
-import { DISCORD_USER_TOKEN } from "$env/static/private";
+import fetch from "node-fetch";
+import cheerio from "cheerio";
 
-let memberCount = 0;
-let roleMembers = {
-	"1214817156420862012": 50,
+let subredditStats = {
+    subscriberCount: 0,
+    activeUsers: 0,
 };
-let gitCommits = 0;
 
-async function fetchServerSideData() {
-	console.log("Fetching member count");
+async function fetchSubredditStats() {
+    console.log("Fetching subreddit statistics from r/suyu");
 
-	const promises = [
-		fetch("https://discord.com/api/v9/invites/suyu?with_counts=true&with_expiration=true"),
-		DISCORD_USER_TOKEN
-			? fetch("https://discord.com/api/v9/guilds/1214371687114477618/roles/member-counts", {
-					headers: {
-						Authorization: DISCORD_USER_TOKEN,
-					},
-				})
-			: Promise.resolve({ json: () => roleMembers }),
-		fetch('https://git.suyu.dev/api/v1/repos/suyu/suyu/commits?stat=false&verification=false&files=false&limit=1')
-	];
+    try {
+        // Fetch the HTML of the subreddit
+        const response = await fetch("https://www.reddit.com/r/suyu/");
+        const html = await response.text();
 
-	const [res, roles, git] = await Promise.all(promises);
-	const jsonPromises = [res.json(), roles.json()];
-	const [resJson, rolesJson] = await Promise.all(jsonPromises);
+        // Load the HTML into Cheerio
+        const $ = cheerio.load(html);
 
-	
-	memberCount = resJson.approximate_member_count;
-	gitCommits = parseInt(git?.headers?.get('x-total'), 10) || 0;
-	if (DISCORD_USER_TOKEN) roleMembers = rolesJson;
+        // Extract statistics
+        const subscriberText = $("._3XFx6CfPlg-4Usgxm0gK8R").first().text(); // Subscriber count
+        const activeUserText = $("._3XFx6CfPlg-4Usgxm0gK8R").last().text(); // Active user count
 
-	console.log("Member count:", memberCount);
-	console.log('Git commit count:', gitCommits);
+        // Parse numbers from the text
+        subredditStats.subscriberCount = parseInt(subscriberText.replace(/\D/g, ""), 10) || 0;
+        subredditStats.activeUsers = parseInt(activeUserText.replace(/\D/g, ""), 10) || 0;
+
+        console.log("Fetched subreddit statistics:", subredditStats);
+    } catch (error) {
+        console.error("Error scraping subreddit statistics:", error);
+    }
 }
 
 if (!building) {
-	await fetchServerSideData();
-	setInterval(fetchServerSideData, 1000 * 60 * 10);
+    await fetchSubredditStats();
+    setInterval(fetchSubredditStats, 1000 * 60 * 10); // Refresh every 10 minutes
 }
 
-export async function load({ cookies }) {
-	const token = cookies.get("token");
-	return {
-		tokenCookie: token,
-		memberCount,
-		roleMembers,
-		gitCommits
-	};
+export async function load() {
+    return {
+        subredditStats,
+    };
 }
