@@ -35,6 +35,9 @@ jobs:
       - name: Install Cheerio
         run: npm install cheerio
 
+      - name: Update Dependencies
+        run: npm update
+
       - name: Build
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
