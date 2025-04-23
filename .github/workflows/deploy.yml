@@ -6,8 +6,8 @@ on:
       - dev  # Change this if your default branch isn't 'main'
 
 env:
-  PUB_KEY: ${{ secrets.PUB_KEY }}
-  HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_KEY }}
+  PUBLIC_SITE_KEY: ${{ secrets.PUB_KEY }}
+  HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
 
 jobs:
   deploy:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Build
         env:
-          HCAPTCHA_SITE_KEY: ${{ secrets.HCAPTCHA_KEY }}
+          HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
