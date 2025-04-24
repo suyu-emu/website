@@ -2,8 +2,8 @@ name: Deploy Svelte Site to GitHub Pages
 
 on:
   push:
-    branches:
-      - dev  # Trigger deployment on changes to the dev branch
+    branches: [dev]
+  workflow_dispatch:
 
 env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
@@ -14,8 +14,15 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     permissions:
-      contents: write  # Ensure the job has the necessary permissions to push to the branch
+      pages: write
+      contents: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Clear npm cache
@@ -80,8 +87,12 @@ jobs:
           PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist  # Ensure this matches the build output directory
+          name: github-pages
+          path: build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
