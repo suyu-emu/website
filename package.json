@@ -4,8 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
-		"build-prod": "vite build && pm2 restart suyu-site",
+		"build": "vite build --mode production",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -49,7 +48,6 @@
 		"@sveltejs/enhanced-img": "^0.1.8",
 		"carbon-components-svelte": "^0.84.0",
 		"cheerio": "^1.0.0-rc.12",
-		"prism-themes": "^1.9.0",
 		"radix-svelte": "^0.9.0",
 		"reflect-metadata": "^0.2.1",
 		"sequelize": "^6.37.1",

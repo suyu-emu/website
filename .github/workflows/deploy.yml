@@ -5,12 +5,6 @@ on:
     branches: [dev]
   workflow_dispatch:
 
-env:
-  PUB_KEY: ${{ secrets.PUB_KEY }}
-  HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
-  PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
-  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -42,10 +36,7 @@ jobs:
         run: pnpm install
 
       - name: Build the Site
-        env:
-          HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
-          PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
-        run: pnpm run build -- --mode production
+        run: pnpm run build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

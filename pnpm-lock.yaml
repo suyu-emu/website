@@ -26,9 +26,6 @@ importers:
       cheerio:
         specifier: ^1.0.0-rc.12
         version: 1.0.0
-      prism-themes:
-        specifier: ^1.9.0
-        version: 1.9.0
       radix-svelte:
         specifier: ^0.9.0
         version: 0.9.0(svelte@4.2.19)
@@ -3103,9 +3100,6 @@ packages:
   pretty-hrtime@1.0.3:
     resolution: {integrity: sha512-66hKPCr+72mlfiSjlEB1+45IjXSqvVAIy6mocupoww4tBFE9R9IhwwUGoI4G++Tc9Aq+2rxOt0RFU6gPcrte0A==}
     engines: {node: '>= 0.8'}
-
-  prism-themes@1.9.0:
-    resolution: {integrity: sha512-tX2AYsehKDw1EORwBps+WhBFKc2kxfoFpQAjxBndbZKr4fRmMkv47XN0BghC/K1qwodB1otbe4oF23vUTFDokw==}
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -7394,8 +7388,6 @@ snapshots:
   prettier@3.5.3: {}
 
   pretty-hrtime@1.0.3: {}
-
-  prism-themes@1.9.0: {}
 
   process-nextick-args@2.0.1: {}
 
