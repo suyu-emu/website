@@ -1,9 +1,9 @@
-name: Deploy Svelte to Dev Branch
+name: Deploy Svelte Site to GitHub Pages
 
 on:
   push:
     branches:
-      - dev  # Ensure this matches your desired branch for deployment
+      - dev  # Trigger deployment on changes to the dev branch
 
 env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
@@ -12,7 +12,7 @@ env:
   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Ensure the job has the necessary permissions to push to the branch
@@ -23,7 +23,7 @@ jobs:
 
       - name: Clear Dependency Cache
         run: rm -rf node_modules package-lock.json && npm cache clean --force
-  
+
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -33,14 +33,14 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps  # Added --legacy-peer-deps flag
+        run: npm install --legacy-peer-deps
 
       - name: Svelte Kit Latest Installation
         run: npm install @sveltejs/kit@latest --legacy-peer-deps
 
       - name: Install Pages Adapter
         run: npm install @sveltejs/adapter-static@latest --legacy-peer-deps
-     
+
       - name: Install Cheerio
         run: npm install cheerio --legacy-peer-deps
 
@@ -55,13 +55,13 @@ jobs:
 
       - name: svelte simple icons
         run: npm i svelte-simple-icons --save-dev
-    
+
       - name: svelte-heros-v2
         run: npm install svelte-heros-v2 @icons-pack/svelte-simple-icons --legacy-peer-deps
 
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
-      
+
       - name: Install pnpm
         run: npm install -g pnpm
 
@@ -69,20 +69,19 @@ jobs:
         run: npx update-browserslist-db@latest --legacy-peer-deps
 
       - name: Rebuild Native Modules
-        run: npm rebuild bcrypt --build-from-source  
+        run: npm rebuild bcrypt --build-from-source
 
       - name: Verify bcrypt Installation
         run: ls -l node_modules/.pnpm/bcrypt*
 
-      - name: Build
+      - name: Build the Site
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
           PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
         run: npm run build
 
-      - name: Deploy to Dev Branch
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
-          publish_branch: dev  # Ensure deployment happens to the dev branch
+          publish_dir: dist  # Ensure this matches the build output directory
