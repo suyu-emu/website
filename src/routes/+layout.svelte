@@ -3,8 +3,8 @@
     import { onMount, onDestroy } from "svelte";
     import Logo from "../components/LogoWithTextHorizontal.svelte";
     import { CodeBranchOutline } from "flowbite-svelte-icons";
-    import { DiscordSolid } from "svelte-hero-icons"; // Note: This might be incorrect for Reddit; consider using a Reddit icon from another library.
     import { Bars3, XMark } from "svelte-heros-v2";
+    import { Reddit } from "@icons-pack/svelte-simple-icons";
     import { browser } from "$app/environment";
     import { writable } from "svelte/store";
     import { setContext } from "svelte";
@@ -251,7 +251,6 @@
     });
 </script>
 
-<!-- unfortunately, firefox is horrendous at rendering transforms so we can't enable it there -->
 {#if navigator.userAgent.indexOf("Firefox") === -1}
     <div
         class="opacity-5"
@@ -325,7 +324,7 @@
                         target="_blank"
                         title="Suyu Reddit"
                     >
-                        <DiscordSolid /> <!-- Note: This should be a Reddit icon, not DiscordSolid. Consider using a different library like simple-icons. -->
+                        <Reddit />
                     </a>
                     {#if $token}
                         <AccountButton user={data.user} />
