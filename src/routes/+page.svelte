@@ -3,11 +3,9 @@
 	import type { PageData } from "./$types";
 	import suyuWindow from "$assets/mockups/suyuwindow.png";
 	import HomepageCounter from "$components/HomepageCounter.svelte";
-	import { XCircleOutline } from "flowbite-svelte-icons";
-	import { Dialog } from "radix-svelte";
 
 	export let data: PageData;
-	$: memberCount = parseFloat(data.memberCount?.toPrecision(2));
+	$: memberCount = parseFloat(data.subredditStats?.subscriberCount?.toPrecision(2));
 	$: contributors = parseFloat(data.roleMembers?.["1214817156420862012"]?.toPrecision(2));
 	$: gitCommits = parseFloat(data.gitCommits?.toPrecision(2));
 	let metadata = {
@@ -126,7 +124,7 @@
 		<HomepageCounter count={contributors} subText="dedicated contributors" />
 		<HomepageCounter count={gitCommits} subText="Git commits" />
 		<HomepageCounter count={4000} subText="supported games" />
-		<HomepageCounter count={memberCount} subText="members on Discord" />
+		<HomepageCounter count={memberCount} subText="members on Reddit" />
 	</div>
 	<div class="flex w-full flex-1 rounded-[2.25rem] bg-[#110d10] lg:rounded-tl-none">
 		<div

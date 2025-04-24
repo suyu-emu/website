@@ -1,6 +1,4 @@
 import { building } from "$app/environment";
-import fetch from "node-fetch";
-import * as cheerio from "cheerio";
 
 let subredditStats = {
     subscriberCount: 0,
@@ -11,24 +9,23 @@ async function fetchSubredditStats() {
     console.log("Fetching subreddit statistics from r/suyu");
 
     try {
-        // Fetch the HTML of the subreddit
-        const response = await fetch("https://www.reddit.com/r/suyu/");
-        const html = await response.text();
+        const response = await fetch("https://www.reddit.com/r/suyu/about.json", {
+            headers: {
+                "User-Agent": "suyu-stats-fetcher/1.0"
+            }
+        });
 
-        // Load the HTML into Cheerio
-        const $ = cheerio.load(html);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        // Extract statistics
-        const subscriberText = $("._3XFx6CfPlg-4Usgxm0gK8R").first().text(); // Subscriber count
-        const activeUserText = $("._3XFx6CfPlg-4Usgxm0gK8R").last().text(); // Active user count
-
-        // Parse numbers from the text
-        subredditStats.subscriberCount = parseInt(subscriberText.replace(/\D/g, ""), 10) || 0;
-        subredditStats.activeUsers = parseInt(activeUserText.replace(/\D/g, ""), 10) || 0;
+        const json = await response.json();
+        subredditStats.subscriberCount = json.data.subscribers || 0;
+        subredditStats.activeUsers = json.data.accounts_active || 0;
 
         console.log("Fetched subreddit statistics:", subredditStats);
     } catch (error) {
-        console.error("Error scraping subreddit statistics:", error);
+        console.error("Error fetching subreddit statistics:", error);
     }
 }
 

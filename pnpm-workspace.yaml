@@ -1,0 +1,10 @@
+onlyBuiltDependencies:
+  - bcrypt
+  - better-sqlite3
+  - carbon-components-svelte
+  - cwebp-bin
+  - es5-ext
+  - esbuild
+  - sharp
+  - sqlite3
+  - svelte-preprocess

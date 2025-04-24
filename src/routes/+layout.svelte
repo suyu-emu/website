@@ -4,17 +4,13 @@
     import Logo from "../components/LogoWithTextHorizontal.svelte";
     import { CodeBranchOutline } from "flowbite-svelte-icons";
     import { Bars3, XMark } from "svelte-heros-v2";
-    import { Reddit } from "@icons-pack/svelte-simple-icons";
+    import { SiReddit } from "@icons-pack/svelte-simple-icons";
     import { browser } from "$app/environment";
-    import { writable } from "svelte/store";
-    import { setContext } from "svelte";
     import type { TransitionConfig } from "svelte/transition";
     import type { PageData } from "./$types";
-    import { bounceOut } from "svelte/easing";
     import { generateTransition, transition } from "$lib/util/animation";
     import { reducedMotion } from "$lib/accessibility";
     import BackgroundProvider from "$components/BackgroundProvider.svelte";
-    import AccountButton from "$components/AccountButton.svelte";
 
     export let data: PageData;
 
@@ -28,8 +24,6 @@
         title: string;
         target: string;
     }
-
-    const token = writable(data.tokenCookie || "");
 
     function transitionIn(node: HTMLElement, { duration = 360 }: TransitionConfig) {
         if ($reducedMotion)
@@ -168,25 +162,7 @@
             href: "https://git.suyu.dev/suyu/suyu",
             title: "Suyu Git Repo",
             target: "_blank",
-        },
-        $token || data.tokenCookie
-            ? {
-                  name: "Account",
-                  href: "/account",
-              }
-            : {
-                  name: "Sign up",
-                  href: "/signup",
-              },
-        $token || data.tokenCookie
-            ? {
-                  name: "Log out",
-                  href: "/logout",
-              }
-            : {
-                  name: "Log in",
-                  href: "/login",
-              },
+        }
     ] as NavItem[];
 
     $: {
@@ -212,23 +188,10 @@
         return `${((i + 1) / 4) * 75}ms`;
     }
 
-    if (browser) {
-        cookies = Object.fromEntries(
-            document.cookie.split("; ").map((c) => {
-                const [key, value] = c.split("=");
-                return [key, value];
-            }),
-        );
-        if (cookies.token) {
-            $token = cookies.token;
-        }
-    }
-
     function toggleDropdown() {
         dropdownOpen = !dropdownOpen;
     }
 
-    setContext("token", token);
     onMount(() => {
         const handleScroll = () => {
             scrolled = window.scrollY > 0;
@@ -324,14 +287,8 @@
                         target="_blank"
                         title="Suyu Reddit"
                     >
-                        <Reddit />
+                        <SiReddit />
                     </a>
-                    {#if $token}
-                        <AccountButton user={data.user} />
-                    {:else}
-                        <a href="/login" class="button-sm">Log in</a>
-                        <a href="/signup" class="button-sm">Sign up</a>
-                    {/if}
                 </div>
                 <div class="relative mr-4 hidden flex-row gap-4 max-[800px]:flex">
                     <button
