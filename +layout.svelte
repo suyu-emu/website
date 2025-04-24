@@ -2,7 +2,8 @@
 	import "../app.pcss";
 	import { onMount, onDestroy } from "svelte";
 	import Logo from "../components/LogoWithTextHorizontal.svelte";
-	import { CodeBranchOutline, DiscordSolid, BarsSolid, CloseSolid } from "svelte-hero-icons";
+        import { CodeBranchOutline } from "flowbite-svelte-icons";
+	import { DiscordSolid, BarsSolid, CloseSolid } from "svelte-hero-icons";
 	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
