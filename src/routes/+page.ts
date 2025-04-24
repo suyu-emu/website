@@ -29,12 +29,9 @@ async function fetchSubredditStats() {
     }
 }
 
-if (!building) {
-    await fetchSubredditStats();
-    setInterval(fetchSubredditStats, 1000 * 60 * 10); // Refresh every 10 minutes
-}
-
 export async function load() {
+    await fetchSubredditStats();
+
     return {
         subredditStats,
     };
