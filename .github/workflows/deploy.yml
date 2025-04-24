@@ -38,9 +38,6 @@ jobs:
       - name: Build the Site
         run: pnpm run build
 
-      - name: Add __data.json file
-        run: echo '{"version":1}' > build/__data.json
-
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
