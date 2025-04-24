@@ -17,7 +17,6 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/typography": "^0.5.10",
 		"autoprefixer": "^10.4.16",
-		"express": "^4.18.3",
 		"flowbite": "^2.3.0",
 		"flowbite-svelte": "^0.44.24",
 		"flowbite-svelte-icons": "1",
