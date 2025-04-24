@@ -25,67 +25,27 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Clear npm cache
-        run: npm cache clean --force
-
-      - name: Clear Dependency Cache
-        run: rm -rf node_modules package-lock.json && npm cache clean --force
-
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 23
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Svelte Kit Latest Installation
-        run: npm install @sveltejs/kit@latest --legacy-peer-deps
-
-      - name: Install Pages Adapter
-        run: npm install @sveltejs/adapter-static@latest --legacy-peer-deps
-
-      - name: Install Cheerio
-        run: npm install cheerio --legacy-peer-deps
-
-      - name: Flowbite Version Check
-        run: npm show flowbite-svelte-icons versions
-
-      - name: Install Specific Version of flowbite-svelte-icons
-        run: npm install flowbite-svelte-icons@1 --legacy-peer-deps
-
-      - name: Bar3Icon stuff
-        run: npm i svelte-hero-icons --save-dev
-
-      - name: svelte simple icons
-        run: npm i svelte-simple-icons --save-dev
-
-      - name: svelte-heros-v2
-        run: npm install svelte-heros-v2 @icons-pack/svelte-simple-icons --legacy-peer-deps
-
-      - name: Flowbite check
-        run: npm ls flowbite-svelte-icons
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Browserlist Fix
-        run: npx update-browserslist-db@latest --legacy-peer-deps
-
-      - name: Rebuild Native Modules
-        run: npm rebuild bcrypt --build-from-source
-
-      - name: Verify bcrypt Installation
-        run: ls -l node_modules/.pnpm/bcrypt*
+        run: pnpm install
 
       - name: Build the Site
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
           PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
-        run: npm run build -- --mode production
+        run: pnpm run build -- --mode production
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

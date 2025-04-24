@@ -3,8 +3,6 @@
 	import type { PageData } from "./$types";
 	import suyuWindow from "$assets/mockups/suyuwindow.png";
 	import HomepageCounter from "$components/HomepageCounter.svelte";
-	import { XCircleOutline } from "flowbite-svelte-icons";
-	import { Dialog } from "radix-svelte";
 
 	export let data: PageData;
 	$: memberCount = parseFloat(data.memberCount?.toPrecision(2));
