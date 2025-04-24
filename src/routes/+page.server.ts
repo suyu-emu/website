@@ -1,6 +1,6 @@
 import { building } from "$app/environment";
 import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 
 let subredditStats = {
     subscriberCount: 0,
