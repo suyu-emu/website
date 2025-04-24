@@ -51,6 +51,11 @@ jobs:
       - name: Bar3Icon stuff
         run: npm i svelte-hero-icons --save-dev
 
+      - name: svelte simple icons
+        run: npm i svelte-simple-icons --save-dev
+      - name: svelte-heros-v2
+        run: svelte-heros-v2 --legacy-peer-deps
+
       - name: Flowbite check
         run: npm ls flowbite-svelte-icons
       
