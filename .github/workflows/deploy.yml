@@ -1,9 +1,9 @@
-name: Deploy Svelte to GitHub Pages
+name: Deploy Svelte to Dev Branch
 
 on:
   push:
     branches:
-      - dev  # Change this if your default branch isn't 'main'
+      - dev  # Ensure this matches your desired branch for deployment
 
 env:
   PUB_KEY: ${{ secrets.PUB_KEY }}
@@ -14,8 +14,10 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Ensure the job has the necessary permissions to push to the branch
+
     steps:
-   
       - name: Clear npm cache
         run: npm cache clean --force
 
@@ -78,8 +80,9 @@ jobs:
           PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
         run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to Dev Branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
+          publish_branch: dev  # Ensure deployment happens to the dev branch
