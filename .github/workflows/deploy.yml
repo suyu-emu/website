@@ -85,7 +85,7 @@ jobs:
         env:
           HCAPTCHA_KEY: ${{ secrets.HCAPTCHA_KEY }}
           PUBLIC_SITE_KEY: 001ad710-986e-4664-91e8-b324618a2146
-        run: npm run build
+        run: npm run build -- --mode production
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
