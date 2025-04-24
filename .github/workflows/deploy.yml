@@ -69,8 +69,8 @@ jobs:
       - name: Rebuild Native Modules
         run: npm rebuild bcrypt --build-from-source  
 
-      - name: Install Dependencies
-        run: pnpm install --legacy-peer-deps  
+      - name: Verify bcrypt Installation
+        run: ls -l node_modules/.pnpm/bcrypt*
 
       - name: Build
         env:
