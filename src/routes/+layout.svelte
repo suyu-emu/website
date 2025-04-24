@@ -2,8 +2,8 @@
 	import "../app.pcss";
 	import { onMount, onDestroy } from "svelte";
 	import Logo from "../components/LogoWithTextHorizontal.svelte";
-        import { CodeBranchOutline } from "flowbite-svelte-icons";
-	import { DiscordSolid, BarsSolid, CloseSolid } from "svelte-hero-icons";
+    import { CodeBranchOutline } from "flowbite-svelte-icons";
+	import { DiscordSolid, Bars3Solid, CloseSolid } from "svelte-hero-icons";
 	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
@@ -126,9 +126,6 @@
 	let dropdownOpen = false;
 	let dropdownCloseFinished = true;
 	let dropdownOpenFinished = false;
-	// let dropdownOpen = true;
-	// let dropdownCloseFinished = false;
-	// let dropdownOpenFinished = true;
 	let scrolled = false;
 	let cookies: {
 		[key: string]: string;
@@ -153,28 +150,12 @@
 			title: "Coming Soon",
 			target: "_self",
 		},
-		// {
-		// 	name: "Compatibility",
-		// 	href: "/compatibility",
-		// 	title: "Compatibility",
-		// 	target: "_self",
-		// },
-		// {
-		// 	name: "Matrix",
-		// 	href: "",
-		// 	title: "Suyu Matrix Server",
-		// 	target: "_blank",
-		// },
 		{
 			name: "Git",
 			href: "https://git.suyu.dev/suyu/suyu",
 			title: "Suyu Git Repo",
 			target: "_blank",
 		},
-		// {
-		// 	name: $token || data.tokenCookie ? "Account" : "Sign up",
-		// 	href: $token || data.tokenCookie ? "/account" : "/signup",
-		// },
 		$token || data.tokenCookie
 			? {
 					name: "Account",
@@ -240,7 +221,7 @@
 			scrolled = window.scrollY > 0;
 		};
 
-		handleScroll(); // we can't guarantee that the page starts at the top
+		handleScroll();
 
 		cookies = Object.fromEntries(
 			document.cookie.split("; ").map((c) => {
@@ -257,7 +238,6 @@
 	});
 </script>
 
-<!-- unfortunately, firefox is horrendous at rendering transforms so we can't enable it there -->
 {#if navigator.userAgent.indexOf("Firefox") === -1}
 	<div
 		class="opacity-5"
@@ -311,7 +291,6 @@
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Blog</a>
 				<a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Docs</a>
 				<a href="/faq" class="px-5 py-3 transition hover:text-white" title="Coming Soon">FAQ</a>
-				<!-- <a href="/compatibility" class="px-5 py-3 transition hover:text-white" title="Compatibility">Compatibility</a> -->
 			</div>
 			<div class="flex w-full flex-row items-center justify-end text-[#A6A5A7]">
 				<div class="flex flex-row gap-4 max-[800px]:hidden">
@@ -324,20 +303,7 @@
 					>
 						<CodeBranchOutline />
 					</a>
-					<!-- <a
-						class="p-2 transition hover:text-white"
-						href=""
-						rel="noreferrer noopener"
-						target="_blank"
-						title="Suyu Matrix Server"
-					>
-						<DiscordSolid />
-					</a> -->
 					{#if $token}
-						<!-- <a href={$token ? "/account" : "/signup"} class="button-sm"
-						>{$token ? "Account" : "Sign up"}</a
-					> -->
-						<!-- <a href="/account" class="button-sm">Account</a> -->
 						<AccountButton user={data.user} />
 					{:else}
 						<a href="/login" class="button-sm">Log in</a>
@@ -352,13 +318,13 @@
 						class="-mr-4 p-4"
 					>
 						<div
-							style="transition: 180ms; transition-property: opacity transform;"
+							style="transition: 180ms ease; transition-property: opacity transform;"
 							class={`absolute ${dropdownOpen ? "rotate-45 opacity-0" : "opacity-1"}`}
 						>
-							<BarsSolid />
+							<Bars3Solid />
 						</div>
 						<div
-							style="transition: 180ms; transition-property: opacity transform;"
+							style="transition: 180ms ease; transition-property: opacity transform;"
 							class={dropdownOpen
 								? "opacity-1 rotate-0"
 								: "rotate-[-45deg] opacity-0"}
@@ -376,32 +342,11 @@
 		class={`fixed left-0 z-[100] h-screen w-full bg-[#0e0d10] p-9 pt-[120px] ${dropdownOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none opacity-0"} ${!dropdownOpen && dropdownCloseFinished ? "invisible" : ""}`}
 	>
 		<div class={`flex flex-col gap-8`}>
-			<!-- <a href="##"><h1 class="w-full text-5xl">Blog</h1></a>
-			<a href="##"><h1 class="w-full text-5xl">Docs</h1></a>
-			<a href="##"><h1 class="w-full text-5xl">FAQ</h1></a> -->
 			{#each navItems as item, i}
 				<a
 					style={`transition: ${
 						dropdownOpen
 							? generateTransition([
-									// {
-									// 	duration: 600,
-									// 	delay: (i + 1) / 4,
-									// 	property: "transform",
-									// 	timingFunction: transition,
-									// },
-									// {
-									// 	duration: 500,
-									// 	delay: i * 1.25,
-									// 	property: "filter",
-									// 	timingFunction: transition,
-									// },
-									// {
-									// 	duration: 400,
-									// 	delay: (i + 1) / 4,
-									// 	property: "opacity",
-									// 	timingFunction: transition,
-									// },
 									{
 										duration: 450,
 										delay: i * 0.6,
@@ -431,7 +376,6 @@
 			{/each}
 		</div>
 	</div>
-	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 	{#key data.url}
 		<div
 			in:transitionIn={{ duration: 500 }}
