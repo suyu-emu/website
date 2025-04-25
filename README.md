@@ -2,7 +2,7 @@
 
 # Suyu website
 
-This project contains the source code for the Suyu website, found at [suyu.dev](https://suyu.dev)
+This project contains the source code for the old Suyu website, formerly found at [suyu.dev](https://suyu.dev)
 
 
 ## Developing
