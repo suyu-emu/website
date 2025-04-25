@@ -75,7 +75,7 @@
 	</p>
 	<div class="flex flex-col gap-4 md:flex-row">
 		<a
-			href="/download"
+			href="https://github.com/suyu-emu/suyu-releases"
 			rel="noreferrer noopener"
 			class="cta-button"
 			title="Download Suyu"
@@ -94,11 +94,11 @@
 			>
 		</a>
 		<a
-			href="https://git.suyu.dev/suyu/suyu"
+			href="https://github.com/suyu-emu"
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
-			title="Suyu Git Repo"
+			title="Suyu Github"
 		>
 			Contribute <svg
 				width="16"
@@ -160,11 +160,11 @@
 <div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
 	<div
 		class="relative w-full rounded-[2.25rem] bg-[#662d91] p-12"
-		title="Suyu Matrix Server"
+		title="Suyu Discussions"
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Matrix</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Our new Matrix Server is currently being implemented. Please check back here soon for more details. Please view the notice at the top of the page for more information. Thank you.
+			Head to the Discussions Page on our Github to contribute or ask questions.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +182,7 @@
 		</svg>
 	</div>
 	<a
-		href="https://git.suyu.dev/suyu/suyu"
+		href="https://github.com/suyu-emu"
 		target="_blank"
 		rel="noreferrer noopener"
 		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
@@ -190,7 +190,7 @@
 	>
 		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Git</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Our Git instance is where all the magic of suyu happens. We're always looking for new contributors
+			Our Github page is where all the magic of suyu happens. We're always looking for new contributors
 			to help us out, so feel free to check out our code.
 		</p>
 		<svg
