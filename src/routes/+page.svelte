@@ -13,13 +13,7 @@
 			const cached = sessionStorage.getItem("stats");
 			if (cached) return (data = JSON.parse(cached));
 
-			const response = await (await fetch("https://suyu.twint.my.id/stats")).json();
-
-			data = {
-				contributors: response.contributorCount,
-				commits: response.gitCommits,
-				reddit: response.subredditSubscribers,
-			};
+			data = await (await fetch("https://suyu.twint.my.id/stats")).json();
 
 			sessionStorage.setItem("stats", JSON.stringify(data));
 		} catch (error) {
@@ -29,7 +23,7 @@
 
 	onMount(() => getStats());
 
-	$: members = parseFloat(data?.reddit?.toPrecision(2));
+	$: subscribers = parseFloat(data?.subscribers?.toPrecision(2));
 	$: contributors = parseFloat(data?.contributors?.toPrecision(2));
 	$: commits = parseFloat(data?.commits?.toPrecision(2));
 
@@ -145,7 +139,7 @@
 		<HomepageCounter count={contributors} subText="dedicated contributors" />
 		<HomepageCounter count={commits} subText="Git commits" />
 		<HomepageCounter count={4000} subText="supported games" />
-		<HomepageCounter count={members} subText="members on Reddit" />
+		<HomepageCounter count={subscribers} subText="members on Reddit" />
 	</div>
 	<div class="flex w-full flex-1 rounded-[2.25rem] bg-[#110d10] lg:rounded-tl-none">
 		<div
