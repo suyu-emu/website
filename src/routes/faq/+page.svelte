@@ -1,7 +1,3 @@
-<script lang="ts">
-	import tuta from "$assets/branding/tuta.png";
-</script>
-
 <svelte:head>
 	<title>FAQ</title>
 </svelte:head>
@@ -28,26 +24,50 @@
 		/>
 	</svg>
 
-	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
-		FAQ
-	</h1>
+	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">FAQ</h1>
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
 		Got some questions? We got answers!
 	</p>
-    <p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">Q: How is this project different from Yuzu? How do we know you won't have the same fate as Yuzu?</p>
-	<p class= "text-m text-[15px]">A: Unlike Yuzu, Suyu does <b>not</b> include many of the core "requirements" to run it. You need to legally dump your Nintendo Switch to obtain a title.keys file, which Yuzu did not do. Additionally, you must dump your own firmware.</p>
-	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">Q: What is the purpose of Suyu?</p>
-	<p class= "text-m text-[15px]">A: The purpose of this project is to provide a free, open-source alternative to the now-dead Yuzu emulator. We believe that the community should be able to emulate their Switch device (legally) and be able to enjoy their favorite game titles.</p>
-	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">Q: How can I contribute to Suyu?</p>
-	<p class= "text-m text-[15px]">A: You can contribute to this project by submitting a pull request on our <a href="https://git.suyu.dev/suyu/suyu"><u>Git</u></a> page. We are always looking for new contributors to help us improve the project!</p>
-	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">Q: Where can I download Suyu?</p>
-	<p class= "text-m text-[15px]">A: You can download the latest build of Suyu from our <a href="https://git.suyu.dev/suyu/suyu/releases"><u>Git</u></a>. Please make sure you are using the right URL!</p>
-	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">Q: What is the current progress for Suyu?</p>
-	<p class= "text-m text-[15px]">A: As of 3/20/2024, we have released our first Windows binary 🎉! You can find it <a href="https://git.suyu.dev/suyu/suyu/releases"><u>here</u></a>. We are always trying to make more and more progress, so please feel free to <a href="https://discord.gg/suyu"><u>join the Discord!</u></a></p>
-	<br />
-	<div class="leading-[1.41] items-center text-[15px] md:leading-[1.1] flex gap-2 text-gray-600">Email hosting lovingly provided by
-		<a href="https://tuta.com" target="_blank">
-			<img src={tuta} alt="Tuta" width={102} height={24} class="h-[24px] rounded-md" />
-		</a>
-	</div>
+	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
+		Q: How is this project different from Yuzu? How do we know you won't have the same fate as
+		Yuzu?
+	</p>
+	<p class="text-m text-[15px]">
+		A: Unlike Yuzu, Suyu does <b>not</b> include many of the core "requirements" to run it. You need
+		to legally dump your Nintendo Switch to obtain a title.keys file, which Yuzu did not do. Additionally,
+		you must dump your own firmware.
+	</p>
+	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
+		Q: What is the purpose of Suyu?
+	</p>
+	<p class="text-m text-[15px]">
+		A: The purpose of this project is to provide a free, open-source alternative to the now-dead
+		Yuzu emulator. We believe that the community should be able to emulate their Switch device
+		(legally) and be able to enjoy their favorite game titles.
+	</p>
+	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
+		Q: How can I contribute to Suyu?
+	</p>
+	<p class="text-m text-[15px]">
+		A: You can contribute to this project by submitting a pull request on our <a
+			href="https://github.com/suyu-emu"><u>GitHub</u></a
+		> page. We are always looking for new contributors to help us improve the project!
+	</p>
+	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
+		Q: Where can I download Suyu?
+	</p>
+	<p class="text-m text-[15px]">
+		A: You can download the latest build of Suyu from our <a
+			href="https://github.com/suyu-emu/suyu-releases"><u>GitHub</u></a
+		>. Please make sure you are using the right URL!
+	</p>
+	<p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
+		Q: What is the current progress for Suyu?
+	</p>
+	<p class="text-m text-[15px]">
+		A: As of 3/20/2024, we have released our first Windows binary 🎉! You can find it <a
+			href="https://github.com/suyu-emu/suyu-releases"><u>here</u></a
+		>. We are always trying to make more and more progress, so please feel free to
+		<a href="https://github.com/orgs/suyu-emu/discussions"><u>join the discussion on GitHub!</u></a>
+	</p>
 </div>

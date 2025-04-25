@@ -2,21 +2,17 @@
 
 # Suyu website
 
-This project contains the source code for the Suyu website, found at [suyu.dev](https://suyu.dev)
-
+This project contains the source code for the Suyu website, found at [suyu-emu.github.io](https://suyu-emu.github.io/website/)
 
 ## Developing
-If you are developing, please take note of the `.env.example` & the secrets config (found at src/lib/server/secrets/secrets.example.json). 
-At minimum, please make sure to clone the `secrets.example.json` file and rename it to `secrets.json`. Otherwise, the project will not run or build (you don't have to edit the values to get it running, but you can if you'd like).
 
-
-Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), you can start a development server by running:
+Once you've installed dependencies with `pnpm install`, you can start a development server by running:
 
 ```bash
-npm run dev
+pnpm run dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm run dev -- --open
 ```
 
 ## Building
@@ -24,6 +20,5 @@ npm run dev -- --open
 To create a production version of our app, you can run:
 
 ```bash
-npm run build
+pnpm run build
 ```
-

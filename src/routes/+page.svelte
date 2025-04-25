@@ -3,23 +3,43 @@
 	import type { PageData } from "./$types";
 	import suyuWindow from "$assets/mockups/suyuwindow.png";
 	import HomepageCounter from "$components/HomepageCounter.svelte";
+	import { base } from "$app/paths";
+	import { onMount } from "svelte";
 
-	export let data: PageData;
-	$: memberCount = parseFloat(data.subredditStats?.subscriberCount?.toPrecision(2));
-	$: contributors = parseFloat(data.roleMembers?.["1214817156420862012"]?.toPrecision(2));
-	$: gitCommits = parseFloat(data.gitCommits?.toPrecision(2));
+	let data = {};
+
+	async function getStats() {
+		try {
+			const cached = sessionStorage.getItem("stats");
+			if (cached) return (data = JSON.parse(cached));
+
+			const response = await (await fetch("https://suyu.twint.my.id/stats")).json();
+
+			data = {
+				contributors: response.contributorCount,
+				commits: response.gitCommits,
+				reddit: response.subredditSubscribers,
+			};
+
+			sessionStorage.setItem("stats", JSON.stringify(data));
+		} catch (error) {
+			data = {};
+		}
+	}
+
+	onMount(() => getStats());
+
+	$: members = parseFloat(data?.reddit?.toPrecision(2));
+	$: contributors = parseFloat(data?.contributors?.toPrecision(2));
+	$: commits = parseFloat(data?.commits?.toPrecision(2));
+
 	let metadata = {
-		url: "https://suyu.dev",
+		url: "https://suyu-emu.github.io/website/",
 		title: "suyu - Open-source, non-profit Switch emulator",
 		description:
 			"suyu is a familiar C++ based Nintendo Switch emulator with a focus on compatibility. Completely free and open-source, forever. Download it here.",
 		image: embedImage,
 	};
-
-	let rootOpen: boolean;
-	let rootModal: boolean = true;
-	let contentOpenAutoFocus: boolean = true;
-	let contentCloseAutoFocus: boolean = true;
 </script>
 
 <svelte:head>
@@ -38,12 +58,13 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
-<article class="border-l-[4px] border-solid border-color-[#DBDBDB] rounded-[10px] bg-[#110d10] pt-[10px] inline-block mb-[20px]">
+<!-- NOTE: Someone may need this in the future -->
+<!-- <article class="border-l-[4px] border-solid border-color-[#DBDBDB] rounded-[10px] bg-[#110d10] pt-[10px] inline-block mb-[20px]">
 <div class="ml-[10px]">
 	<p class="text-[20px] font-bold mb-[2px]">Notice: Suyu Discord Deleted</p>
 	<p class="text-[#A6A5A7] pb-[10px] mr-[12px]">The Suyu Discord Server has been unlawfully DMCA'd, by who we believe is Nintendo Co., Ltd. Whilst we are not pressing charges, we will continue with the development of the emulator as intended. We are moving our communications to a self-hosted Matrix Server for the foreseeable future. Please check back within the next 48 hours for an update as our dev team works hard behind the scenes to get the server implemented. Thank you for sticking with us through this tough journey. We will continue to fight for the right to legal emulation, as shown in <a href="https://www.copyright.gov/fair-use/summaries/sony-connectix-9thcir2000.pdf" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]"><i>Sega Enterprises Ltd. v. Accolade, Inc.</i></a> and <a href="https://www.copyright.gov/fair-use/summaries/sony-connectix-9thcir2000.pdf" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]"><i>Sony Computer Entertainment v. Connectix Corporation</i></a>. We are curerntly in the process of auditing our code for copyright infringing content. If you would like to assist, please contribute to the project via our Git. Thank you.</p>
 </div>
-</article>
+</article> -->
 <div
 	class="relative flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] rounded-bl-none rounded-br-none bg-[#110d10] p-8 md:p-12 lg:rounded-bl-none lg:rounded-br-[2.25rem]"
 >
@@ -75,12 +96,12 @@
 	</p>
 	<div class="flex flex-col gap-4 md:flex-row">
 		<a
-			href="https://github.com/suyu-emu/suyu-releases"
+			href="{base}/download"
 			rel="noreferrer noopener"
 			class="cta-button"
 			title="Download Suyu"
 		>
-				Download <svg
+			Download <svg
 				width="16"
 				height="16"
 				viewBox="0 0 16 16"
@@ -98,7 +119,7 @@
 			target="_blank"
 			rel="noreferrer noopener"
 			class="button text-[#8A8F98]"
-			title="Suyu Github"
+			title="Suyu Organization"
 		>
 			Contribute <svg
 				width="16"
@@ -122,9 +143,9 @@
 	>
 		<h1 class="text-[48px] leading-[0.9]">By the numbers</h1>
 		<HomepageCounter count={contributors} subText="dedicated contributors" />
-		<HomepageCounter count={gitCommits} subText="Git commits" />
+		<HomepageCounter count={commits} subText="Git commits" />
 		<HomepageCounter count={4000} subText="supported games" />
-		<HomepageCounter count={memberCount} subText="members on Reddit" />
+		<HomepageCounter count={members} subText="members on Reddit" />
 	</div>
 	<div class="flex w-full flex-1 rounded-[2.25rem] bg-[#110d10] lg:rounded-tl-none">
 		<div
@@ -158,13 +179,16 @@
 </div>
 
 <div class="mt-8 flex w-full flex-col gap-8 lg:flex-row">
-	<div
-		class="relative w-full rounded-[2.25rem] bg-[#662d91] p-12"
+	<a
+		href="https://github.com/orgs/suyu-emu/discussions"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="relative w-full rounded-[2.25rem] bg-[#662d91] p-12 662d91text-black"
 		title="Suyu Discussions"
 	>
-		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Matrix</h2>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Discussions</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Head to the Discussions Page on our Github to contribute or ask questions.
+			Head to the Discussions page on our Github to contribute or ask questions.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -173,25 +197,25 @@
 			stroke="currentColor"
 			class="absolute right-12 top-12 h-12 w-12"
 		>
-			<!-- <path
+			<path
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				stroke-width="4"
 				d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-			/> -->
+			/>
 		</svg>
-	</div>
+	</a>
 	<a
 		href="https://github.com/suyu-emu"
 		target="_blank"
 		rel="noreferrer noopener"
 		class="relative w-full rounded-[2.25rem] bg-[#f78c40] p-12 text-black"
-		title="Suyu Git Repo"
+		title="Suyu Organization"
 	>
-		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Git</h2>
+		<h2 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">GitHub</h2>
 		<p class="mt-2 text-lg leading-relaxed">
-			Our Github page is where all the magic of suyu happens. We're always looking for new contributors
-			to help us out, so feel free to check out our code.
+			Our GitHub page is where all the magic of suyu happens. We're always looking for new
+			contributors to help us out, so feel free to check out our code.
 		</p>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

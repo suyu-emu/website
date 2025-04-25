@@ -5,7 +5,7 @@
 	// cool moving dots :3
 	// NOTE: This is required to be ran on the server due to issues with Svelte
 	let text = "Downloading Suyu";
-	const textLength = text.length
+	const textLength = text.length;
 	setInterval(() => {
 		text += ".";
 		// Text length + 3 is essentially the length of the text above + the 3 dots
@@ -19,8 +19,8 @@
 	onMount(async () => {
 		// Variables
 		const UA = navigator.userAgent;
-		const url = `https://git.suyu.dev/api/v1/repos/suyu/suyu/tags`;
-		const fakeVersionTag = false; // Fake version tag? (for debugging)
+		const url = `https://git.suyu.dev/api/v1/repos/suyu/suyu/tags`; //NOTE - Change this to the correct URL when thats decided
+		const fakeVersionTag = true; // Fake version tag? (for debugging)
 		let latestRelease = "";
 
 		async function getTag() {
@@ -54,22 +54,22 @@
 		if (!fakeVersionTag) {
 			latestRelease = await getTag();
 		} else {
-			latestRelease = "v0.0.1";
+			latestRelease = "v0.0.2-master";
 			console.log(latestRelease);
 		}
 
 		setTimeout(() => {
 			if (UA.includes("Windows")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/3f178ae15ef039266fade3970d042b1463dc20a3/Suyu-Windows_x64.zip`;
+				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/Suyu-Windows_x64.7z`;
 				// Android is above Linux because Android UA's also contain "Linux"
 			} else if (UA.includes("Android")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/3f178ae15ef039266fade3970d042b1463dc20a3/app-mainline-release.apk`;
+				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/app-mainline-release.apk`;
 			} else if (UA.includes("Linux")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/3f178ae15ef039266fade3970d042b1463dc20a3/suyu-mainline--.AppImage`;
+				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/suyu-mainline--.AppImage`;
 			} else if (UA.includes("Macintosh;")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/3f178ae15ef039266fade3970d042b1463dc20a3/suyu-macOS.dmg`;
+				window.location.href = `https://github.com/suyu-emu/suyu-releases/blob/master/${latestRelease}/suyu-macOS-arm64.dmg`;
 			} else {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/tree/master/`;
+				window.location.href = `https://github.com/suyu-emu/suyu-releases/tree/master/${latestRelease}`;
 			}
 		}, 3000);
 	});
@@ -107,7 +107,7 @@
 
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
 		Your download should start shortly. If it doesn't, click <a
-			href="https://github.com/suyu-emu/suyu-releases/tree/master"><u>here</u></a
+			href="https://github.com/suyu-emu/suyu-releases"><u>here</u></a
 		>.
 	</p>
 </div>

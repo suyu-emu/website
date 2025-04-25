@@ -1,16 +1,8 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
-	let initialStatusGot = false;
-	let status = 0;
-	let message = "";
-	page.subscribe((val) => {
-		if (val.status && !initialStatusGot) {
-			initialStatusGot = true;
-			status = val.status;
-			message = val.error?.message || "Unknown Error";
-		}
-	});
+	$: status = page.status;
+	$: message = page.error?.message || "Unknown Error";
 </script>
 
 <div
