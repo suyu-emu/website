@@ -30,7 +30,7 @@
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
 		Check back soon for awesome stuff. In the meantime, you can <a
 			class="underline"
-			href="https://discord.gg/suyu">join our Discord community</a
+			href="https://github.com/orgs/suyu-emu/discussions">join the Discussion!</a
 		> to stay updated.
 	</p>
 </div>
