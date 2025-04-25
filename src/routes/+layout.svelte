@@ -129,21 +129,21 @@
     $: navItems = [
         {
             name: "Blog",
-            href: "/coming-soon",
+            href: "https://web.archive.org/web/20240322000642/https://suyu.dev/blog",
             title: "Coming Soon",
-            target: "_self",
+            target: "_blank",
         },
         {
             name: "Docs",
-            href: "/coming-soon",
+            href: "https://web.archive.org/web/20240410090451/https://suyu.dev/coming-soon",
             title: "Coming Soon",
-            target: "_self",
+            target: "_blank",
         },
         {
             name: "FAQ",
-            href: "/faq",
+            href: "https://web.archive.org/web/20240329231057/suyu.dev/faq",
             title: "Frequently Asked Questions",
-            target: "_self",
+            target: "_blank",
         },
         {
             name: "Compatibility",
@@ -158,9 +158,9 @@
             target: "_blank",
         },
         {
-            name: "Git",
-            href: "https://git.suyu.dev/suyu/suyu",
-            title: "Suyu Git Repo",
+            name: "Github",
+            href: "https://github.com/suyu-emu",
+            title: "Suyu Github Page",
             target: "_blank",
         }
     ] as NavItem[];
@@ -264,8 +264,8 @@
             <div
                 class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7] max-[800px]:hidden"
             >
-                <a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Blog</a>
-                <a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Coming Soon">Docs</a>
+                <a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Blog (Coming Soon)">Blog</a>
+                <a href="/coming-soon" class="px-5 py-3 transition hover:text-white" title="Docs (Coming Soon)">Docs</a>
                 <a href="/faq" class="px-5 py-3 transition hover:text-white" title="Frequently Asked Questions">FAQ</a>
                 <a href="https://docs.google.com/spreadsheets/u/0/d/1LrLak1DP4UP3bNZKOCAzwNEp5JMkVozYuMnUBDF8gQM/htmlview#" class="px-5 py-3 transition hover:text-white" title="Compatibility" target="_blank">Compatibility</a>
             </div>
@@ -273,10 +273,10 @@
                 <div class="flex flex-row gap-4 max-[800px]:hidden">
                     <a
                         class="p-2 transition hover:text-white"
-                        href="https://git.suyu.dev/suyu/suyu"
+                        href="https://github.com/suyu-emu"
                         rel="noreferrer noopener"
                         target="_blank"
-                        title="Suyu Git Repo"
+                        title="Suyu Github"
                     >
                         <CodeBranchOutline />
                     </a>
