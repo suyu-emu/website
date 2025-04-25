@@ -12,3 +12,4 @@ ssl
 *.sqlite
 src/lib/server/secrets/secrets.json
 src/assets/blurhash.json
+.pnpm-store
