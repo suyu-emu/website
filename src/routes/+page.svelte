@@ -1,7 +1,7 @@
 <script lang="ts">
 	import embedImage from "$assets/branding/suyu__Embed-Image.png";
 	import type { PageData } from "./$types";
-	import suyuWindow from "$assets/mockups/suyuwindow.png";
+	import suyuWindow from "$assets/mockups/SuyuClientMockup.png";
 	import HomepageCounter from "$components/HomepageCounter.svelte";
 	import { base } from "$app/paths";
 	import { onMount } from "svelte";
