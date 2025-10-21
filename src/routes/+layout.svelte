@@ -204,14 +204,19 @@
                                 class="flex w-full flex-row items-center justify-center gap-2 text-sm font-medium text-[#A6A5A7] max-[800px]:hidden"
                         >
                                 <a
+                                        href="{base}/about"
+                                        class="px-5 py-3 transition hover:text-white"
+                                        title="About suyu">About</a
+                                >
+                                <a
                                         href="{base}/coming-soon"
                                         class="px-5 py-3 transition hover:text-white"
                                         title="Blog (Coming Soon)">Blog</a
                                 >
                                 <a
-                                        href="{base}/coming-soon"
+                                        href="{base}/docs"
                                         class="px-5 py-3 transition hover:text-white"
-                                        title="Docs (Coming Soon)">Docs</a
+                                        title="Documentation">Docs</a
                                 >
                                 <a
                                         href="{base}/faq"
