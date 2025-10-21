@@ -3,6 +3,7 @@
         import type { PageData } from "./$types";
         import suyuWindow from "$assets/mockups/SuyuClientMockup.png";
         import HomepageCounter from "$components/HomepageCounter.svelte";
+        import ProgressTracker from "$components/ProgressTracker.svelte";
         import { base } from "$app/paths";
         import { onMount } from "svelte";
 
@@ -24,7 +25,7 @@
         onMount(() => getStats());
 
         $: subscribers = parseFloat(data?.subscribers?.toPrecision(2));
-        $: contributors = parseFloat(data?.contributors?.toPrecision(2));
+        $: contributors = Math.min(5, parseFloat(data?.contributors?.toPrecision(2)) || 5);
         $: commits = parseFloat(data?.commits?.toPrecision(2));
 
         let metadata = {
@@ -185,6 +186,12 @@
 </div>
 
 <div
+        class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
+>
+        <ProgressTracker />
+</div>
+
+<div
         class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#eee] p-8 text-black md:p-12"
 >
         <h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
@@ -314,6 +321,71 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                         <p>suyu does not condone nor facilitate piracy or intellectual property theft.</p>
+                </div>
+        </div>
+</div>
+
+<div
+        class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
+>
+        <h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
+                Platform Support
+        </h1>
+        <p class="max-w-[40rem] text-lg leading-relaxed text-[#A6A5A7]">
+                suyu is designed with portability in mind and supports multiple platforms to ensure you can enjoy your games wherever you are.
+        </p>
+        <div class="flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-2">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6"
+                        >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        <p><strong>Windows</strong> - Full support with regular builds and updates</p>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6"
+                        >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        <p><strong>Linux</strong> - Native support with AppImage and package manager distributions</p>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6"
+                        >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        <p><strong>Android</strong> - Mobile gaming experience with touch controls and gamepad support</p>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6"
+                        >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        <p><strong>macOS</strong> - Community builds available for Apple Silicon and Intel Macs</p>
                 </div>
         </div>
 </div>
