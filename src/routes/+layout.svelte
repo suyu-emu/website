@@ -287,6 +287,101 @@
                 </nav>
         </header>
 
+        <!-- Mobile Navigation Menu -->
+        {#if dropdownOpen}
+                <div
+                        class="fixed inset-0 z-[9998] bg-[#131215d0] backdrop-blur-xl min-[800px]:hidden"
+                        style="top: {scrolled ? '72px' : '120px'};"
+                        in:transitionIn={{ duration: 360 }}
+                        out:transitionOut={{ duration: 360 }}
+                >
+                        <nav class="flex flex-col p-8 gap-2">
+                                <!-- Main Navigation Links -->
+                                <a
+                                        href="{base}/about"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="About suyu"
+                                        on:click={toggleDropdown}
+                                >
+                                        About
+                                </a>
+                                <a
+                                        href="{base}/coming-soon"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="Blog (Coming Soon)"
+                                        on:click={toggleDropdown}
+                                >
+                                        Blog
+                                </a>
+                                <a
+                                        href="{base}/docs"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="Documentation"
+                                        on:click={toggleDropdown}
+                                >
+                                        Docs
+                                </a>
+                                <a
+                                        href="{base}/faq"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="Frequently Asked Questions"
+                                        on:click={toggleDropdown}
+                                >
+                                        FAQ
+                                </a>
+                                <a
+                                        href="https://docs.google.com/spreadsheets/u/0/d/1LrLak1DP4UP3bNZKOCAzwNEp5JMkVozYuMnUBDF8gQM/htmlview#"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="Compatibility"
+                                        target="_blank"
+                                        on:click={toggleDropdown}
+                                >
+                                        Compatibility
+                                </a>
+
+                                <!-- Social Links Section -->
+                                <div class="mt-8 px-4">
+                                        <h3 class="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Connect</h3>
+                                        <div class="flex flex-col gap-2">
+                                                <a
+                                                        class="flex items-center gap-3 py-3 text-[#A6A5A7] transition hover:text-white"
+                                                        href="https://github.com/suyu-emu"
+                                                        rel="noreferrer noopener"
+                                                        target="_blank"
+                                                        title="Suyu Organization"
+                                                        on:click={toggleDropdown}
+                                                >
+                                                        <CodeBranchOutline size="20" />
+                                                        <span>GitHub</span>
+                                                </a>
+                                                <a
+                                                        class="flex items-center gap-3 py-3 text-[#A6A5A7] transition hover:text-white"
+                                                        href="https://www.reddit.com/r/suyu/"
+                                                        rel="noreferrer noopener"
+                                                        target="_blank"
+                                                        title="Suyu Reddit"
+                                                        on:click={toggleDropdown}
+                                                >
+                                                        <SiReddit size="20" />
+                                                        <span>Reddit</span>
+                                                </a>
+                                                <a
+                                                        class="flex items-center gap-3 py-3 text-[#A6A5A7] transition hover:text-white"
+                                                        href="https://web.archive.org/web/20240304000000*/https://suyu.dev/static/brand/suyuBrandKit.zip"
+                                                        rel="noreferrer noopener"
+                                                        target="_blank"
+                                                        title="Download Press Kit (Archived)"
+                                                        on:click={toggleDropdown}
+                                                >
+                                                        <ArchiveBoxArrowDown size="20" />
+                                                        <span>Press Kit</span>
+                                                </a>
+                                        </div>
+                                </div>
+                        </nav>
+                </div>
+        {/if}
+
         <div
                 in:transitionIn={{ duration: 500 }}
                 out:transitionOut={{ duration: 500 }}
