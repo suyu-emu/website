@@ -22,3 +22,6 @@ To create a production version of our app, you can run:
 ```bash
 pnpm run build
 ```
+
+## Contributors
+Thanks to everyone who contributes to Suyu !
