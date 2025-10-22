@@ -1,3 +1,7 @@
+<script lang="ts">
+        import { base } from "$app/paths";
+</script>
+
 <svelte:head>
         <title>Documentation - suyu</title>
         <meta name="description" content="suyu documentation and guides" />
@@ -33,7 +37,7 @@
 
 <div class="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <a
-                href="/docs/getting-started"
+                href="{base}/docs/getting-started"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -46,7 +50,7 @@
         </a>
 
         <a
-                href="/docs/user-guide"
+                href="{base}/docs/user-guide"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -59,7 +63,7 @@
         </a>
 
         <a
-                href="/docs/troubleshooting"
+                href="{base}/docs/troubleshooting"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -72,7 +76,7 @@
         </a>
 
         <a
-                href="/docs/developer"
+                href="{base}/docs/developer"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -85,7 +89,7 @@
         </a>
 
         <a
-                href="/docs/game-compatibility"
+                href="{base}/docs/game-compatibility"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -98,7 +102,7 @@
         </a>
 
         <a
-                href="/docs/advanced"
+                href="{base}/docs/advanced"
                 class="relative rounded-[2.25rem] bg-[#110d10] p-8 transition hover:bg-[#1a1a1a] border border-[#ffffff11]"
         >
                 <div class="mb-4">
@@ -156,7 +160,7 @@
                         </div>
                 </a>
                 
-                <a href="/faq" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
+                <a href="{base}/faq" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
                         <svg class="h-6 w-6 text-[#f94d4d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
