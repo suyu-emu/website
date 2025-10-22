@@ -28,13 +28,17 @@ const config = {
                 prerender: {
                         entries: [
                                 "*",
-                                "/docs",
-                                "/docs/getting-started",
-                                "/docs/user-guide", 
-                                "/docs/troubleshooting",
-                                "/docs/developer",
-                                "/docs/game-compatibility",
-                                "/docs/advanced"
+                                "/website/docs",
+                                "/website/docs/getting-started",
+                                "/website/docs/user-guide", 
+                                "/website/docs/troubleshooting",
+                                "/website/docs/developer",
+                                "/website/docs/game-compatibility",
+                                "/website/docs/advanced",
+                                "/website/about",
+                                "/website/download",
+                                "/website/faq",
+                                "/website/coming-soon"
                         ],
                 },
         },
