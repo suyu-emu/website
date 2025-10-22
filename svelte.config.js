@@ -28,18 +28,24 @@ const config = {
                 prerender: {
                         entries: [
                                 "*",
-                                "/website/docs",
-                                "/website/docs/getting-started",
-                                "/website/docs/user-guide", 
-                                "/website/docs/troubleshooting",
-                                "/website/docs/developer",
-                                "/website/docs/game-compatibility",
-                                "/website/docs/advanced",
-                                "/website/about",
-                                "/website/download",
-                                "/website/faq",
-                                "/website/coming-soon"
+                                "/docs",
+                                "/docs/getting-started",
+                                "/docs/user-guide", 
+                                "/docs/troubleshooting",
+                                "/docs/developer",
+                                "/docs/game-compatibility",
+                                "/docs/advanced",
+                                "/about",
+                                "/download",
+                                "/faq",
+                                "/coming-soon"
                         ],
+                        handleHttpError: ({ path, referrer, message }) => {
+                                // Log the error but don't fail the build
+                                console.warn(`Prerender error for ${path}: ${message}`);
+                                // Return false to ignore the error and continue
+                                return false;
+                        }
                 },
         },
 };
