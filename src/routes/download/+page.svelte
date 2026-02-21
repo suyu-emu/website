@@ -1,82 +1,10 @@
 <script lang="ts">
-	// Allow for us to use client-sided code when needed
-	import { onMount } from "svelte";
-
-	// cool moving dots :3
-	// NOTE: This is required to be ran on the server due to issues with Svelte
-	let text = "Downloading Suyu";
-	const textLength = text.length;
-	setInterval(() => {
-		text += ".";
-		// Text length + 3 is essentially the length of the text above + the 3 dots
-		if (text.length > textLength + 3) {
-			text = "Downloading Suyu";
-		}
-	}, 500);
-
-	$: htmlContent = `${text}`;
-
-	onMount(async () => {
-		// Variables
-		const UA = navigator.userAgent;
-		const url = `https://git.suyu.dev/api/v1/repos/suyu/suyu/tags`; //NOTE - Change this to the correct URL when thats decided
-		const fakeVersionTag = true; // Fake version tag? (for debugging)
-		let latestRelease = "";
-
-		async function getTag() {
-			try {
-				// Get the latest release tag
-				const response = await fetch(url, {
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-
-				// Sort the response & get the first release (usually the latest)
-				/* TODO: Make the process way cleaner */
-				const releases = await response.json();
-				const latestRelease = releases[0].name;
-
-				console.log(latestRelease);
-				// Release found
-				if (latestRelease) {
-					console.log("Latest release tag:", latestRelease);
-					return latestRelease; // Assuming the first result is the latest
-				} else {
-					console.log("No releases found.");
-					return null;
-				}
-			} catch (error) {
-				console.error("Error fetching latest release tag:", error);
-				return null;
-			}
-		}
-		if (!fakeVersionTag) {
-			latestRelease = await getTag();
-		} else {
-			latestRelease = "v0.0.2-master";
-			console.log(latestRelease);
-		}
-
-		setTimeout(() => {
-			if (UA.includes("Windows")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/Suyu-Windows_x64.7z`;
-				// Android is above Linux because Android UA's also contain "Linux"
-			} else if (UA.includes("Android")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/app-mainline-release.apk`;
-			} else if (UA.includes("Linux")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/raw/refs/heads/master/${latestRelease}/suyu-mainline--.AppImage`;
-			} else if (UA.includes("Macintosh;")) {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/blob/master/${latestRelease}/suyu-macOS-arm64.dmg`;
-			} else {
-				window.location.href = `https://github.com/suyu-emu/suyu-releases/tree/master/${latestRelease}`;
-			}
-		}, 3000);
-	});
+	// Downloads are currently paused due to DMCA
+	import { base } from "$app/paths";
 </script>
 
 <svelte:head>
-	<title>Downloading Suyu</title>
+	<title>Downloads Paused - suyu</title>
 </svelte:head>
 
 <div
@@ -102,12 +30,43 @@
 	</svg>
 
 	<h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">
-		{@html htmlContent}
+		Downloads Indefinitely Paused
 	</h1>
 
 	<p class="max-w-[36rem] text-lg leading-relaxed text-[#A6A5A7]">
-		Your download should start shortly. If it doesn't, click <a
-			href="https://github.com/suyu-emu/suyu-releases"><u>here</u></a
-		>.
+		Due to DMCA concerns, we are indefinitely pausing downloads of suyu.
 	</p>
+
+	<div class="bg-[#2a1a1a] border-l-4 border-[#f94d4d] rounded-lg p-6 mt-4">
+		<h2 class="text-xl font-semibold text-[#f94d4d] mb-3">Why are downloads paused?</h2>
+		<p class="text-[#A6A5A7] mb-4">
+			We have received DMCA-related concerns and are taking proactive steps to address them. 
+			Out of an abundance of caution, we are temporarily suspending all download distribution.
+		</p>
+	</div>
+
+	<div class="bg-[#1a1a1a] border-l-4 border-[#60c7e9] rounded-lg p-6 mt-4">
+		<h2 class="text-xl font-semibold text-[#60c7e9] mb-3">🔧 Emulator Modifications in Progress</h2>
+		<p class="text-[#A6A5A7] mb-4">
+			The suyu emulator is currently being modified to remove ROM decryption functionality. 
+			Future versions will require pre-decrypted ROMs to operate. This change is being made 
+			to ensure the project remains compliant and sustainable.
+		</p>
+		<p class="text-[#A6A5A7]">
+			We are working hard to implement these changes and will provide updates as they become available.
+		</p>
+	</div>
+
+	<div class="flex flex-col gap-4 mt-6">
+		<a
+			href="{base}/"
+			class="button text-[#8A8F98] inline-flex items-center justify-center gap-2"
+			title="Return to Homepage"
+		>
+			← Return to Homepage
+		</a>
+		<a href="https://github.com/orgs/suyu-emu/discussions" target="_blank" rel="noreferrer noopener" class="button text-[#8A8F98] inline-flex items-center justify-center gap-2" title="GitHub Discussions">
+			Join the Discussion on GitHub →
+		</a>
+	</div>
 </div>

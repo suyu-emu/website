@@ -32,7 +32,7 @@
                 url: "https://suyu-emu.github.io/website/",
                 title: "suyu - Open-source, non-profit Switch emulator",
                 description:
-                        "suyu is a familiar C++ based Nintendo Switch emulator with a focus on compatibility. Completely free and open-source, forever. Download it here.",
+			"suyu is a familiar C++ based Nintendo Switch emulator with a focus on compatibility. Completely free and open-source, forever.",
                 image: embedImage,
         };
 </script>
@@ -62,6 +62,16 @@
 </article> -->
 
 <!-- Citron Warning -->
+<!-- DMCA Notice -->
+<article class="border-l-[4px] border-solid border-[#f94d4d] rounded-[10px] bg-[#2a1a1a] pt-[10px] inline-block mb-[20px]">
+	<div class="ml-[10px]">
+		<p class="text-[20px] font-bold mb-[2px] text-[#f94d4d]">⚠️ Notice: Downloads Paused</p>
+		<p class="text-[#A6A5A7] pb-[10px] mr-[12px]">
+			Due to DMCA concerns, we are indefinitely pausing downloads of suyu. The emulator is currently being modified to remove ROM decryption functionality and will require pre-decrypted ROMs going forward. We appreciate your understanding and patience during this transition. For more information, please check our GitHub discussions.
+		</p>
+	</div>
+</article>
+
 <article class="border-l-[4px] border-solid border-[#f94d4d] rounded-[10px] bg-[#2a1a1a] pt-[10px] inline-block mb-[20px]">
         <div class="ml-[10px]">
                 <p class="text-[20px] font-bold mb-[2px] text-[#f94d4d]">⚠️ Warning: Do Not Use Citron</p>
@@ -114,25 +124,6 @@
                 and open-source, forever.
         </p>
         <div class="flex flex-col gap-4 md:flex-row">
-                <a
-                        href="{base}/download"
-                        rel="noreferrer noopener"
-                        class="cta-button"
-                        title="Download Suyu"
-                >
-                        Download <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                                fill="currentColor"
-                                role="img"
-                                focusable="false"
-                                aria-hidden="true"
-                                ><path
-                                        d="M5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10.5303 8.53033C10.8207 8.23999 10.8236 7.77014 10.5368 7.47624L6.63419 3.47624C6.34492 3.17976 5.87009 3.17391 5.57361 3.46318C5.27713 3.75244 5.27128 4.22728 5.56054 4.52376L8.94583 7.99351L5.46967 11.4697Z"
-                                ></path></svg
-                        >
-                </a>
                 <a
                         href="https://github.com/suyu-emu"
                         target="_blank"

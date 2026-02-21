@@ -120,15 +120,15 @@
 <div class="mt-12 bg-[#1a1a1a] rounded-[2.25rem] p-8 border border-[#ffffff11]">
         <h2 class="text-xl font-bold text-white mb-6">Quick Links & Resources</h2>
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <a href="https://github.com/suyu-emu/suyu/releases" target="_blank" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
-                        <svg class="h-6 w-6 text-[#60c7e9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+		<div class="flex items-center gap-3 p-4 bg-[#2a1a1a] rounded-lg border border-[#f94d4d]">
+			<svg class="h-6 w-6 text-[#f94d4d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                         </svg>
                         <div>
-                                <h3 class="text-white font-semibold text-sm">Download Latest</h3>
-                                <p class="text-[#A6A5A7] text-xs">Get the newest suyu release</p>
+				<h3 class="text-[#f94d4d] font-semibold text-sm">Downloads Paused</h3>
+				<p class="text-[#A6A5A7] text-xs">Due to DMCA concerns</p>
                         </div>
-                </a>
+		</div>
                 
                 <a href="https://github.com/orgs/suyu-emu/discussions" target="_blank" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
                         <svg class="h-6 w-6 text-[#f78c40]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
