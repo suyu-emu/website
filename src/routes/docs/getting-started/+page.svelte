@@ -19,6 +19,16 @@
                 Everything you need to know to get suyu up and running on your system
         </p>
 
+	<div class="bg-[#2a1a1a] border-l-4 border-[#f94d4d] rounded-lg p-6 mb-6">
+		<h3 class="text-lg font-semibold text-[#f94d4d] mb-2">⚠️ Downloads Currently Paused</h3>
+		<p class="text-[#A6A5A7] mb-3">
+			Due to DMCA concerns, we are indefinitely pausing downloads of suyu. The emulator is currently being modified to remove ROM decryption functionality and will require pre-decrypted ROMs going forward.
+		</p>
+		<p class="text-[#A6A5A7]">
+			Please check our <a href="https://github.com/orgs/suyu-emu/discussions" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">GitHub discussions</a> for updates on when downloads will resume.
+		</p>
+	</div>
+
         <div class="prose prose-invert max-w-none">
                 <h2 class="text-2xl font-bold text-white mt-8 mb-4">System Requirements</h2>
                 <div class="bg-[#1a1a1a] rounded-lg p-6 border border-[#ffffff11] mb-6">
@@ -44,31 +54,13 @@
                 </div>
 
                 <h2 class="text-2xl font-bold text-white mt-8 mb-4">Installation</h2>
+		
+		<div class="bg-[#2a2015] border-l-4 border-[#f78c40] rounded-lg p-6 mb-6">
+			<p class="text-[#A6A5A7]">
+				<strong class="text-[#f78c40]">Note:</strong> Installation instructions are temporarily unavailable as downloads are paused. Once the modified emulator is available, this section will be updated with new installation procedures that reflect the changes to ROM handling.
+			</p>
+		</div>
                 
-                <h3 class="text-xl font-semibold text-white mt-6 mb-3">Windows</h3>
-                <ol class="text-[#A6A5A7] space-y-3 list-decimal list-inside">
-                        <li>Download the latest Windows build from our <a href="https://github.com/suyu-emu/suyu-releases" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">releases page</a></li>
-                        <li>Extract the downloaded ZIP file to a folder of your choice</li>
-                        <li>Run <code class="bg-[#2a2a2a] px-2 py-1 rounded text-white">suyu.exe</code> to start the emulator</li>
-                        <li>Follow the first-time setup wizard</li>
-                </ol>
-
-                <h3 class="text-xl font-semibold text-white mt-6 mb-3">Linux</h3>
-                <ol class="text-[#A6A5A7] space-y-3 list-decimal list-inside">
-                        <li>Download the AppImage from our <a href="https://github.com/suyu-emu/suyu-releases" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">releases page</a></li>
-                        <li>Make the AppImage executable: <code class="bg-[#2a2a2a] px-2 py-1 rounded text-white">chmod +x suyu-*.AppImage</code></li>
-                        <li>Run the AppImage: <code class="bg-[#2a2a2a] px-2 py-1 rounded text-white">./suyu-*.AppImage</code></li>
-                        <li>Follow the first-time setup wizard</li>
-                </ol>
-
-                <h3 class="text-xl font-semibold text-white mt-6 mb-3">Android</h3>
-                <ol class="text-[#A6A5A7] space-y-3 list-decimal list-inside">
-                        <li>Download the APK from our <a href="https://github.com/suyu-emu/suyu-releases" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">releases page</a></li>
-                        <li>Enable "Install from unknown sources" in your Android settings</li>
-                        <li>Install the APK file</li>
-                        <li>Launch suyu and complete the setup process</li>
-                </ol>
-
                 <h2 class="text-2xl font-bold text-white mt-8 mb-4">First-Time Setup</h2>
                 
                 <div class="bg-[#2a1a1a] border-l-4 border-[#f94d4d] rounded-lg p-6 mb-6">

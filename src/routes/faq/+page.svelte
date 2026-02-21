@@ -57,17 +57,13 @@
                 Q: Where can I download Suyu?
         </p>
         <p class="text-m text-[15px]">
-                A: You can download the latest build of Suyu from our <a
-                        href="https://github.com/suyu-emu/suyu-releases"><u>GitHub</u></a
-                >. Please make sure you are using the right URL!
+		A: Downloads are currently paused indefinitely due to DMCA concerns. The emulator is being modified to remove ROM decryption functionality and will require pre-decrypted ROMs in the future. Please check our GitHub discussions for updates.
         </p>
         <p class="text-[15px] leading-[1.41] md:text-[19px] md:leading-[1.1]">
                 Q: What is the current progress for Suyu?
         </p>
         <p class="text-m text-[15px]">
-                A: As of 3/20/2024, we have released our first Windows binary 🎉! You can find it <a
-                        href="https://github.com/suyu-emu/suyu-releases"><u>here</u></a
-                >. We are always trying to make more and more progress, so please feel free to
+		A: Development is ongoing. Due to DMCA concerns, downloads are currently paused while we modify the emulator to remove ROM decryption functionality. We are always trying to make more and more progress, so please feel free to
                 <a href="https://github.com/orgs/suyu-emu/discussions"><u>join the discussion on GitHub!</u></a>
         </p>
 </div>
