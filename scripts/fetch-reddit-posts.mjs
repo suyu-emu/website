@@ -7,9 +7,8 @@
  * can prerender the blog routes at build time.
  *
  * Strategy:
- *   1. Try the public Reddit JSON API (www.reddit.com/.json).
- *   2. If the API returns a 4xx error (e.g. HTTP 403 in CI), fall back to
- *      scraping the post page on old.reddit.com and parsing the HTML —
+ *   Fetch raw HTML directly from Reddit (www.reddit.com first, then old.reddit.com)
+ *   and parse it to extract post data —
  *      no API key or Reddit credentials required.
  *
  * Usage:  node scripts/fetch-reddit-posts.mjs
@@ -89,12 +88,19 @@ const POSTS = [
 ];
 
 // ── Shared browser-like headers used for every request ──────────────────────
-const BROWSER_HEADERS = {
+// ── Enhanced browser-like headers to avoid HTTP 403 ──────────────────────────
 	"User-Agent":
 		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-	Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-	"Accept-Language": "en-US,en;q=0.9",
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+	Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
 	"Cache-Control": "no-cache",
+	"Accept-Encoding": "gzip, deflate, br",
+	"Sec-Ch-Ua": '"Chromium";v="131", "Not_A Brand";v="24"',
+	"Sec-Ch-Ua-Mobile": "?0",
+	"Sec-Ch-Ua-Platform": '"Windows"',
+	"Sec-Fetch-Dest": "document",
+	"Sec-Fetch-Mode": "navigate",
+	"Sec-Fetch-Site": "none",
 	Pragma: "no-cache",
 };
 
@@ -163,62 +169,6 @@ function extractMdContent(html) {
 	return "";
 }
 
-// ── Strategy 1 – Reddit JSON API ─────────────────────────────────────────────
-
-async function fetchPostJson(post, retries = 3) {
-	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`;
-	console.log(`Fetching ${url} …`);
-
-	let lastError;
-	for (let attempt = 0; attempt < retries; attempt++) {
-		try {
-			const res = await fetch(url, { headers: BROWSER_HEADERS });
-
-			if (!res.ok) {
-				const err = new Error(`HTTP ${res.status} for ${url}`);
-				// 4xx errors mean the API is blocking us – don't bother retrying.
-				if (res.status >= 400 && res.status < 500) throw err;
-				lastError = err;
-				if (attempt < retries - 1) {
-					const backoff = Math.pow(2, attempt) * 1000;
-					console.log(`  ⚠ Attempt ${attempt + 1} failed (${res.status}), retrying in ${backoff}ms...`);
-					await sleep(backoff);
-				}
-				continue;
-			}
-
-			const json = await res.json();
-			const data = json[0]?.data?.children?.[0]?.data;
-			if (!data) throw new Error(`Unexpected JSON shape for ${post.id}`);
-
-			return {
-				slug: post.slug,
-				id: data.id,
-				title: data.title,
-				date: new Date(data.created_utc * 1000).toISOString(),
-				subreddit: data.subreddit,
-				author: data.author,
-				url: `https://www.reddit.com${data.permalink}`,
-				score: data.score,
-				content: data.selftext || "",
-			};
-		} catch (err) {
-			// Re-throw 4xx immediately – no point retrying a blocked request.
-			if (/HTTP 4\d\d/.test(err.message)) throw err;
-			lastError = err;
-			if (attempt < retries - 1) {
-				const backoff = Math.pow(2, attempt) * 1000;
-				console.log(`  ⚠ Attempt ${attempt + 1} failed, retrying in ${backoff}ms...`);
-				await sleep(backoff);
-			}
-		}
-	}
-
-	throw lastError;
-}
-
-// ── Strategy 2 – old.reddit.com HTML scraper ─────────────────────────────────
-
 async function scrapePostHtml(post, retries = 3) {
 	const url = `https://old.reddit.com/r/${post.subreddit}/comments/${post.id}/`;
 	console.log(`  ↩ Scraping ${url} …`);
@@ -283,20 +233,83 @@ async function scrapePostHtml(post, retries = 3) {
 	throw lastError;
 }
 
-// ── Public entry point ────────────────────────────────────────────────────────
+/**
+ * Try scraping from www.reddit.com directly (without .json).
+ * This approach fetches the raw HTML page and extracts data.
+ */
+async function scrapeNewRedditHtml(post, retries = 3) {
+	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}/`;
+	console.log(`Fetching ${url} (raw HTML) …`);
+
+	let lastError;
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(url, { 
+				headers: {
+					...BROWSER_HEADERS,
+					"Upgrade-Insecure-Requests": "1",
+					"Dnt": "1",
+				}
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+
+			const html = await res.text();
+
+			// Try to extract JSON from Reddit's <script> tags that contain post data
+			// Modern Reddit embeds JSON data in <script id="data">...</script> tags
+			const scriptMatch = html.match(/<script[^>]*id="data"[^>]*>([^<]+)<\/script>/);
+			if (scriptMatch) {
+				try {
+					const jsonData = JSON.parse(scriptMatch[1]);
+					// Navigate through Reddit's data structure
+					const postData = jsonData?.posts?.models?.[post.id];
+					if (postData) {
+						return {
+							slug: post.slug,
+							id: post.id,
+							title: decodeHtmlEntities(postData.title || ""),
+							date: new Date(postData.created).toISOString(),
+							subreddit: postData.subreddit?.name || post.subreddit,
+							author: postData.author || "",
+							url: `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}/`,
+							score: postData.score || 0,
+							content: postData.selftext || "",
+						};
+					}
+				} catch (parseErr) {
+					// If JSON parsing fails, continue to next attempt or fallback
+					console.log(`  ⚠ Failed to parse embedded JSON data`);
+				}
+			}
+
+			// If we couldn't extract from script tags, throw error to try next approach
+			throw new Error(`Could not extract post data from www.reddit.com HTML for ${post.id}`);
+			
+		} catch (err) {
+			lastError = err;
+			if (attempt < retries - 1) {
+				const backoff = Math.pow(2, attempt) * 1000;
+				console.log(`  ⚠ Attempt ${attempt + 1} failed, retrying in ${backoff}ms...`);
+				await sleep(backoff);
+			}
+		}
+	}
+
+	throw lastError;
+}
+
+// ── Public entry point ─────────────────────────────────────────────────────────
 
 /**
- * Try the JSON API first; if it is blocked (4xx) fall back to HTML scraping.
+ * Fetch post data by scraping HTML directly.
+ * Try www.reddit.com first, then fall back to old.reddit.com if needed.
  */
 async function fetchPost(post) {
 	try {
-		return await fetchPostJson(post);
+		return await scrapeNewRedditHtml(post);
 	} catch (err) {
-		if (/HTTP 4\d\d/.test(err.message)) {
-			console.log(`  ↩ JSON API blocked (${err.message.match(/HTTP \d+/)?.[0]}), trying HTML scraper …`);
-			return await scrapePostHtml(post);
-		}
-		throw err;
+		console.log(`  ↩ www.reddit.com failed (${err.message}), trying old.reddit.com …`);
+		return await scrapePostHtml(post);
 	}
 }
 
@@ -316,7 +329,7 @@ async function main() {
 			failed++;
 		}
 
-		// Be polite to the Reddit API – 1 second between requests.
+		// Be polite – add delay between requests to avoid rate limiting.
 		await sleep(1000);
 	}
 
