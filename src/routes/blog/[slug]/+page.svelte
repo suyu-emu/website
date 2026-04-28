@@ -255,6 +255,20 @@
 	<!-- Body -->
 	<div class="relative z-10 mt-2">
 		{#if renderedContent}
+			<!-- Images (if any) -->
+			{#if post.images && post.images.length > 0}
+				<div class="mb-6 grid gap-4 {post.images.length === 1 ? '' : 'grid-cols-1 md:grid-cols-2'}">
+					{#each post.images as imageUrl}
+						<img 
+							src={imageUrl}
+							alt="Post image"
+							class="w-full rounded-lg border border-[#ffffff11]"
+							loading="lazy"
+						/>
+					{/each}
+				</div>
+			{/if}
+
 			<div class="blog-content text-base text-[#c9c8ca]">
 				{@html renderedContent}
 			</div>

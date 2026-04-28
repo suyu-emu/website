@@ -152,6 +152,39 @@ function decodeHtmlEntities(str) {
 		.replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)));
 }
 
+/**
+ * Extract image URLs from Reddit post data (JSON API format).
+ * Handles preview images, galleries, and direct image URLs.
+ */
+function extractImages(postData) {
+	const images = [];
+
+	// 1. Preview image (most common)
+	if (postData?.preview?.images?.[0]?.source?.url) {
+		images.push(decodeHtmlEntities(postData.preview.images[0].source.url));
+	}
+
+	// 2. Gallery images
+	if (postData?.gallery_data?.items && postData?.media_metadata) {
+		for (const item of postData.gallery_data.items) {
+			const mediaId = item.media_id;
+			const media = postData.media_metadata[mediaId];
+			if (media?.s?.u) {
+				images.push(decodeHtmlEntities(media.s.u));
+			}
+		}
+	}
+
+	// 3. Direct image URL (i.redd.it, imgur, etc.)
+	if (postData?.url && /\.(jpg|jpeg|png|gif|webp)$/i.test(postData.url)) {
+		if (!images.includes(postData.url)) {
+			images.push(postData.url);
+		}
+	}
+
+	return images;
+}
+
 /** Strip all HTML tags and collapse whitespace to plain text. */
 function stripHtml(html) {
 	return html
@@ -238,6 +271,9 @@ async function scrapePostHtml(post, retries = 3) {
 			// Selftext: content of the first <div class="md"> block
 			const content = extractMdContent(html);
 
+			// Add signature
+			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
 			return {
 				slug: post.slug,
 				id: post.id,
@@ -247,7 +283,8 @@ async function scrapePostHtml(post, retries = 3) {
 				author,
 				url: `https://www.reddit.com${permalink}`,
 				score,
-				content,
+				content: finalContent,
+				images: [], // HTML scraping doesn't easily extract images; fallback to empty
 			};
 		} catch (err) {
 			lastError = err;
@@ -292,6 +329,10 @@ async function scrapeNewRedditHtml(post, retries = 3) {
 					const jsonData = JSON.parse(scriptMatch[1]);
 					// Navigate through Reddit's data structure
 					const postData = jsonData?.posts?.models?.[post.id];
+						const images = extractImages(postData);
+						const content = postData.selftext || "";
+						const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
 					if (postData) {
 						return {
 							slug: post.slug,
@@ -301,8 +342,8 @@ async function scrapeNewRedditHtml(post, retries = 3) {
 							subreddit: postData.subreddit?.name || post.subreddit,
 							author: postData.author || "",
 							url: `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}/`,
-							score: postData.score || 0,
-							content: postData.selftext || "",
+							content: finalContent,
+							images,
 						};
 					}
 				} catch (parseErr) {
@@ -355,6 +396,10 @@ async function fetchPostJson(post, retries = 3) {
 			const postData = json?.[0]?.data?.children?.[0]?.data;
 			if (!postData) throw new Error(`Unexpected JSON structure for ${post.id}`);
 
+			const images = extractImages(postData);
+			const content = postData.selftext || "";
+			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
 			return {
 				slug: post.slug,
 				id: post.id,
@@ -364,7 +409,8 @@ async function fetchPostJson(post, retries = 3) {
 				author: postData.author || "",
 				url: `https://www.reddit.com${postData.permalink || `/r/${post.subreddit}/comments/${post.id}/`}`,
 				score: postData.score || 0,
-				content: postData.selftext || "",
+				content: finalContent,
+				images,
 			};
 		} catch (err) {
 			lastError = err;
@@ -405,6 +451,10 @@ async function fetchFromArcticShift(post, retries = 3) {
 			const json = await res.json();
 			const postData = json?.data?.[0];
 			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+			const images = extractImages(postData);
+			const content = postData.selftext || "";
+			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
 
 			return {
 				slug: post.slug,
@@ -414,8 +464,8 @@ async function fetchFromArcticShift(post, retries = 3) {
 				subreddit: postData.subreddit || post.subreddit,
 				author: postData.author || "",
 				url: `https://www.reddit.com${postData.permalink || `/r/${post.subreddit}/comments/${post.id}/`}`,
-				score: postData.score || 0,
-				content: postData.selftext || "",
+				content: finalContent,
+				images,
 			};
 		} catch (err) {
 			lastError = err;
