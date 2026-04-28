@@ -86,21 +86,48 @@ async function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchPost(post) {
+async function fetchPost(post, retries = 3) {
 	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`;
 	console.log(`Fetching ${url} …`);
 
-	const res = await fetch(url, {
-		headers: {
-			"User-Agent": "suyu-website-blog-fetcher/1.0 (https://github.com/suyu-emu/website)",
-			Accept: "application/json",
-		},
-	});
+	let lastError;
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(url, {
+				headers: {
+					"User-Agent":
+						"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+					Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,application/json,*/*;q=0.8",
+					"Accept-Language": "en-US,en;q=0.9",
+					"Accept-Encoding": "gzip, deflate, br",
+					"Cache-Control": "no-cache",
+					Pragma: "no-cache",
+					"Sec-Fetch-Dest": "document",
+					"Sec-Fetch-Mode": "navigate",
+					"Sec-Fetch-Site": "none",
+					"Upgrade-Insecure-Requests": "1",
+				},
+			});
 
-	if (!res.ok) {
-		throw new Error(`HTTP ${res.status} for ${url}`);
+			if (!res.ok) {
+				throw new Error(`HTTP ${res.status} for ${url}`);
+			}
+
+			return await processResponse(res, post);
+		} catch (err) {
+			lastError = err;
+			if (attempt < retries - 1) {
+				const backoff = Math.pow(2, attempt) * 1000;
+				console.log(`  ⚠ Attempt ${attempt + 1} failed, retrying in ${backoff}ms...`);
+				await sleep(backoff);
+			}
+		}
 	}
 
+	throw lastError;
+}
+
+async function processResponse(res, post) {
 	const json = await res.json();
 	const data = json[0]?.data?.children?.[0]?.data;
 
