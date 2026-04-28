@@ -379,6 +379,57 @@ async function fetchPostJson(post, retries = 3) {
 	throw lastError;
 }
 
+// ── Arctic Shift archive API ───────────────────────────────────────────────────
+
+/**
+ * Fetch post from Arctic Shift (https://arctic-shift.photon-reddit.com),
+ * a community-maintained Reddit archive with a public API.
+ * This endpoint is not blocked by GitHub Actions and provides accurate
+ * post data including selftext (body content) and real creation timestamps.
+ */
+async function fetchFromArcticShift(post, retries = 3) {
+	const url = `https://arctic-shift.photon-reddit.com/api/posts/ids?ids=${post.id}`;
+	console.log(`  ↩ Fetching from Arctic Shift: ${url} …`);
+
+	let lastError;
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(url, {
+				headers: {
+					"User-Agent": "suyu-website-bot/1.0 (https://suyu.dev; build-time blog mirror)",
+					Accept: "application/json",
+				},
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+
+			const json = await res.json();
+			const postData = json?.data?.[0];
+			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+
+			return {
+				slug: post.slug,
+				id: post.id,
+				title: decodeHtmlEntities(postData.title || ""),
+				date: new Date((postData.created_utc || 0) * 1000).toISOString(),
+				subreddit: postData.subreddit || post.subreddit,
+				author: postData.author || "",
+				url: `https://www.reddit.com${postData.permalink || `/r/${post.subreddit}/comments/${post.id}/`}`,
+				score: postData.score || 0,
+				content: postData.selftext || "",
+			};
+		} catch (err) {
+			lastError = err;
+			if (attempt < retries - 1) {
+				const backoff = Math.pow(2, attempt) * 1000;
+				console.log(`  ⚠ Arctic Shift attempt ${attempt + 1} failed, retrying in ${backoff}ms...`);
+				await sleep(backoff);
+			}
+		}
+	}
+
+	throw lastError;
+}
+
 // ── Public entry point ─────────────────────────────────────────────────────────
 
 /**
@@ -386,7 +437,8 @@ async function fetchPostJson(post, retries = 3) {
  *   1. Reddit JSON API  (simplest, often works without browser headers)
  *   2. www.reddit.com HTML scrape
  *   3. old.reddit.com HTML scrape
- *   4. Existing on-disk JSON (static fallback so a single Reddit outage never
+ *   4. Arctic Shift archive API (community Reddit archive; not blocked by CI)
+ *   5. Existing on-disk JSON (static fallback so a single outage never
  *      breaks the build when the files were previously committed to the repo)
  */
 async function fetchPost(post) {
@@ -408,10 +460,17 @@ async function fetchPost(post) {
 	try {
 		return await scrapePostHtml(post);
 	} catch (err) {
-		console.log(`  ↩ old.reddit.com failed (${err.message}), checking for existing file …`);
+		console.log(`  ↩ old.reddit.com failed (${err.message}), trying Arctic Shift archive …`);
 	}
 
-	// 4. Static fallback: use existing on-disk JSON if present
+	// 4. Arctic Shift archive
+	try {
+		return await fetchFromArcticShift(post);
+	} catch (err) {
+		console.log(`  ↩ Arctic Shift failed (${err.message}), checking for existing file …`);
+	}
+
+	// 5. Static fallback: use existing on-disk JSON if present
 	const existingPath = join(OUTPUT_DIR, `${post.slug}.json`);
 	if (existsSync(existingPath)) {
 		console.log(`  ↩ Using existing on-disk data for ${post.slug}`);
