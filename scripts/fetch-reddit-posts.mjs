@@ -14,7 +14,7 @@
  * Usage:  node scripts/fetch-reddit-posts.mjs
  */
 
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -25,6 +25,21 @@ mkdirSync(OUTPUT_DIR, { recursive: true });
 
 /** All Reddit posts to mirror, in chronological order. */
 const POSTS = [
+	{
+		slug: "no-you-didnt-get-banned-from-the-discord-server",
+		subreddit: "suyu",
+		id: "1c0vlvj",
+	},
+	{
+		slug: "the-death-of-suyu",
+		subreddit: "suyu",
+		id: "1c1hs3l",
+	},
+	{
+		slug: "bus-has-moved-suyus-server-from-discord-to-matrix",
+		subreddit: "suyu",
+		id: "1c1sfen",
+	},
 	{
 		slug: "founder-speaking-future",
 		subreddit: "suyu",
@@ -41,6 +56,11 @@ const POSTS = [
 		id: "1drxnw7",
 	},
 	{
+		slug: "about-uzuy-new-switch-emulator",
+		subreddit: "suyu",
+		id: "1dz4czr",
+	},
+	{
 		slug: "official-suyu-website-and-download",
 		subreddit: "suyu",
 		id: "1dyaokm",
@@ -49,6 +69,16 @@ const POSTS = [
 		slug: "fix-echoes-of-wisdom-not-running-correctly",
 		subreddit: "suyu",
 		id: "1frtdjy",
+	},
+	{
+		slug: "suyuzudachi-my-account-and-our-group-dm-is-down",
+		subreddit: "suyu",
+		id: "1eilofq",
+	},
+	{
+		slug: "an-update",
+		subreddit: "suyu",
+		id: "1eixziy",
 	},
 	{
 		slug: "suyu-has-officially-stated-their-project-is-eol",
@@ -297,19 +327,99 @@ async function scrapeNewRedditHtml(post, retries = 3) {
 	throw lastError;
 }
 
+// ── Reddit JSON API ────────────────────────────────────────────────────────────
+
+/**
+ * Try Reddit's public JSON API endpoint first.
+ * e.g. https://www.reddit.com/r/suyu/comments/1c1tnh5.json
+ * This is simpler than HTML scraping and often bypasses bot-detection.
+ */
+async function fetchPostJson(post, retries = 3) {
+	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`;
+	console.log(`Fetching ${url} …`);
+
+	let lastError;
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(url, {
+				headers: {
+					// Reddit requires a descriptive User-Agent for API access.
+					"User-Agent": "suyu-website-bot/1.0 (https://suyu.dev; build-time blog mirror)",
+					Accept: "application/json",
+				},
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+
+			const json = await res.json();
+			// Reddit returns a two-element array: [post-listing, comments-listing]
+			const postData = json?.[0]?.data?.children?.[0]?.data;
+			if (!postData) throw new Error(`Unexpected JSON structure for ${post.id}`);
+
+			return {
+				slug: post.slug,
+				id: post.id,
+				title: decodeHtmlEntities(postData.title || ""),
+				date: new Date((postData.created_utc || postData.created) * 1000).toISOString(),
+				subreddit: postData.subreddit || post.subreddit,
+				author: postData.author || "",
+				url: `https://www.reddit.com${postData.permalink || `/r/${post.subreddit}/comments/${post.id}/`}`,
+				score: postData.score || 0,
+				content: postData.selftext || "",
+			};
+		} catch (err) {
+			lastError = err;
+			if (attempt < retries - 1) {
+				const backoff = Math.pow(2, attempt) * 1000;
+				console.log(`  ⚠ JSON API attempt ${attempt + 1} failed, retrying in ${backoff}ms...`);
+				await sleep(backoff);
+			}
+		}
+	}
+
+	throw lastError;
+}
+
 // ── Public entry point ─────────────────────────────────────────────────────────
 
 /**
- * Fetch post data by scraping HTML directly.
- * Try www.reddit.com first, then fall back to old.reddit.com if needed.
+ * Fetch post data. Strategy (in order):
+ *   1. Reddit JSON API  (simplest, often works without browser headers)
+ *   2. www.reddit.com HTML scrape
+ *   3. old.reddit.com HTML scrape
+ *   4. Existing on-disk JSON (static fallback so a single Reddit outage never
+ *      breaks the build when the files were previously committed to the repo)
  */
 async function fetchPost(post) {
+	// 1. Reddit JSON API
+	try {
+		return await fetchPostJson(post);
+	} catch (err) {
+		console.log(`  ↩ JSON API failed (${err.message}), trying www.reddit.com HTML …`);
+	}
+
+	// 2. www.reddit.com HTML scrape
 	try {
 		return await scrapeNewRedditHtml(post);
 	} catch (err) {
 		console.log(`  ↩ www.reddit.com failed (${err.message}), trying old.reddit.com …`);
-		return await scrapePostHtml(post);
 	}
+
+	// 3. old.reddit.com HTML scrape
+	try {
+		return await scrapePostHtml(post);
+	} catch (err) {
+		console.log(`  ↩ old.reddit.com failed (${err.message}), checking for existing file …`);
+	}
+
+	// 4. Static fallback: use existing on-disk JSON if present
+	const existingPath = join(OUTPUT_DIR, `${post.slug}.json`);
+	if (existsSync(existingPath)) {
+		console.log(`  ↩ Using existing on-disk data for ${post.slug}`);
+		const existing = JSON.parse(readFileSync(existingPath, "utf8"));
+		return existing;
+	}
+
+	throw new Error(`All fetch strategies failed for ${post.slug} and no existing file found`);
 }
 
 async function main() {
