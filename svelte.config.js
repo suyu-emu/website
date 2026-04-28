@@ -28,6 +28,7 @@ const config = {
                 prerender: {
                         entries: [
                                 "*",
+                                "/blog",
                                 "/docs",
                                 "/docs/getting-started",
                                 "/docs/user-guide", 

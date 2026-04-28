@@ -209,9 +209,9 @@
                                         title="About suyu">About</a
                                 >
                                 <a
-                                        href="{base}/coming-soon"
+                                        href="{base}/blog"
                                         class="px-5 py-3 transition hover:text-white"
-                                        title="Blog (Coming Soon)">Blog</a
+                                        title="Blog">Blog</a
                                 >
                                 <a
                                         href="{base}/docs"
@@ -306,9 +306,9 @@
                                         About
                                 </a>
                                 <a
-                                        href="{base}/coming-soon"
+                                        href="{base}/blog"
                                         class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
-                                        title="Blog (Coming Soon)"
+                                        title="Blog"
                                         on:click={toggleDropdown}
                                 >
                                         Blog
