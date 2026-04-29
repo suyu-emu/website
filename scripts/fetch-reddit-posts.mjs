@@ -436,7 +436,8 @@ async function fetchPostJson(post, retries = 3) {
 async function fetchFromArcticShift(post, retries = 3) {
 	// Request posts sorted by created_utc descending so the most recently
 	// archived snapshot (i.e. the latest edit) is at index 0.
-	const url = `https://arctic-shift.photon-reddit.com/api/posts/ids?ids=${post.id}&sort=created_utc&order=desc`;
+	// Try the submissions endpoint instead of posts/ids which may have changed
+	const url = `https://arctic-shift.photon-reddit.com/api/${post.subreddit}/post/${post.id}`;
 	console.log(`  ↩ Fetching from Arctic Shift: ${url} …`);
 
 	let lastError;
@@ -451,18 +452,13 @@ async function fetchFromArcticShift(post, retries = 3) {
 			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
 
 			const json = await res.json();
-			// Arctic Shift may return multiple snapshots for the same post ID
-			// (archived at different points in time).  We always want the most
-			// recently archived snapshot, which reflects the latest OP edits.
-			// With sort=created_utc&order=desc the newest snapshot is first;
-			// fall back to the last element in case the endpoint ignores sorting.
-			const snapshots = json?.data;
-			if (!snapshots?.length) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
-			const postData = snapshots[0];
+			// Arctic Shift returns the post data directly
+			const postData = json?.data;
+			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+			
 			const images = extractImages(postData);
 			const content = postData.selftext || "";
 			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
-
 
 			return {
 				slug: post.slug,
@@ -555,8 +551,8 @@ async function main() {
 			failed++;
 		}
 
-		// Be polite – add delay between requests to avoid rate limiting.
-		await sleep(1000);
+		// Be polite – add delay between requests to avoid rate limiting (2 seconds)
+		await sleep(2000);
 	}
 
 	console.log(`\nDone. ${ok} succeeded, ${failed} failed.`);

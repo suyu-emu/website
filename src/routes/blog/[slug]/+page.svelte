@@ -261,7 +261,7 @@
 					{#each post.images as imageUrl}
 						<img 
 							src={imageUrl}
-							alt="Post image"
+							alt=""
 							class="w-full rounded-lg border border-[#ffffff11]"
 							loading="lazy"
 						/>

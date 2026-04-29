@@ -41,6 +41,7 @@ const config = {
                                 "/faq",
                                 "/coming-soon"
                         ],
+			handleUnseenRoutes: 'ignore',
                         handleHttpError: ({ path, referrer, message }) => {
                                 // Log the error but don't fail the build
                                 console.warn(`Prerender error for ${path}: ${message}`);
