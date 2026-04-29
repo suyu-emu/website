@@ -376,7 +376,7 @@ async function scrapeNewRedditHtml(post, retries = 3) {
  * This is simpler than HTML scraping and often bypasses bot-detection.
  */
 async function fetchPostJson(post, retries = 3) {
-	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`;
+	const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json?raw_json=1`;
 	console.log(`Fetching ${url} …`);
 
 	let lastError;
@@ -434,7 +434,9 @@ async function fetchPostJson(post, retries = 3) {
  * post data including selftext (body content) and real creation timestamps.
  */
 async function fetchFromArcticShift(post, retries = 3) {
-	const url = `https://arctic-shift.photon-reddit.com/api/posts/ids?ids=${post.id}`;
+	// Request posts sorted by created_utc descending so the most recently
+	// archived snapshot (i.e. the latest edit) is at index 0.
+	const url = `https://arctic-shift.photon-reddit.com/api/posts/ids?ids=${post.id}&sort=created_utc&order=desc`;
 	console.log(`  ↩ Fetching from Arctic Shift: ${url} …`);
 
 	let lastError;
@@ -449,8 +451,14 @@ async function fetchFromArcticShift(post, retries = 3) {
 			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
 
 			const json = await res.json();
-			const postData = json?.data?.[0];
-			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+			// Arctic Shift may return multiple snapshots for the same post ID
+			// (archived at different points in time).  We always want the most
+			// recently archived snapshot, which reflects the latest OP edits.
+			// With sort=created_utc&order=desc the newest snapshot is first;
+			// fall back to the last element in case the endpoint ignores sorting.
+			const snapshots = json?.data;
+			if (!snapshots?.length) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+			const postData = snapshots[0];
 			const images = extractImages(postData);
 			const content = postData.selftext || "";
 			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
