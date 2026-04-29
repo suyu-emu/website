@@ -434,10 +434,7 @@ async function fetchPostJson(post, retries = 3) {
  * post data including selftext (body content) and real creation timestamps.
  */
 async function fetchFromArcticShift(post, retries = 3) {
-	// Request posts sorted by created_utc descending so the most recently
-	// archived snapshot (i.e. the latest edit) is at index 0.
-	// Try the submissions endpoint instead of posts/ids which may have changed
-	const url = `https://arctic-shift.photon-reddit.com/api/${post.subreddit}/post/${post.id}`;
+	const url = `https://arctic-shift.photon-reddit.com/api/posts/ids?ids=${post.id}`;
 	console.log(`  ↩ Fetching from Arctic Shift: ${url} …`);
 
 	let lastError;
@@ -452,8 +449,8 @@ async function fetchFromArcticShift(post, retries = 3) {
 			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
 
 			const json = await res.json();
-			// Arctic Shift returns the post data directly
-			const postData = json?.data;
+			// Arctic Shift returns { data: [ postObject, ... ] }
+			const postData = json?.data?.[0];
 			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
 			
 			const images = extractImages(postData);
