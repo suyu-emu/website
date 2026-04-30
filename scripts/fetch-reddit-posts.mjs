@@ -450,12 +450,43 @@ async function fetchFromArcticShift(post, retries = 3) {
 
 			const json = await res.json();
 			// Arctic Shift returns { data: [ postObject, ... ] }
-			const postData = json?.data?.[0];
-			if (!postData) throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
-			
+			// Multiple snapshots may exist for the same post (original + re-crawls after edits).
+			// Sort by retrieval time descending so we always use the most recent snapshot.
+			const data = json?.data;
+			if (!data || data.length === 0)
+				throw new Error(`No data returned by Arctic Shift for post ${post.id}`);
+
+			if (data.length > 1) {
+				console.log(
+					`  ℹ Arctic Shift returned ${data.length} snapshots for ${post.id}; picking the latest`,
+				);
+				data.forEach((snap, i) => {
+					const crawledAt = snap.retrieved_on || snap.retrieved_utc;
+					console.log(
+						`    snapshot ${i + 1}: retrieved_on=${crawledAt} selftext_len=${(snap.selftext || "").length}`,
+					);
+				});
+			}
+
+			// Pick the snapshot with the highest retrieval timestamp (most recently crawled).
+			// data[0] is used as the initial value so reduce never operates on an empty array.
+			const postData = data.reduce((latest, snap) => {
+				const latestTime = latest.retrieved_on || latest.retrieved_utc || 0;
+				const snapTime = snap.retrieved_on || snap.retrieved_utc || 0;
+				return snapTime > latestTime ? snap : latest;
+			}, data[0]);
+
 			const images = extractImages(postData);
 			const content = postData.selftext || "";
 			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
+			// Reddit / Arctic Shift stores `edited` as either `false` or a Unix timestamp in
+			// seconds (same unit as `created_utc`), so multiply by 1000 for Date.
+			if (postData.edited && postData.edited !== false) {
+				console.log(
+					`  ℹ Post ${post.id} was edited; using latest snapshot (edited at ${new Date(Number(postData.edited) * 1000).toISOString()})`,
+				);
+			}
 
 			return {
 				slug: post.slug,
