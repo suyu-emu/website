@@ -19,119 +19,37 @@ export interface ProjectData {
 }
 
 /**
- * Fetch project data from the suyu project management system
- * This is a placeholder implementation that would need to be adapted
- * for the actual API endpoints and authentication requirements
+ * Load project board data.
+ *
+ * Priority:
+ *   1. src/content/project-board.json  – written at build time by
+ *      scripts/fetch-project-board.mjs from a Wayback Machine snapshot
+ *      of the git.suyu.dev project board.
+ *   2. FALLBACK_TASKS below            – static data used when the
+ *      fetch script was unable to reach the archive.
  */
 export async function fetchProjectData(): Promise<ProjectData> {
-	try {
-		// In a real implementation, this would fetch from the actual API
-		// const response = await fetch('https://git.suyu.dev/api/v1/repos/suyu/suyu/projects/11', {
-		//   headers: {
-		//     'Authorization': 'Bearer ' + process.env.GITEA_TOKEN,
-		//     'Accept': 'application/json'
-		//   }
-		// });
-		
-		// For now, return enhanced static data that reflects current development priorities
-		const enhancedTasks: ProjectTask[] = [
-			{
-				id: 1,
-				title: "Compatibility Improvements",
-				status: "In Progress",
-				progress: 85,
-				description: "Improving game compatibility and fixing rendering issues",
-				category: "Core",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 2,
-				title: "Performance Optimization",
-				status: "In Progress",
-				progress: 70,
-				description: "CPU and GPU performance improvements, shader cache optimization",
-				category: "Performance",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 3,
-				title: "Vulkan Renderer Enhancements",
-				status: "In Progress",
-				progress: 90,
-				description: "Advanced Vulkan features and rendering accuracy improvements",
-				category: "Graphics",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 4,
-				title: "Android Port Development",
-				status: "In Progress",
-				progress: 65,
-				description: "Improving Android version stability and performance",
-				category: "Platform",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 5,
-				title: "Audio System Improvements",
-				status: "In Progress",
-				progress: 80,
-				description: "Audio accuracy and latency improvements",
-				category: "Audio",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 6,
-				title: "Input System Enhancements",
-				status: "In Progress",
-				progress: 75,
-				description: "Better controller support and motion controls",
-				category: "Input",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 7,
-				title: "Memory Management",
-				status: "In Progress",
-				progress: 60,
-				description: "Memory usage optimization and leak fixes",
-				category: "Core",
-				updated: new Date().toISOString()
-			},
-			{
-				id: 8,
-				title: "Developer Tools",
-				status: "Planned",
-				progress: 25,
-				description: "Debugging tools and development utilities",
-				category: "Tools",
-				updated: new Date().toISOString()
-			}
-		];
+	// import.meta.glob resolves at Vite build time; returns {} when the
+	// file does not yet exist so the build never fails.
+	const boardModules = import.meta.glob("/src/content/project-board.json", { eager: true });
+	const boardMod: any = Object.values(boardModules)[0];
 
-		return {
-			tasks: enhancedTasks,
-			lastUpdated: new Date().toLocaleString(),
-			source: 'enhanced'
-		};
-	} catch (error) {
-		console.error('Failed to fetch project data:', error);
-		throw error;
+	if (boardMod) {
+		const board = boardMod.default ?? boardMod;
+		if (Array.isArray(board.tasks) && board.tasks.length > 0) {
+			return {
+				tasks: board.tasks as ProjectTask[],
+				lastUpdated: board.lastUpdated || new Date().toISOString(),
+				source: board.source || "project-board-json",
+			};
+		}
 	}
-}
 
-/**
- * Transform raw API data into our internal format
- * This would be used when integrating with the actual project management API
- */
-export function transformProjectData(rawData: any): ProjectData {
-	// This is a placeholder for the actual transformation logic
-	// The implementation would depend on the structure of the API response
-	
+	// Fallback to static data
 	return {
-		tasks: rawData.tasks || [],
-		lastUpdated: rawData.updated_at || new Date().toISOString(),
-		source: 'api'
+		tasks: FALLBACK_TASKS,
+		lastUpdated: new Date().toISOString(),
+		source: "fallback",
 	};
 }
 
@@ -178,7 +96,9 @@ export function isCacheValid(key: string, maxAge: number): boolean {
 }
 
 /**
- * Fallback data for when API is unavailable
+ * Fallback data shown when the Wayback Machine fetch fails and no
+ * cached project-board.json is available.  These reflect the main
+ * development areas of a Switch emulator rather than specific tasks.
  */
 export const FALLBACK_TASKS: ProjectTask[] = [
 	{

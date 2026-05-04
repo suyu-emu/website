@@ -229,6 +229,11 @@
                                         title="Compatibility"
                                         target="_blank">Compatibility</a
                                 >
+                                <a
+                                        href="{base}/legal"
+                                        class="px-5 py-3 transition hover:text-white"
+                                        title="Legal information">Legal</a
+                                >
                         </div>
                         <div class="flex w-full flex-row items-center justify-end text-[#A6A5A7]">
                                 <div class="flex flex-row gap-4 max-[800px]:hidden">
@@ -337,6 +342,14 @@
                                         on:click={toggleDropdown}
                                 >
                                         Compatibility
+                                </a>
+                                <a
+                                        href="{base}/legal"
+                                        class="px-4 py-4 text-lg font-medium text-[#A6A5A7] transition hover:text-white border-b border-[#ffffff11]"
+                                        title="Legal information"
+                                        on:click={toggleDropdown}
+                                >
+                                        Legal
                                 </a>
 
                                 <!-- Social Links Section -->

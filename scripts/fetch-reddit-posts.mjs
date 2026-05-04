@@ -368,6 +368,108 @@ async function scrapeNewRedditHtml(post, retries = 3) {
 	throw lastError;
 }
 
+/**
+ * Fetch a Reddit post via the Wayback Machine (web.archive.org).
+ *
+ * Strategy:
+ *   1. Query the CDX API to find the most recent successful archived snapshot
+ *      of the old.reddit.com post page.
+ *   2. Fetch that snapshot and parse the selftext from the old-Reddit HTML.
+ *
+ * This is inserted between old.reddit.com and Arctic Shift because the Wayback
+ * Machine typically crawls more recently than Arctic Shift's bulk crawler,
+ * so it's more likely to capture post edits.
+ */
+async function fetchFromWaybackMachine(post, retries = 2) {
+	const originalUrl = `https://old.reddit.com/r/${post.subreddit}/comments/${post.id}/`;
+
+	// Step 1: CDX API — find the most recent 200-OK snapshot
+	const cdxUrl =
+		`https://web.archive.org/cdx/search/cdx` +
+		`?url=${encodeURIComponent(originalUrl)}` +
+		`&output=json&limit=1&fl=timestamp,statuscode,original` +
+		`&filter=statuscode:200&from=20240101&to=20260101` +
+		`&collapse=timestamp&matchType=prefix`;
+
+	console.log(`  ↩ Querying Wayback CDX for ${post.id} …`);
+
+	let timestamp;
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(cdxUrl, {
+				headers: { "User-Agent": "suyu-website-bot/1.0 (build-time blog mirror)" },
+			});
+			if (!res.ok) throw new Error(`CDX HTTP ${res.status}`);
+			const json = await res.json();
+			// json[0] is the header row ["timestamp","statuscode","original"],
+			// json[1..] are result rows.
+			if (!json || json.length < 2) throw new Error(`No CDX results for ${post.id}`);
+			timestamp = json[1][0]; // most recent snapshot timestamp
+			break;
+		} catch (err) {
+			if (attempt < retries - 1) {
+				await sleep(1000 * (attempt + 1));
+			} else {
+				throw new Error(`CDX lookup failed: ${err.message}`);
+			}
+		}
+	}
+
+	// Step 2: Fetch the archived page and parse it the same way as scrapePostHtml
+	const waybackUrl = `https://web.archive.org/web/${timestamp}/${originalUrl}`;
+	console.log(`  ↩ Fetching Wayback snapshot: ${waybackUrl} …`);
+
+	for (let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const res = await fetch(waybackUrl, { headers: BROWSER_HEADERS });
+			if (!res.ok) throw new Error(`HTTP ${res.status} for ${waybackUrl}`);
+
+			const html = await res.text();
+
+			const thingMatch = html.match(/class="[^"]*\bthing\b[^"]*"([^>]*)>/);
+			const attrs = thingMatch ? thingMatch[1] : "";
+
+			const author = (attrs.match(/\bdata-author="([^"]+)"/) || [])[1] || "";
+			const permalink =
+				(attrs.match(/\bdata-permalink="([^"]+)"/) || [])[1] ||
+				`/r/${post.subreddit}/comments/${post.id}/`;
+			const tsRaw = (attrs.match(/\bdata-timestamp="(\d+)"/) || [])[1];
+			const titleMatch = html.match(/<a[^>]+class="[^"]*\btitle\b[^"]*"[^>]*>([^<]+)<\/a>/);
+
+			if (!titleMatch) throw new Error(`Could not extract title from Wayback HTML for ${post.id}`);
+			if (!tsRaw) throw new Error(`Could not extract timestamp from Wayback HTML for ${post.id}`);
+
+			const title = decodeHtmlEntities(titleMatch[1].trim());
+			const date = new Date(parseInt(tsRaw, 10)).toISOString();
+			const content = extractMdContent(html);
+			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
+
+			console.log(
+				`  ℹ Wayback snapshot ${timestamp}: title="${title}", content_len=${content.length}`,
+			);
+
+			return {
+				slug: post.slug,
+				id: post.id,
+				title,
+				date,
+				subreddit: post.subreddit,
+				author,
+				url: `https://www.reddit.com${permalink}`,
+				score: 0,
+				content: finalContent,
+				images: [],
+			};
+		} catch (err) {
+			if (attempt < retries - 1) {
+				await sleep(1000 * (attempt + 1));
+			} else {
+				throw err;
+			}
+		}
+	}
+}
+
 // ── Reddit JSON API ────────────────────────────────────────────────────────────
 
 /**
@@ -463,30 +565,42 @@ async function fetchFromArcticShift(post, retries = 3) {
 				data.forEach((snap, i) => {
 					const crawledAt = snap.retrieved_on || snap.retrieved_utc;
 					console.log(
-						`    snapshot ${i + 1}: retrieved_on=${crawledAt} selftext_len=${(snap.selftext || "").length}`,
+						`    snapshot ${i + 1}: retrieved_on=${crawledAt} edited=${snap.edited} selftext_len=${(snap.selftext || "").length}`,
 					);
 				});
 			}
 
-			// Pick the snapshot with the highest retrieval timestamp (most recently crawled).
-			// data[0] is used as the initial value so reduce never operates on an empty array.
-			const postData = data.reduce((latest, snap) => {
-				const latestTime = latest.retrieved_on || latest.retrieved_utc || 0;
-				const snapTime = snap.retrieved_on || snap.retrieved_utc || 0;
-				return snapTime > latestTime ? snap : latest;
-			}, data[0]);
+			// Pick the snapshot that best reflects the latest user-visible version.
+			// Priority:
+			//   1. Snapshots where `edited` is a non-false Unix timestamp — pick the
+			//      one with the most recent `edited` value (latest user edit).
+			//   2. If no edited snapshots exist, fall back to highest `retrieved_on`
+			//      (most recently archived snapshot).
+
+			const editedSnaps = data.filter(
+				(s) => s.edited && s.edited !== false && Number(s.edited) > 0,
+			);
+
+			let postData;
+
+			if (editedSnaps.length > 0) {
+				postData = editedSnaps.reduce((best, snap) => {
+					return Number(snap.edited) > Number(best.edited) ? snap : best;
+				}, editedSnaps[0]);
+				console.log(
+					`  ℹ Post ${post.id} was edited; using snapshot edited at ${new Date(Number(postData.edited) * 1000).toISOString()}`,
+				);
+			} else {
+				postData = data.reduce((latest, snap) => {
+					const latestTime = latest.retrieved_on || latest.retrieved_utc || 0;
+					const snapTime = snap.retrieved_on || snap.retrieved_utc || 0;
+					return snapTime > latestTime ? snap : latest;
+				}, data[0]);
+			}
 
 			const images = extractImages(postData);
 			const content = postData.selftext || "";
 			const finalContent = content ? content + "\n\n- suyu team" : "- suyu team";
-
-			// Reddit / Arctic Shift stores `edited` as either `false` or a Unix timestamp in
-			// seconds (same unit as `created_utc`), so multiply by 1000 for Date.
-			if (postData.edited && postData.edited !== false) {
-				console.log(
-					`  ℹ Post ${post.id} was edited; using latest snapshot (edited at ${new Date(Number(postData.edited) * 1000).toISOString()})`,
-				);
-			}
 
 			return {
 				slug: post.slug,
@@ -519,8 +633,10 @@ async function fetchFromArcticShift(post, retries = 3) {
  *   1. Reddit JSON API  (simplest, often works without browser headers)
  *   2. www.reddit.com HTML scrape
  *   3. old.reddit.com HTML scrape
- *   4. Arctic Shift archive API (community Reddit archive; not blocked by CI)
- *   5. Existing on-disk JSON (static fallback so a single outage never
+ *   4. Wayback Machine (web.archive.org) — most recent archived snapshot,
+ *      which often captures post edits that Arctic Shift missed
+ *   5. Arctic Shift archive API (community Reddit archive; not blocked by CI)
+ *   6. Existing on-disk JSON (static fallback so a single outage never
  *      breaks the build when the files were previously committed to the repo)
  */
 async function fetchPost(post) {
@@ -542,17 +658,25 @@ async function fetchPost(post) {
 	try {
 		return await scrapePostHtml(post);
 	} catch (err) {
-		console.log(`  ↩ old.reddit.com failed (${err.message}), trying Arctic Shift archive …`);
+		console.log(`  ↩ old.reddit.com failed (${err.message}), trying Wayback Machine …`);
 	}
 
-	// 4. Arctic Shift archive
+	// 4. Wayback Machine (web.archive.org) — most recent archived snapshot
+	// Often has post edits that Arctic Shift's bulk crawler missed.
+	try {
+		return await fetchFromWaybackMachine(post);
+	} catch (err) {
+		console.log(`  ↩ Wayback Machine failed (${err.message}), trying Arctic Shift archive …`);
+	}
+
+	// 5. Arctic Shift archive
 	try {
 		return await fetchFromArcticShift(post);
 	} catch (err) {
 		console.log(`  ↩ Arctic Shift failed (${err.message}), checking for existing file …`);
 	}
 
-	// 5. Static fallback: use existing on-disk JSON if present
+	// 6. Static fallback: use existing on-disk JSON if present
 	const existingPath = join(OUTPUT_DIR, `${post.slug}.json`);
 	if (existsSync(existingPath)) {
 		console.log(`  ↩ Using existing on-disk data for ${post.slug}`);

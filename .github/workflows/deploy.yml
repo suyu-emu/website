@@ -39,6 +39,10 @@ jobs:
               run: node scripts/fetch-reddit-posts.mjs
               continue-on-error: true # don't fail the build if Reddit is temporarily unavailable
 
+            - name: Fetch project board from Wayback Machine
+              run: node scripts/fetch-project-board.mjs
+              continue-on-error: true # don't fail the build if Wayback is temporarily unavailable
+
             - name: Build the Site
               run: pnpm run build
 
