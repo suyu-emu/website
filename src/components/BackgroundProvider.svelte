@@ -33,7 +33,7 @@
 	}
 </script>
 
-<div class="gradient" />
+<div class="gradient"></div>
 
 <div class="background-container">
 	<div
