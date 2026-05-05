@@ -387,9 +387,9 @@ async function fetchFromWaybackMachine(post, retries = 2) {
 	const cdxUrl =
 		`https://web.archive.org/cdx/search/cdx` +
 		`?url=${encodeURIComponent(originalUrl)}` +
-		`&output=json&limit=1&fl=timestamp,statuscode,original` +
+		`&output=json&limit=-1&fl=timestamp,statuscode,original` +
 		`&filter=statuscode:200&from=20240101&to=20260101` +
-		`&collapse=timestamp&matchType=prefix`;
+		`&matchType=prefix`;
 
 	console.log(`  ↩ Querying Wayback CDX for ${post.id} …`);
 
