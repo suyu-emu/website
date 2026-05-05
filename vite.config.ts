@@ -11,4 +11,10 @@ export default defineConfig({
 		}),
 		sveltekit(),
 	],
+	resolve: {
+		conditions: ['svelte', 'browser', 'import', 'default'],
+	},
+	optimizeDeps: {
+		include: ['flowbite-svelte-icons'],
+	},
 });
