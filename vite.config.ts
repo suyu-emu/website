@@ -17,4 +17,7 @@ export default defineConfig({
 	optimizeDeps: {
 		include: ['flowbite-svelte-icons'],
 	},
+	ssr: {
+		noExternal: ['flowbite-svelte-icons'],
+	},
 });
