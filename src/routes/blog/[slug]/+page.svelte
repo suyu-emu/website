@@ -235,20 +235,8 @@
 
 	<!-- Author / date -->
 	<div class="relative z-10 flex flex-wrap items-center gap-4 text-sm text-[#A6A5A7]">
-		{#if post.author}
-			<span>
-				Posted by
-				<a
-					href="https://www.reddit.com/user/{post.author}"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-white transition hover:text-[#60c7e9]"
-				>
-					u/{post.author}
-				</a>
-			</span>
-			<span>·</span>
-		{/if}
+		<span>Posted anonymously</span>
+		<span>·</span>
 		<time datetime={post.date}>{formatDate(post.date)}</time>
 	</div>
 

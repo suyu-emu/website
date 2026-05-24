@@ -23,8 +23,8 @@ export interface ProjectData {
  *
  * Priority:
  *   1. src/content/project-board.json  – written at build time by
- *      scripts/fetch-project-board.mjs from a Wayback Machine snapshot
- *      of the git.suyu.dev project board.
+ *      scripts/fetch-project-board.mjs from GitHub Projects or an archival
+ *      snapshot of the git.suyu.dev project board.
  *   2. FALLBACK_TASKS below            – static data used when the
  *      fetch script was unable to reach the archive.
  */

@@ -26,6 +26,11 @@ const OUTPUT_FILE = join(OUTPUT_DIR, "project-board.json");
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
 
+const GITHUB_PROJECT_URL = "https://github.com/orgs/suyu-emu/projects/1";
+const GITHUB_API_BASE = "https://api.github.com";
+const GITHUB_PROJECT_ID = 1;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
+
 const GITEA_BASE = "https://git.suyu.dev";
 const REPO = "suyu/suyu";
 const PROJECT_ID = 11;
@@ -80,13 +85,14 @@ async function findWaybackSnapshot(originalUrl, retries = 3) {
 /**
  * Fetch JSON from a URL (Wayback Machine or direct), with retries.
  */
-async function fetchJson(url, retries = 3) {
+async function fetchJson(url, retries = 3, headers = {}) {
 	for (let attempt = 0; attempt < retries; attempt++) {
 		try {
 			const res = await fetch(url, {
 				headers: {
 					"User-Agent": "suyu-website-bot/1.0 (build-time project board fetch)",
 					Accept: "application/json",
+					...headers,
 				},
 			});
 			if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
@@ -99,6 +105,85 @@ async function fetchJson(url, retries = 3) {
 			}
 		}
 	}
+}
+
+async function fetchGitHubProjectBoard() {
+	if (!GITHUB_TOKEN) {
+		throw new Error("GITHUB_TOKEN not available");
+	}
+
+	console.log(`  Trying GitHub project board API for ${GITHUB_PROJECT_URL}…`);
+	const headers = {
+		Accept: "application/vnd.github+json, application/vnd.github.inertia-preview+json",
+		Authorization: `token ${GITHUB_TOKEN}`,
+	};
+
+	const columns = await fetchJson(
+		`${GITHUB_API_BASE}/projects/${GITHUB_PROJECT_ID}/columns`,
+		3,
+		headers,
+	);
+	if (!Array.isArray(columns) || columns.length === 0) {
+		throw new Error("GitHub project board returned no columns");
+	}
+
+	const tasks = [];
+	let nextTaskId = 1;
+
+	for (const column of columns) {
+		const status = column.name?.toLowerCase().includes("done") || column.name?.toLowerCase().includes("complete")
+			? "Completed"
+			: column.name?.toLowerCase().includes("progress")
+			? "In Progress"
+			: "Planned";
+
+		const cards = await fetchJson(column.cards_url, 3, headers);
+		if (!Array.isArray(cards)) continue;
+
+		for (const card of cards) {
+			let title = "";
+			let description = "";
+			let updated = card.updated_at || card.created_at || new Date().toISOString();
+			let labels = [];
+
+			if (card.note) {
+				title = card.note.trim().split("\n")[0].slice(0, 120) || `Project card ${card.id}`;
+				description = card.note.trim().slice(0, 240);
+			}
+
+			if (card.content_url) {
+				try {
+					const content = await fetchJson(card.content_url, 3, headers);
+					title = content.title || title || `Project card ${card.id}`;
+					description = (content.body || "").split("\n")[0].slice(0, 120);
+					updated = content.updated_at || updated;
+					labels = content.labels || [];
+				} catch (err) {
+					console.warn(`  ⚠ GitHub card content fetch failed: ${err.message}`);
+				}
+			}
+
+			tasks.push({
+				id: nextTaskId++,
+				title,
+				status,
+				progress: status === "Completed" ? 100 : status === "In Progress" ? 50 : 0,
+				description,
+				category: issueToCategory({ title, labels }),
+				updated,
+			});
+		}
+	}
+
+	if (tasks.length === 0) {
+		throw new Error("GitHub project board returned no tasks");
+	}
+
+	return {
+		tasks,
+		projectUrl: GITHUB_PROJECT_URL,
+		source: "github-projects",
+	};
 }
 
 /**
@@ -280,9 +365,17 @@ async function fetchViaHtmlPage() {
 }
 
 async function main() {
-	console.log("Fetching project board from Wayback Machine…");
+	console.log("Fetching project board from GitHub and archive…");
 
 	let result = null;
+
+	// Strategy 0: GitHub organization project board
+	try {
+		result = await fetchGitHubProjectBoard();
+		console.log(`  ✓ Got ${result.tasks.length} tasks from GitHub project board (${GITHUB_PROJECT_URL})`);
+	} catch (err) {
+		console.log(`  ↩ GitHub project board fetch failed (${err.message}), falling back to archive…`);
+	}
 
 	// Strategy 1: Gitea project JSON API
 	try {

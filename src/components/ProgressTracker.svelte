@@ -205,7 +205,7 @@
                                         For real-time updates and detailed discussions, visit our 
                                         <a href="https://github.com/orgs/suyu-emu/discussions" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">GitHub Discussions</a>
                                         or check the 
-                                        <a href="https://web.archive.org/web/2024/https://git.suyu.dev/suyu/suyu/projects/11" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">project board</a>.
+                                        <a href="https://github.com/orgs/suyu-emu/projects/1" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">project board</a>.
                                 </p>
                         </div>
                 </div>
