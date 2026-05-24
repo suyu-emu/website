@@ -155,7 +155,7 @@
                                         <li>Check our <a href="/faq" class="text-[#60c7e9] hover:text-[#f94d4d] transition">FAQ page</a> for additional help</li>
                                         <li>Visit our <a href="https://github.com/orgs/suyu-emu/discussions" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">GitHub Discussions</a></li>
                                         <li>Join the community on <a href="https://www.reddit.com/r/suyu/" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">Reddit</a></li>
-                                        <li>Report bugs on our <a href="https://github.com/suyu-emu/suyu/issues" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">GitHub Issues</a></li>
+                                        <li>Report bugs using the <a href="https://github.com/suyu-emu/suyu-issue-tracker" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">suyu issue tracker</a></li>
                                 </ul>
                         </div>
                 </div>

@@ -2,16 +2,17 @@
 /**
  * fetch-project-board.mjs
  *
- * Fetches the suyu project board from a Wayback Machine snapshot of
- * git.suyu.dev and writes the data to src/content/project-board.json.
+ * Fetches the suyu project board from GitHub Projects or a Wayback Machine
+ * snapshot of git.suyu.dev, then writes the data to src/content/project-board.json.
  * Run before `pnpm build` so SvelteKit can prerender the homepage.
  *
  * Strategy (in order):
- *   1. Wayback Machine CDX API → find snapshot timestamps for the
+ *   1. GitHub Projects API → org board at https://github.com/orgs/suyu-emu/projects/1
+ *   2. Wayback Machine CDX API → find snapshot timestamps for the
  *      git.suyu.dev Gitea REST API endpoint, then fetch the JSON.
- *   2. Wayback Machine CDX API → fall back to the Gitea issues list
+ *   3. Wayback Machine CDX API → fall back to the Gitea issues list
  *      so we can reconstruct column data from issue labels/milestones.
- *   3. On-disk fallback: use existing src/content/project-board.json.
+ *   4. On-disk fallback: use existing src/content/project-board.json.
  *
  * Usage: node scripts/fetch-project-board.mjs
  */

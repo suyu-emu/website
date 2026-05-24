@@ -111,7 +111,7 @@
                                         <li>Test with the latest suyu version</li>
                                         <li>Provide detailed reproduction steps</li>
                                         <li>Include system specifications and logs</li>
-                                        <li>Submit to our <a href="https://github.com/suyu-emu/suyu/issues" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">GitHub Issues</a></li>
+                                        <li>Submit to our <a href="https://github.com/suyu-emu/suyu-issue-tracker" class="text-[#60c7e9] hover:text-[#f94d4d] transition" target="_blank">suyu issue tracker</a></li>
                                 </ol>
                         </div>
                 </div>

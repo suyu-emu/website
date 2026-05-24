@@ -67,10 +67,10 @@
 
 			<div class="flex items-center gap-4 text-sm text-[#A6A5A7]">
 				<span>{formatDate(post.date)}</span>
-			<span>·</span>
-			<span>Anonymous</span>
-					<span>{post.score} points</span>
-				{/if}
+					<span>·</span>
+					<span>Anonymous</span>
+					{#if post.score}
+						<span>·</span>
 			</div>
 
 			{#if post.content}

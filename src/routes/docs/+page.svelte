@@ -149,7 +149,17 @@
                                 <p class="text-[#A6A5A7] text-xs">Track development progress</p>
                         </div>
                 </a>
-                
+
+                <a href="https://github.com/suyu-emu/suyu-issue-tracker" target="_blank" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
+                        <svg class="h-6 w-6 text-[#fbbf24]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z" />
+                        </svg>
+                        <div>
+                                <h3 class="text-white font-semibold text-sm">Issue Tracker</h3>
+                                <p class="text-[#A6A5A7] text-xs">Submit and track bugs</p>
+                        </div>
+                </a>
+
                 <a href="https://web.archive.org/web/2024/https://git.suyu.dev/suyu/suyu" target="_blank" class="flex items-center gap-3 p-4 bg-[#110d10] rounded-lg hover:bg-[#2a2a2a] transition border border-[#ffffff11]">
                         <svg class="h-6 w-6 text-[#9333ea]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
