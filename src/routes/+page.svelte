@@ -377,6 +377,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                         <p><strong>macOS</strong> - Community builds available for Apple Silicon and Intel Macs</p>
+
+                        <p><strong>Libretro</strong> - suyu v0.04 has been ported to Libretro</p>
                 </div>
         </div>
 </div>
