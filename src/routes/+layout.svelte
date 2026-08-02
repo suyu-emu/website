@@ -2,10 +2,10 @@
         import "../app.pcss";
         import { onMount } from "svelte";
         import Logo from "../components/LogoWithTextHorizontal.svelte";
-        import { CodeBranchOutline } from "flowbite-svelte-icons";
-        import { Bars3, XMark } from "svelte-heros-v2";
-        import { SiReddit } from "@icons-pack/svelte-simple-icons";
-        import { ArchiveBoxArrowDown } from "svelte-heros-v2";
+        import Bars3 from "svelte-heros-v2/Bars3.svelte";
+        import XMark from "svelte-heros-v2/XMark.svelte";
+        import ArchiveBoxArrowDown from "svelte-heros-v2/ArchiveBoxArrowDown.svelte";
+        import { SiReddit, SiGithub } from "@icons-pack/svelte-simple-icons";
         import { browser } from "$app/environment";
         import type { TransitionConfig } from "svelte/transition";
         import { transition } from "$lib/util/animation";
@@ -244,7 +244,7 @@
                                                 target="_blank"
                                                 title="Suyu Organization"
                                         >
-                                                <CodeBranchOutline />
+                                                <SiGithub />
                                         </a>
                                         <a
                                                 class="p-2 transition hover:text-white"
@@ -364,7 +364,7 @@
                                                         title="Suyu Organization"
                                                         on:click={toggleDropdown}
                                                 >
-                                                        <CodeBranchOutline size="20" />
+                                                        <SiGithub size={20} />
                                                         <span>GitHub</span>
                                                 </a>
                                                 <a
@@ -375,7 +375,7 @@
                                                         title="Suyu Reddit"
                                                         on:click={toggleDropdown}
                                                 >
-                                                        <SiReddit size="20" />
+                                                        <SiReddit size={20} />
                                                         <span>Reddit</span>
                                                 </a>
                                                 <a

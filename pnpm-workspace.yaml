@@ -1,9 +1,15 @@
+allowBuilds:
+  cwebp-bin: true
+  es5-ext: true
+  esbuild: true
+  sharp: true
+  svelte-preprocess: true
 onlyBuiltDependencies:
-    - better-sqlite3
-    - carbon-components-svelte
-    - cwebp-bin
-    - es5-ext
-    - esbuild
-    - sharp
-    - sqlite3
-    - svelte-preprocess
+  - better-sqlite3
+  - carbon-components-svelte
+  - cwebp-bin
+  - es5-ext
+  - esbuild
+  - sharp
+  - sqlite3
+  - svelte-preprocess

@@ -14,10 +14,10 @@ export default defineConfig({
 	resolve: {
 		conditions: ['svelte', 'browser', 'import', 'default'],
 	},
-	optimizeDeps: {
-		include: ['flowbite-svelte-icons'],
-	},
 	ssr: {
-		noExternal: ['flowbite-svelte-icons'],
+		resolve: {
+			conditions: ['svelte', 'node', 'import', 'default'],
+			externalConditions: ['svelte', 'node'],
+		},
 	},
 });
