@@ -62,34 +62,14 @@
 </article> -->
 
 <!-- Citron Warning -->
-<!-- DMCA Notice -->
-<article class="border-l-[4px] border-solid border-[#f94d4d] rounded-[10px] bg-[#2a1a1a] pt-[10px] inline-block mb-[20px]">
-	<div class="ml-[10px]">
-		<p class="text-[20px] font-bold mb-[2px] text-[#f94d4d]">⚠️ Notice: Downloads Paused</p>
-		<p class="text-[#A6A5A7] pb-[10px] mr-[12px]">
-			Due to DMCA concerns, we are indefinitely pausing downloads of suyu. The emulator is currently being modified to remove ROM decryption functionality and will require pre-decrypted ROMs going forward. We appreciate your understanding and patience during this transition. For more information, please check our GitHub discussions.
-		</p>
-	</div>
-</article>
-
 <article class="border-l-[4px] border-solid border-[#f94d4d] rounded-[10px] bg-[#2a1a1a] pt-[10px] inline-block mb-[20px]">
         <div class="ml-[10px]">
                 <p class="text-[20px] font-bold mb-[2px] text-[#f94d4d]">⚠️ Warning: Do Not Use Citron</p>
                 <p class="text-[#A6A5A7] pb-[10px] mr-[12px]">
-                        Do not use Citron or its forks. The developer appears to be implementing a DRM scheme that we believe might send your keys to a server to check against a blacklist. This could jeopardize your Switch should this data fall into the wrong hands. More info 
-                        <a href="https://www.reddit.com/r/EmulationOnAndroid/comments/1jnpo71/the_fall_of_citron/" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]">here</a> 
-                        and 
+                        Do not use Citron or its forks. The developer appears to be implementing a DRM scheme that we believe might send your keys to a server to check against a blacklist. This could jeopardize your Switch should this data fall into the wrong hands. More info
+                        <a href="https://www.reddit.com/r/EmulationOnAndroid/comments/1jnpo71/the_fall_of_citron/" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]">here</a>
+                        and
                         <a href="https://www.reddit.com/r/EmulationOnAndroid/comments/1jojbkw/the_fall_of_citron_part_2/" target="_blank" class="transition hover:text-[#f94d4d] text-[#60c7e9]">here</a>.
-                </p>
-        </div>
-</article>
-
-<!-- Development Status Notice -->
-<article class="border-l-[4px] border-solid border-[#f78c40] rounded-[10px] bg-[#2a2015] pt-[10px] inline-block mb-[20px]">
-        <div class="ml-[10px]">
-                <p class="text-[20px] font-bold mb-[2px] text-[#f78c40]">📢 Development Status</p>
-                <p class="text-[#A6A5A7] pb-[10px] mr-[12px]">
-                        Development is currently slowing down and the project needs more developers. If you're interested in contributing to suyu, please check out our GitHub and join the community discussions.
                 </p>
         </div>
 </article>
@@ -179,7 +159,10 @@
 <div
         class="relative mt-48 flex w-full flex-col gap-6 overflow-hidden rounded-[2.25rem] bg-[#110d10] p-8 md:p-12"
 >
-        <ProgressTracker />
+        <h1 class="text-[24px] leading-[1.41] md:text-[60px] md:leading-[1.1]">Compatibility</h1>
+        <p class="max-w-[40rem] text-lg leading-relaxed text-[#A6A5A7]">
+                suyu is capable of running the vast majority of Nintendo Switch titles, including games and software released in 2026. Support for the latest Switch system firmware is maintained on an ongoing basis, ensuring broad compatibility with modern releases.
+        </p>
 </div>
 
 <div
@@ -377,8 +360,19 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                         <p><strong>macOS</strong> - Community builds available for Apple Silicon and Intel Macs</p>
-
-                        <p><strong>Libretro</strong> - suyu v0.04 has been ported to Libretro</p>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6"
+                        >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        <p><strong>Libretro</strong> - suyu v0.04 has been ported to Libretro, enabling use with RetroArch and compatible frontends</p>
                 </div>
         </div>
 </div>
